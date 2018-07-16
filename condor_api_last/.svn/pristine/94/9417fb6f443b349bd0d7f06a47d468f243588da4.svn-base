@@ -1,0 +1,128 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Xamarin.Forms.Xaml;
+
+namespace CondorExtreme3_Xamarin
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public class Star : Image
+    {
+        public enum StarTypes { Full, Empty, Half };
+
+        private int _StarIndex;
+        private StarTypes _StarType;
+        private bool _IsReadOnly;
+        private TapGestureRecognizer tapRecognizer = new TapGestureRecognizer();
+        private List<Star> _ratingControlStars = null;
+        private int _MovieID;
+
+        public StarTypes StarType
+        {
+            get { return _StarType; }
+            set
+            {
+                
+                switch (value)
+                {
+                    case StarTypes.Empty:
+                        Source = "star_empty.png";
+                        _StarType = StarTypes.Empty;
+                        break;
+
+                    case StarTypes.Half:
+                        Source = "star_half.png";
+                        _StarType = StarTypes.Half;
+                        break;
+
+                    case StarTypes.Full:
+                        Source = "star_full.png";
+                        _StarType = StarTypes.Full;
+                        break;
+                }
+            }
+        }
+
+        public Star(int starIndex, bool isReadOnly = false)
+        {
+            _IsReadOnly = isReadOnly;
+            _StarIndex = starIndex;
+            StarType = StarTypes.Empty;
+
+            this.HeightRequest = 30;
+            this.WidthRequest = 30;
+
+            tapRecognizer.Tapped += TapRecognizer_Tapped;
+            this.GestureRecognizers.Add(tapRecognizer);
+        }
+
+        public Star(int starIndex, int movieID, ref List<Star> ratingControlStars, bool isReadOnly = false)
+        {
+            _IsReadOnly = isReadOnly;
+            _StarIndex = starIndex;
+            _ratingControlStars = ratingControlStars;
+            _MovieID = movieID;
+
+            this.HeightRequest = 30;
+            this.WidthRequest = 30;
+
+            StarType = StarTypes.Empty;
+            tapRecognizer.Tapped += TapRecognizer_Tapped;
+            this.GestureRecognizers.Add(tapRecognizer);
+        }
+
+        public Star(int starIndex, StarTypes starType, bool isReadOnly = false)
+        {
+            StarType = starType;
+            _StarIndex = starIndex;
+            _IsReadOnly = isReadOnly;
+
+            this.HeightRequest = 30;
+            this.WidthRequest = 30;
+
+            tapRecognizer.Tapped += TapRecognizer_Tapped;
+            this.GestureRecognizers.Add(tapRecognizer);
+        }
+
+        private void TapRecognizer_Tapped(object sender, EventArgs e)
+        { 
+            if (!_IsReadOnly)
+            {
+                if (_ratingControlStars != null)
+                {
+                    for (int i = 0; i < _ratingControlStars.Count; i++)
+                    {
+                        if (i <= this._StarIndex)
+                        {
+                            if (this.StarType == StarTypes.Empty)
+                                _ratingControlStars[i].StarType = StarTypes.Full;
+                        }
+                        else _ratingControlStars[i].StarType = StarTypes.Empty;
+                    }
+                }
+                else
+                {
+                    if (this.StarType == StarTypes.Empty)
+                        this.StarType = StarTypes.Full;
+
+                    if (this.StarType == StarTypes.Full)
+                        this.StarType = StarTypes.Empty;
+                }
+            }
+
+            JObject jObj = new JObject()
+            {
+                { "RVisitorID", Authentication.CurrentUser.UserID },
+                { "MovieID", _MovieID },
+                { "Rating", _ratingControlStars.Where(x => x.StarType == Star.StarTypes.Full).Count() }
+            };
+
+            new WebAPIHelper(Domains.APIDomain, "api/RecommendationSystem")
+                .PostResponse(jObj.ToString(), "PostMovieRating");
+        }
+    }
+}

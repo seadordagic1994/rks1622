@@ -1,0 +1,102 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    public partial class RootShowVPacks : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+
+        private static RootShowVPacks Instance;
+        public static RootShowVPacks GetForm
+        {
+            get
+            {
+                if (Instance == null || Instance.IsDisposed)
+                    Instance = new RootShowVPacks();
+                return Instance;
+            }
+        }
+        private RootShowVPacks()
+        {
+            InitializeComponent();
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/RootAdministration");
+
+            LoadAllVirtualPointsPackets();
+        }
+
+        void LoadAllVirtualPointsPackets()
+        {
+            HttpResponseMessage httpResponseMessage = Service.GetResponse("GetVirtualPointsPackets");
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                grdVirtualPointsPackets.DataSource = httpResponseMessage.Content.ReadAsAsync<List<VPPP>>().Result;
+                grdVirtualPointsPackets.Columns["VirtualPointsPacketID"].Visible = false;
+            }
+        }
+
+
+
+        private void btnAddVP_Click(object sender, EventArgs e)
+        {
+            RootVPAddForm rootVPAddForm = new RootVPAddForm();
+            DialogResult dialogResult = rootVPAddForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+                LoadAllVirtualPointsPackets();
+        }
+
+        private void btnRemoveVP_Click(object sender, EventArgs e)
+        {
+            if (grdVirtualPointsPackets.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(Messages.VPSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to remove this Virtual Points packet?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                int VirtualPointsPacketID = (int)grdVirtualPointsPackets.SelectedRows[0].Cells["VirtualPointsPacketID"].Value;
+                dynamic VVP = new
+                {
+                    VirtualPointsPacketID = VirtualPointsPacketID
+                }; 
+                HttpResponseMessage httpResponseMessage = Service.PutResponse(VVP, "PutVirtualPointsPackets");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(Messages.VPRemoveSuccess, "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadAllVirtualPointsPackets();
+                }
+                else
+                    MessageBox.Show(Messages.VPRemoveFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+
+            
+
+        }
+    }
+
+
+    public class VPPP
+    {
+        public int VirtualPointsPacketID { get; set; }
+
+        public decimal Amount { get; set; }
+    }
+
+}

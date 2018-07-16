@@ -1,0 +1,442 @@
+﻿using CondorExtreme3_UI.Helper;
+using CondorExtreme3_UI.ReportModels;
+using Microsoft.Reporting.WinForms;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Reports
+{
+    public partial class ReportingForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+
+  
+        public ReportingForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CinemaStatistics");
+            btnReportCreate.Enabled = false;
+
+
+            var allReportTypes = ReportsMapToParameters.Keys.ToList();
+            cmbReportTypes.DataSource = allReportTypes;
+            cmbReportTypes.ValueMember = "ReportTypeID";
+            cmbReportTypes.DisplayMember = "Label";
+            cmbReportTypes.SelectedItem = null;
+
+            var Genders = new List<dynamic>
+            {
+                new
+                {
+                    GenderID=1,
+                    Name="Male"
+                },
+                new
+                { 
+                    GenderID=2,
+                    Name="Female"
+                }
+            };
+            cmbGenders.DataSource = Genders;
+            cmbGenders.DisplayMember = "Name";
+            cmbGenders.ValueMember = "GenderID";
+            dtTo.Value = DateTime.Now.AddDays(20);
+
+            HttpResponseMessage getTechTypes = Service.GetResponse("GetTechnologyTypes");
+            cmbTechTypes.DataSource = getTechTypes.Content.ReadAsAsync<List<dynamic>>().Result;
+            cmbTechTypes.DisplayMember = "Name";
+            cmbTechTypes.ValueMember = "TechnologyTypeID";
+
+
+            lblReportType.Text = "Please select report type...";
+
+        }
+        public List<Panel> allPanels { get {
+                return new List<Panel>
+                {
+                    pnlReportTypes,
+                    pnlGenders,
+                    pnlTechTypes,
+                    pnlDates,
+                    pnlButton
+                };
+
+            } }
+        public static List<EmployeeSalary> GetEmployeeSalary(List<dynamic> listEmps)
+        {
+            return listEmps.Select(x => new EmployeeSalary
+            {
+                EmployeeID = x.EmployeeID,
+                FullName = x.FullName,
+                Gender = x.Gender,
+                EmploymentType = x.EmploymentType,
+                CurrentSalary = x.CurrentSalary
+            }).ToList();
+        }
+
+
+
+
+        public Dictionary<ReportTypes, List<Panel>> ReportsMapToParameters { get {
+
+                return new Dictionary<ReportTypes, List<Panel>>
+                {
+                    {
+                        new ReportTypes
+                        {
+                            ReportTypeID=0,
+                            Name="EmployeeSalary",
+                            Label="Employee Salary"
+
+                        },
+                        new List<Panel>
+                        {
+                            pnlReportTypes,pnlGenders,pnlButton
+                        }
+                    },
+                    {
+                        new ReportTypes
+                        {
+                            ReportTypeID=1,
+                            Name="ProfitByMovies",
+                            Label="Top 10 Movies By Profit"
+
+                        },
+                        new List<Panel>
+                        {
+                            pnlReportTypes,pnlDates,pnlTechTypes,pnlButton
+                        }
+                    },
+                    {
+                        new ReportTypes
+                        {
+                            ReportTypeID=2,
+                            Name="Top10MostPopularSeats",
+                            Label="Top 10 Most Popular Seats"
+
+                        },
+                        new List<Panel>
+                        {
+                            pnlReportTypes,pnlDates,pnlTechTypes, pnlButton
+                        }
+                    },
+                    {
+                        new ReportTypes
+                        {
+                            ReportTypeID=3,
+                            Name="ProfitByPaymentMethods",
+                            Label="Profit By Payment Methods"
+
+                        },
+                        new List<Panel>
+                        {
+                            pnlReportTypes,pnlDates,pnlTechTypes,pnlButton
+                        }
+                    }
+
+                };
+
+            } }
+
+        private void ReportingForm_Load(object sender, EventArgs e)
+        {
+           //this.rptViewer.RefreshReport();
+           
+        }
+
+        
+    
+        
+
+       
+
+        
+
+      
+
+      
+
+        private void btnReportCreate_Click(object sender, EventArgs e)
+        {
+            this.rptViewer.LocalReport.DataSources.Clear();
+            this.rptViewer.LocalReport.ReportEmbeddedResource = null;
+
+
+            int SelectedValue = Int32.Parse(cmbReportTypes.SelectedValue.ToString());
+            string reportType = ReportsMapToParameters.Where(x => x.Key.ReportTypeID == SelectedValue)
+                .Select(x => x.Key.Name).FirstOrDefault();
+
+            switch (reportType)
+            {
+                case "EmployeeSalary": EmployeeSalary(); break;
+                case "ProfitByMovies": ProfitByMovies(); break; 
+                case "Top10MostPopularSeats": SeatReservationFrequency(); break;
+                case "ProfitByPaymentMethods": ProfitByPaymentMethods(); break;
+                default:
+                    break;
+            }
+        }
+        private void EmployeeSalary()
+        {
+            int CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+            bool Gender = (Int32.Parse(cmbGenders.SelectedValue.ToString())==1)?false:true;
+
+            var rParameters = new RParameters
+            {
+                CinemaID = CinemaID,
+                Gender = Gender
+            };
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(rParameters, "EmployeeSalary");
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var List = httpResponseMessage.Content.ReadAsAsync<List<dynamic>>().Result;
+
+                TestXDataset testXDataset = new TestXDataset();
+                TestXDataset.EmployeeSalaryDataTable dataTable = testXDataset.EmployeeSalary;
+
+
+                foreach (var item in List)
+                {
+                    DataRow dr = dataTable.NewRow();
+                    dr["FullName"] = item.FullName;
+                    dr["Gender"] = item.Gender;
+                    dr["EmploymentType"] = item.EmploymentType;
+                    dr["CurrentSalary"] = item.CurrentSalary;
+
+                    dataTable.Rows.Add(dr);
+                }
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Value = testXDataset.Tables["EmployeeSalary"];
+                reportDataSource.Name = "dsEmployeeSalary";
+                this.rptViewer.LocalReport.DataSources.Add(reportDataSource);
+                this.rptViewer.LocalReport.ReportEmbeddedResource = "CondorExtreme3_UI.Reports.EmployeeSalary.rdlc";
+                this.rptViewer.RefreshReport();
+
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning,"Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+
+
+        }
+
+        private void ProfitByMovies()
+        {
+            int TechTypeID = Int32.Parse(cmbTechTypes.SelectedValue.ToString());
+            DateTime DateTimeFrom = dtFrom.Value;
+            DateTime DateTimeTo = dtTo.Value;
+            int CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+
+
+            var rParameters = new RParameters
+            {
+                TechTypeID = TechTypeID,
+                DateTimeFrom = DateTimeFrom,
+                DateTimeTo = DateTimeTo,
+                CinemaID=CinemaID
+
+            };
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(rParameters, "ProfitByMovies");
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var dictProfitByMovies = httpResponseMessage.Content.ReadAsAsync<Dictionary<int,dynamic> >().Result;
+
+                TestXDataset testXDataset = new TestXDataset();
+                TestXDataset.ProfitByMoviesDataTable dataTable = testXDataset.ProfitByMovies;
+
+                foreach (var item in dictProfitByMovies)
+                {
+                    DataRow dr = dataTable.NewRow();
+                    dr["MovieID"] =item.Key;
+                    dr["Name"] = item.Value.Name;
+                    dr["Genre"] = item.Value.Genre;
+                    dr["Director"] = item.Value.Director;
+                    dr["Total"] = item.Value.Total;
+                    dataTable.Rows.Add(dr);
+                }
+
+
+              
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Value = testXDataset.Tables["ProfitByMovies"];
+                reportDataSource.Name = "dsProfitByMovies";
+                this.rptViewer.LocalReport.DataSources.Add(reportDataSource);
+                this.rptViewer.LocalReport.ReportEmbeddedResource = "CondorExtreme3_UI.Reports.ProfitByMovies.rdlc";
+                this.rptViewer.RefreshReport();
+
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.rptViewer.LocalReport.DataSources.Clear();
+                this.rptViewer.LocalReport.ReportEmbeddedResource = null;
+
+            }
+        }
+        private void SeatReservationFrequency()
+        {
+            DateTime DateTimeFrom = dtFrom.Value;
+            DateTime DateTimeTo = dtTo.Value;
+            int CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+            int TechTypeID = Int32.Parse(cmbTechTypes.SelectedValue.ToString());
+
+            var rParameters = new RParameters
+            {
+                DateTimeFrom = DateTimeFrom,
+                DateTimeTo = DateTimeTo,
+                CinemaID = CinemaID,
+                TechTypeID = TechTypeID
+            };
+
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(rParameters, "SeatReservationFrequencyReporting");
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var result = httpResponseMessage.Content.ReadAsAsync<Dictionary<dynamic,dynamic>>().Result;
+
+                TestXDataset testXDataset = new TestXDataset();
+                TestXDataset.SeatReservationFrequencyDataTable dataTable = testXDataset.SeatReservationFrequency;
+
+                foreach (var item in result)
+                {
+
+                    DataRow dr = dataTable.NewRow();
+                    dr["SeatID"] = item.Key;
+                    dr["SeatLabel"] = item.Value.SeatLabel;
+                    dr["CinemaHall"] = item.Value.CinemaHall;
+                    dr["TotalFrequency"] = item.Value.TotalFrequency;
+                    dataTable.Rows.Add(dr);
+                }
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Value = testXDataset.Tables["SeatReservationFrequency"];
+                reportDataSource.Name = "dsSeatReservationFrequency";
+                this.rptViewer.LocalReport.DataSources.Add(reportDataSource);
+                this.rptViewer.LocalReport.ReportEmbeddedResource = "CondorExtreme3_UI.Reports.SeatReservationFrequency.rdlc";
+                this.rptViewer.RefreshReport();
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
+        private void ProfitByPaymentMethods()
+        {   
+            DateTime DateTimeFrom = dtFrom.Value;
+            DateTime DateTimeTo = dtTo.Value;
+            int CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+            int TechTypeID = Int32.Parse(cmbTechTypes.SelectedValue.ToString());
+
+
+            var rParameters = new RParameters
+            {  
+
+                DateTimeFrom = DateTimeFrom,
+                DateTimeTo = DateTimeTo,
+                CinemaID = CinemaID,
+                TechTypeID= TechTypeID
+
+
+            };
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(rParameters, "ProfitByPaymentMethods");
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var listProfitByPaymentMethods = httpResponseMessage.Content.ReadAsAsync<Dictionary<dynamic, Dictionary<dynamic,dynamic>>>().Result;
+
+                TestXDataset testXDataset = new TestXDataset();
+                TestXDataset.ProfitByPaymentMethodsDataTable dataTable = testXDataset.ProfitByPaymentMethods;
+
+
+                foreach (var keyValuePairLevel1 in listProfitByPaymentMethods)
+                {
+                    
+                    foreach (var keyValuePairLevel2 in keyValuePairLevel1.Value)
+                    {
+                        DataRow dr = dataTable.NewRow();
+                        dr["Name"] = keyValuePairLevel1.Key;
+                        dr["DateDayMonth"] = keyValuePairLevel2.Key;
+                        dr["Total"] = keyValuePairLevel2.Value;
+                        dataTable.Rows.Add(dr);
+                    }
+
+                  
+                }
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Value = testXDataset.Tables["ProfitByPaymentMethods"];
+                reportDataSource.Name = "dsProfitByPaymentMethods";
+                this.rptViewer.LocalReport.DataSources.Add(reportDataSource);
+                this.rptViewer.LocalReport.ReportEmbeddedResource = "CondorExtreme3_UI.Reports.ProfitByPaymentMethods.rdlc";
+                this.rptViewer.RefreshReport();
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void cmbReportTypes_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (!btnReportCreate.Enabled)
+                btnReportCreate.Enabled = true;
+
+            int SelectedValue = Int32.Parse(cmbReportTypes.SelectedValue.ToString());
+            lblReportType.Text = cmbReportTypes.Text;
+
+            var panels = ReportsMapToParameters
+                .Where(x => x.Key.ReportTypeID == SelectedValue)
+                .Select(x => x.Value).FirstOrDefault();
+
+            foreach (var item in allPanels)
+            {
+                Panel k = item;
+                if (panels.Contains(k))
+                    k.Visible = true;
+                else
+                    k.Visible = false;
+            }
+        }
+
+        private void dtFrom_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtFrom.Value >= dtTo.Value)
+                dtTo.Value = dtFrom.Value.AddDays(1);
+        }
+
+        private void dtTo_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtTo.Value <= dtFrom.Value)
+                dtFrom.Value = dtTo.Value.AddDays(-1);
+        }
+    }
+
+    public class ReportTypes
+    {
+        public int ReportTypeID { get; set; }
+        public string Name { get; set; }
+        public string Label { get; set; }
+
+
+    }
+
+    public class RParameters
+    {
+        public int CinemaID { get; set; }
+        public bool Gender { get; set; }
+        public int TechTypeID { get; set; }
+        public DateTime DateTimeFrom { get; set; }
+        public DateTime DateTimeTo { get; set; }
+
+    }
+
+   
+}

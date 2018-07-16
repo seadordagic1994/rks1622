@@ -1,0 +1,174 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Plugin.Geolocator;
+
+
+namespace CondorExtreme3_Xamarin
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class RVMainPage : ContentPage
+	{
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/UserProjections");
+
+        public RVMainPage()
+		{
+			InitializeComponent();
+            LoadProjections();
+		}
+
+        public async void LoadProjections()
+        {
+            JObject jObject = null;
+
+            var Entry = new Entry()
+            {
+                Placeholder = "Search ..."
+            };
+
+            if (Authentication.GeoPosition != null)
+            {
+                jObject = new JObject() {
+                    { "RVisitorID", Authentication.CurrentUser.UserID },
+                    { "Latitude", (float)Authentication.GeoPosition.Latitude },
+                    { "Longitude", (float)Authentication.GeoPosition.Longitude },
+                    { "GPSAquired", true },
+                    { "SearchQuery", Entry.Text}
+                };
+            }
+            else
+            {        
+                jObject = new JObject() {
+                    { "RVisitorID", Authentication.CurrentUser.UserID },
+                    { "Latitude", 0.0f },
+                    { "Longitude", 0.0f },
+                    { "GPSAquired", false },
+                    { "SearchQuery", Entry.Text}
+                };
+            }
+           
+            var response = service.PostResponse(jObject.ToString(), "SearchForProjections");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                JArray projections = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+                if (projections.Count == 0)
+                    mainStackLayout.Children.Add(new Label()
+                    {
+                        Text = "No projections available at the moment!",
+                        FontSize = 30
+                    });
+
+               
+
+                var buttonSearch = new Button() { Text = "Search" };
+                buttonSearch.Clicked += async (sender, args) => {
+
+                    if (Authentication.GeoPosition != null)
+                    {
+                        jObject = new JObject() {
+                    { "RVisitorID", Authentication.CurrentUser.UserID },
+                    { "Latitude", (float)Authentication.GeoPosition.Latitude },
+                    { "Longitude", (float)Authentication.GeoPosition.Longitude },
+                    { "GPSAquired", true },
+                    { "SearchQuery", Entry.Text}
+                };
+                    }
+                    else
+                    {
+                        jObject = new JObject() {
+                    { "RVisitorID", Authentication.CurrentUser.UserID },
+                    { "Latitude", 0.0f },
+                    { "Longitude", 0.0f },
+                    { "GPSAquired", false },
+                    { "SearchQuery", Entry.Text}
+                };
+                    }
+
+                    response = service.PostResponse(jObject.ToString(), "SearchForProjections");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {                        
+                        projections = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+                        //entry projection load
+                        LoadProjections(projections);
+                    }
+                };
+
+                var Grid = new Grid() { Padding = 15 };
+                Grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                Grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.8, GridUnitType.Star) });
+                Grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0.2, GridUnitType.Auto) });
+
+
+                Grid.Children.Add(Entry, 0,0);
+                Grid.Children.Add(buttonSearch, 1,0);
+
+                mainStackLayout.Children.Add(Grid);
+                //main projection load
+                LoadProjections(projections);
+            }
+        }
+
+        private void LoadProjections(JArray projections)
+        {
+            List<View> controls = mainStackLayout.Children.Skip(1).ToList();
+
+            if (controls != null)
+            {
+                foreach(View v in controls)
+                {
+                   mainStackLayout.Children.Remove(v);
+                }
+            }
+
+            foreach (var projection in projections)
+            {
+                var frame = new StackLayout() { Spacing = 0, Padding = 15 };
+                frame.Children.Add(new Label()
+                {
+                    Text = projection["MovieName"].ToString(),
+                    FontSize = 14,
+                    HeightRequest = 30,
+                    TextColor = Color.White,
+                    BackgroundColor = Color.FromHex("#AA0000"),
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment = TextAlignment.Center
+                });
+
+                frame.Children.Add(new Image()
+                {
+                    BackgroundColor = Color.FromHex("#CB5C5C"),
+                    HeightRequest = 220,
+                    Aspect = Aspect.AspectFill,
+                    Source = ImageSource.FromStream(() => new System.IO.MemoryStream(
+                        Convert.FromBase64String(projection["MovieCover"].ToString()
+                    ))),
+                });
+
+                var btnBuy = new Button()
+                {
+                    Text = "Get Tickets",
+                    TextColor = Color.White,
+                    BackgroundColor = Color.FromHex("#CB5C5C")
+                };
+
+                btnBuy.Clicked += async (sender, args) => {
+                    await Content.Navigation.PushModalAsync(new ReservationProjectionModalPage(
+                        JArray.Parse(projection["Projections"].ToString())));
+                };
+
+                frame.Children.Add(btnBuy);
+                mainStackLayout.Children.Add(frame);
+            }
+        }
+    }
+}

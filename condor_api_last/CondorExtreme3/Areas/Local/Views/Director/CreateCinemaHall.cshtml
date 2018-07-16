@@ -1,0 +1,103 @@
+﻿@model CondorExtreme3.Areas.Local.Models.AddCinemaHallVM
+
+<div class="modal-dialog">
+    <div class="modal-content" style="background-color:#e74c3c">
+        <div class="modal-body" style="padding:2px 2px 2px 2px;">
+            @using (Html.BeginForm("SubmitCreateCinemaHall", "Director", new { @id = "AddFormCH" }))
+            {
+                <div class="box" style="border-width:0px; margin-bottom:0px;">
+                    <div class="box-header with-border" style="background-color:#3498db;">
+                        <h4 style="text-align:center; margin:1px 0px 1px 0px; color:white; font-family:sans-serif;">Cinema Hall Management</h4>
+                    </div>
+
+
+
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+
+
+
+
+                            <tr>
+                                <td>
+
+                                    <div class="form-group">
+                                        <label for="CinemaHallName">Cinema Hall Name</label>
+                                        <input type="text" class="form-control" id="CinemaHallName" name="CinemaHallName" placeholder="Enter cinema hall name..." required>
+                                    </div>
+                                </td>
+                                <td>
+
+                                    <div class="form-group">
+                                        <label>Technology Types</label>
+                                        <br />
+
+                                        @foreach (var item in Model.AllTechnologyTypes)
+                                        {
+                                            <input id="@item.Key" type="checkbox" value="@item.Value.ToString()" name="@item.Key" />
+                                            <label>@item.Key</label>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    <div class="form-group">
+                                        <label for="NumberOfSeatRows">Seat Rows</label>
+                                        <input type="number" min="10" max="15" class="form-control" id="NumberOfSeatRows" name="NumberOfSeatRows" value="@Model.NumberOfSeatRows" required>
+                                    </div>
+                                </td>
+                                <td>
+
+                                    <div class="form-group">
+                                        <label for="NumberOfSeatColumns">Seat Columns</label>
+                                        <input type="number" min="10" max="15" class="form-control" id="NumberOfSeatColumns" name="NumberOfSeatColumns" value="@Model.NumberOfSeatColumns" required>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+
+
+
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" style="width:125px; height:40px; margin-right:20px; margin-bottom:10px;">Discard</button>
+
+
+                        <input type="submit" class="btn btn primary pull-right" style="width:125px; height:40px; margin-right:20px;" id="buttonID" value="Submit" />
+                    </div>
+
+
+
+
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+
+        $(".modal").on("hidden.bs.modal", function () {
+
+            $("#ModalCH").html("");
+
+        });
+
+        $("input[type=checkbox]").on("click", function () {
+
+            $("input[type=checkbox]:checked").val("True");
+            $("input:checkbox:not(:checked)").val("False");
+
+
+        });
+
+
+    });
+</script>

@@ -1,0 +1,68 @@
+﻿@using CondorExtreme3.Models
+@{
+    ViewBag.Title = "Index";
+}
+@model CondorExtreme3.Models.HomeIndexVM
+
+<input type="hidden" id="refresh" value="no">
+<div id="loginButtons"class="row pull-right" style="margin:5px 0px; padding-right:5px;">
+    <a href="/Local/RegisteredVisitor/Login"><i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp; Login</a><span style="color:antiquewhite">|</span>
+    <a href="/Local/RegisteredVisitor/Registration"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Register</a>
+</div>
+
+<div class="centerSite">
+<div class="col-md-5 col-sm-5 col-xs-12">
+    <img src="~/Pictures/logo1.png" />
+    
+</div>
+    <div class="col-md-7 col-sm-7 col-xs-12">
+        <h5 class="SelectH5">Choose your country: </h5>
+        <!--<select name="city">
+        <option value="all">Choose the city: </option>
+
+    </select>-->
+        @using (Ajax.BeginForm("GetCityOverCountry", "Home", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "ShowCities", LoadingElementId = "loading" }))
+        {
+
+            <select class="styleSelect" name="country" onclick="$(this.form).submit()" onfocus="setFirst()">
+                <option name="choose" value="all" selected="selected">Choose your country: </option>
+                @foreach (SelectListItem s in Model.Countries)
+                {
+                    <option value="@s.Value">@s.Text</option>
+                }
+            </select>
+
+           
+        }
+    
+        <div id="ShowCities">
+            <h5 class="SelectH5">
+                Choose your city:                
+            </h5>
+            <select name="city">
+                <option value="0">Choose your city:</option>
+            </select>  
+        </div>
+
+        <div id="ShowCinema" class="margin-top:7px;">
+
+            <h5 class="SelectH5">
+                Choose your cinema:               
+            </h5>
+            <select name="Cinema">
+                <option value="0">Choose your cinema:</option>
+            </select>
+        
+        </div>
+
+</div>
+    </div>
+<script>
+    function setFirst()
+    { $("select[name='country'] option[value='all']").remove() }
+
+</script>
+   
+
+
+

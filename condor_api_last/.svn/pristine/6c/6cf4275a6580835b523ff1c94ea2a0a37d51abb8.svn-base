@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc4443208d824b9585c375b26eed7120" Name="Diagram1">
+        <EntityTypeShape EntityType="CondorDBXModel.Actors" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.AgeRestrictions" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Banks" Width="1.5" PointX="14" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.CinemaCoordinates" Width="1.5" PointX="6" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.CinemaHalls" Width="1.5" PointX="6" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Cinemas" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Cities" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Countries" Width="1.5" PointX="1.5" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.EmployeePayments" Width="1.5" PointX="18.5" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.EmployeeRoles" Width="1.5" PointX="13.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Employees" Width="1.5" PointX="11" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Employments" Width="1.5" PointX="16.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.EmploymentTypes" Width="1.5" PointX="14" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Genres" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.MovieDirectors" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.MovieRatings" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.MovieRoles" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Movies" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.PaymentMethods" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Projections" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Reservations" Width="1.5" PointX="8.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Roles" Width="1.5" PointX="11" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.RootUsers" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.RVisitors" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.SeatColumns" Width="1.5" PointX="6" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.SeatRows" Width="1.5" PointX="6" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Seats" Width="1.5" PointX="8.25" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.TechnologyTypes" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Tickets" Width="1.5" PointX="10.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.TransactionsVirtualPoints" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.VirtualPointsPackets" Width="1.5" PointX="6" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Artikli" Width="1.5" PointX="11" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Cjenovnik" Width="1.5" PointX="13.25" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Grupa" Width="1.5" PointX="8.75" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Stavke" Width="1.5" PointX="15.5" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CondorDBXModel.Zaglavlje" Width="1.5" PointX="13.25" PointY="22.75" IsExpanded="true" />
+        <AssociationConnector Association="CondorDBXModel.FK__MovieRole__Actor__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Movies__AgeRestr__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Employmen__BankI__6166761E" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__CinemaCoo__Cinem__23F3538A" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__CinemaHal__Cinem__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Projectio__Cinem__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Seats__CinemaHal__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Cinemas__CityID__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Employees__Cinem__0697FACD" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Cities__CountryI__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Employees__CityB__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__RVisitors__CityI__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__EmployeeP__Emplo__08B54D69" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__EmployeeR__Emplo__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__EmployeeR__RoleI__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Employmen__Emplo__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Zaglavlje__Zapos__324172E1" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Employmen__Emplo__51300E55" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Movies__GenreID__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Movies__MovieDir__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__MovieRati__Movie__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__MovieRati__RVisi__22751F6C" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__MovieRole__Movie__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Projectio__Movie__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Reservati__Payme__0E6E26BF" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Projectio__Techn__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Tickets__Project__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Reservati__RVisi__0D7A0286" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Stavke__Rezervac__3335971A" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Tickets__Reserva__1332DBDC" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Transacti__RVisi__1C873BEC" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Seats__SeatColum__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Seats__SeatRowID__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Tickets__SeatID__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK__Transacti__Virtu__1B9317B3" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK_Artikli_Grupa" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK_Cijenovnik_Arikal" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK_Stavke_Cjenovnik" ManuallyRouted="false" />
+        <AssociationConnector Association="CondorDBXModel.FK_Stavke_Zaglavlje" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

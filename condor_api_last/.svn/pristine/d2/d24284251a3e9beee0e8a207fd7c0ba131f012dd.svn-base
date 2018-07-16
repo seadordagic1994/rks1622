@@ -1,0 +1,263 @@
+﻿namespace CondorExtreme3_UI.Employees
+{
+    partial class EditEmploymentForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numCurrentSalary = new System.Windows.Forms.NumericUpDown();
+            this.cmbBanks = new System.Windows.Forms.ComboBox();
+            this.txtBankAccountNumber = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupboxEmployee = new System.Windows.Forms.GroupBox();
+            this.lblEmployee = new System.Windows.Forms.Label();
+            this.cmbEmploymentTypes = new System.Windows.Forms.ComboBox();
+            this.dtHireDate = new System.Windows.Forms.DateTimePicker();
+            this.cmbEmployeeNames = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSaveChangesEmployment = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numCurrentSalary)).BeginInit();
+            this.groupboxEmployee.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.numCurrentSalary);
+            this.groupBox1.Controls.Add(this.cmbBanks);
+            this.groupBox1.Controls.Add(this.txtBankAccountNumber);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Location = new System.Drawing.Point(222, 19);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(221, 175);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Payment Info";
+            // 
+            // numCurrentSalary
+            // 
+            this.numCurrentSalary.Location = new System.Drawing.Point(15, 46);
+            this.numCurrentSalary.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numCurrentSalary.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numCurrentSalary.Name = "numCurrentSalary";
+            this.numCurrentSalary.Size = new System.Drawing.Size(181, 20);
+            this.numCurrentSalary.TabIndex = 5;
+            this.numCurrentSalary.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // cmbBanks
+            // 
+            this.cmbBanks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBanks.FormattingEnabled = true;
+            this.cmbBanks.Location = new System.Drawing.Point(15, 144);
+            this.cmbBanks.Name = "cmbBanks";
+            this.cmbBanks.Size = new System.Drawing.Size(181, 21);
+            this.cmbBanks.TabIndex = 6;
+            // 
+            // txtBankAccountNumber
+            // 
+            this.txtBankAccountNumber.Location = new System.Drawing.Point(15, 91);
+            this.txtBankAccountNumber.Multiline = true;
+            this.txtBankAccountNumber.Name = "txtBankAccountNumber";
+            this.txtBankAccountNumber.Size = new System.Drawing.Size(181, 21);
+            this.txtBankAccountNumber.TabIndex = 7;
+            this.txtBankAccountNumber.TextChanged += new System.EventHandler(this.txtBankAccountNumber_TextChanged);
+            this.txtBankAccountNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtBankAccountNumber_Validating);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 71);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(115, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Bank Account Number";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Salary";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 123);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Bank";
+            // 
+            // groupboxEmployee
+            // 
+            this.groupboxEmployee.Controls.Add(this.lblEmployee);
+            this.groupboxEmployee.Controls.Add(this.cmbEmploymentTypes);
+            this.groupboxEmployee.Controls.Add(this.dtHireDate);
+            this.groupboxEmployee.Controls.Add(this.cmbEmployeeNames);
+            this.groupboxEmployee.Controls.Add(this.label3);
+            this.groupboxEmployee.Controls.Add(this.label1);
+            this.groupboxEmployee.Location = new System.Drawing.Point(10, 19);
+            this.groupboxEmployee.Name = "groupboxEmployee";
+            this.groupboxEmployee.Size = new System.Drawing.Size(201, 175);
+            this.groupboxEmployee.TabIndex = 17;
+            this.groupboxEmployee.TabStop = false;
+            this.groupboxEmployee.Text = "Employee Info";
+            // 
+            // lblEmployee
+            // 
+            this.lblEmployee.AutoSize = true;
+            this.lblEmployee.Location = new System.Drawing.Point(6, 23);
+            this.lblEmployee.Name = "lblEmployee";
+            this.lblEmployee.Size = new System.Drawing.Size(53, 13);
+            this.lblEmployee.TabIndex = 1;
+            this.lblEmployee.Text = "Employee";
+            // 
+            // cmbEmploymentTypes
+            // 
+            this.cmbEmploymentTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmploymentTypes.FormattingEnabled = true;
+            this.cmbEmploymentTypes.Location = new System.Drawing.Point(9, 145);
+            this.cmbEmploymentTypes.Name = "cmbEmploymentTypes";
+            this.cmbEmploymentTypes.Size = new System.Drawing.Size(181, 21);
+            this.cmbEmploymentTypes.TabIndex = 2;
+            // 
+            // dtHireDate
+            // 
+            this.dtHireDate.Location = new System.Drawing.Point(9, 92);
+            this.dtHireDate.Name = "dtHireDate";
+            this.dtHireDate.Size = new System.Drawing.Size(181, 20);
+            this.dtHireDate.TabIndex = 4;
+            // 
+            // cmbEmployeeNames
+            // 
+            this.cmbEmployeeNames.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmployeeNames.Enabled = false;
+            this.cmbEmployeeNames.FormattingEnabled = true;
+            this.cmbEmployeeNames.Location = new System.Drawing.Point(9, 46);
+            this.cmbEmployeeNames.Name = "cmbEmployeeNames";
+            this.cmbEmployeeNames.Size = new System.Drawing.Size(181, 21);
+            this.cmbEmployeeNames.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 123);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Employment Types";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 71);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Hire Date";
+            // 
+            // btnSaveChangesEmployment
+            // 
+            this.btnSaveChangesEmployment.Location = new System.Drawing.Point(140, 200);
+            this.btnSaveChangesEmployment.Name = "btnSaveChangesEmployment";
+            this.btnSaveChangesEmployment.Size = new System.Drawing.Size(171, 36);
+            this.btnSaveChangesEmployment.TabIndex = 16;
+            this.btnSaveChangesEmployment.Text = "Save Changes";
+            this.btnSaveChangesEmployment.UseVisualStyleBackColor = true;
+            this.btnSaveChangesEmployment.Click += new System.EventHandler(this.btnSaveChangesEmployment_Click);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
+            // EditEmploymentForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(453, 254);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupboxEmployee);
+            this.Controls.Add(this.btnSaveChangesEmployment);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "EditEmploymentForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Edit Employment";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numCurrentSalary)).EndInit();
+            this.groupboxEmployee.ResumeLayout(false);
+            this.groupboxEmployee.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown numCurrentSalary;
+        private System.Windows.Forms.ComboBox cmbBanks;
+        private System.Windows.Forms.TextBox txtBankAccountNumber;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupboxEmployee;
+        private System.Windows.Forms.Label lblEmployee;
+        private System.Windows.Forms.ComboBox cmbEmploymentTypes;
+        private System.Windows.Forms.DateTimePicker dtHireDate;
+        private System.Windows.Forms.ComboBox cmbEmployeeNames;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSaveChangesEmployment;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+    }
+}

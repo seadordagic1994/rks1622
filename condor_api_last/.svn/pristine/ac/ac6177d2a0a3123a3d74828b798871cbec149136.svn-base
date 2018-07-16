@@ -1,0 +1,681 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+
+namespace CondorExtreme3_UI.Cinemas
+{
+    public partial class StatisticsForm : Form
+    {
+        public StatisticsForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CinemaStatistics");
+
+
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            var currentCinema = AuthenticationUI.CurrentCinema;
+            this.Text = $"{currentCinema.Name} {currentCinema.City} statistics::{loggedEmp.FirstName} {loggedEmp.LastName}";
+
+            cmbAnalysisTypes.DataSource=StatisticsHelper.GetAnalysisTypes();
+            cmbAnalysisTypes.DisplayMember = "Name";
+            cmbAnalysisTypes.ValueMember = "AnalysisTypeID";
+            cmbAnalysisTypes.SelectedItem = null;
+
+            dtPeriodFrom.CustomFormat = "dd.MMMM yyyy. HH:mm";
+            dtPeriodTo.CustomFormat = "dd.MMMM yyyy. HH:mm";
+            dtPeriodTo.Value = DateTime.Now.AddDays(20);
+
+
+            HttpResponseMessage ResponseMovies = Service.GetResponse("GetMovies");
+
+            if(ResponseMovies.StatusCode==System.Net.HttpStatusCode.OK)
+            {
+                cmbMovies.DataSource = ResponseMovies.Content.ReadAsAsync<List<object>>().Result;
+            }
+            else
+            {
+                MessageBox.Show(Messages.Movie404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            cmbMovies.DisplayMember = "Name";
+            cmbMovies.ValueMember = "MovieID";
+            
+
+
+            HttpResponseMessage ResponseTechTypes = Service.GetResponse("GetTechnologyTypes");
+
+            if (ResponseTechTypes.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                cmbTechnologyTypes.DataSource = ResponseTechTypes.Content.ReadAsAsync<List<object>>().Result;
+            }
+            else
+            {
+                MessageBox.Show(Messages.TechnologyType404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            cmbTechnologyTypes.DisplayMember = "Name";
+            cmbTechnologyTypes.ValueMember = "TechnologyTypeID";
+            
+            
+            btnGenerateChart.Enabled = false;
+            targetChart.Visible = false;
+            targetChart.Height = 500;
+        }
+
+        public WebAPIHelper Service { get; set; }
+
+
+        private List<Panel> AllPanels { get {
+                return new List<Panel>
+            {
+                pnlAnalysisTypes,pnlDateFromTo,pnlMovies,pnlTechnologyTypes,pnlGenerateChart
+            };
+
+            } }
+
+        public Dictionary<int, List<Panel>> dictMapAnalysisToFilters { get {
+                return new Dictionary<int, List<Panel>>
+                {
+                    {1, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo,pnlMovies,pnlTechnologyTypes,pnlGenerateChart } },
+                    {2, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo,pnlMovies, pnlTechnologyTypes,pnlGenerateChart } },
+                    {3, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo, pnlTechnologyTypes, pnlGenerateChart } },
+                    {4, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo, pnlMovies, pnlGenerateChart } },
+                    {5, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo, pnlTechnologyTypes, pnlGenerateChart } },
+                    {6, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo, pnlMovies, pnlTechnologyTypes, pnlGenerateChart } },
+                    {7, new List<Panel>{ pnlAnalysisTypes,pnlDateFromTo, pnlMovies, pnlTechnologyTypes, pnlGenerateChart } }
+
+                };
+
+            } }
+
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtPeriodFrom_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtPeriodFrom.Value>=dtPeriodTo.Value)
+            {
+                dtPeriodTo.Value = dtPeriodFrom.Value.AddHours(2);
+            }
+        }
+        private void dtPeriodTo_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtPeriodTo.Value <= dtPeriodFrom.Value)
+            {
+                dtPeriodFrom.Value = dtPeriodTo.Value.AddHours(-2);
+            }
+        }
+
+        private void btnGenerateChart_Click(object sender, EventArgs e)
+        {
+            
+                   
+            string MethodName = cmbAnalysisTypes.Text.Replace(" ", "");
+
+            StatisticsParameters statisticsParameters = new StatisticsParameters()
+            {
+                CinemaID = AuthenticationUI.CurrentCinema.CinemaID,
+                MovieID = Int32.Parse(cmbMovies.SelectedValue.ToString()),
+                TechTypeID = Int32.Parse(cmbTechnologyTypes.SelectedValue.ToString()),
+                DateTimeFrom = dtPeriodFrom.Value,
+                DateTimeTo = dtPeriodTo.Value,
+                PaymentMethodID=0
+                
+            };
+
+            switch (MethodName)
+            {
+                case "TotalProfit": TotalProfit(statisticsParameters, MethodName);break;
+                case "TotalProfitByPaymentMethod": TotalProfitByPaymentMethod(statisticsParameters, MethodName); break;
+                case "TotalProfitByMovie": TotalProfitByMovie(statisticsParameters, MethodName); break;
+                case "TotalProfitByTechnologyType": TotalProfitByTechnologyType(statisticsParameters, MethodName); break;
+                case "TotalProfitByMovieGenre": TotalProfitByMovieGenre(statisticsParameters, MethodName); break;
+                case "Top10SeatReservationFrequency": Top10SeatReservationFrequency(statisticsParameters, MethodName); break;
+                case "TotalTicketsSold": TotalTicketsSold(statisticsParameters, MethodName); break;
+                default:
+                    break;
+            }
+
+           
+
+        }
+
+        private void cmbMovies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbAnalysisTypes_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (!btnGenerateChart.Enabled)
+                btnGenerateChart.Enabled = true;
+            var selectedAnalysisID = cmbAnalysisTypes.SelectedValue;
+
+            List<Panel> panelsToShow = dictMapAnalysisToFilters[(int)selectedAnalysisID];
+
+            foreach (var item in AllPanels)
+                 item.Visible=(panelsToShow.Contains(item))? true :false;
+            
+
+        }
+
+
+        public void TotalProfit(StatisticsParameters statisticsParameters, string MethodName)
+        {
+            HttpResponseMessage Response = Service.PostResponse(statisticsParameters, MethodName);
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if (!targetChart.Visible)
+                    targetChart.Visible = true;
+
+                targetChart.Series.Clear();
+                targetChart.Titles.Clear();
+                targetChart.ChartAreas.Clear();
+
+                Dictionary<string, decimal> Result = Response.Content.ReadAsAsync<Dictionary<string, decimal>>().Result;
+
+
+                targetChart.Series.Add("Total Profit (BAM)");
+                targetChart.Series["Total Profit (BAM)"].ChartType = SeriesChartType.Column;
+
+                targetChart.Titles.Add(cmbAnalysisTypes.Text);
+                targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+
+                targetChart.DataSource = Result;
+                targetChart.Series[0].XValueMember = "Key";
+                targetChart.Series[0].YValueMembers = "Value";
+
+
+                targetChart.Series[0].IsVisibleInLegend = false;
+
+                targetChart.Series[0].ToolTip = "#VALX - #VALY BAM";
+                
+               
+
+
+
+                Color temp = Color.FromArgb(0xED4C67);
+                Color result = Color.FromArgb(temp.R, temp.G, temp.B);
+
+
+                targetChart.Series[0].Color = result;
+                var chartArea = new ChartArea("NewChartArea");
+                chartArea.AxisX.Title = "Date";
+
+               
+                chartArea.AxisX.Interval = 2;
+                
+
+
+                chartArea.AxisX.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+                chartArea.AxisY.Title = "Profit (BAM)";
+                chartArea.AxisY.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+                targetChart.ChartAreas.Add(chartArea);
+                targetChart.DataBind();
+
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        public void TotalProfitByPaymentMethod(StatisticsParameters statisticsParameters, string MethodName)
+        {
+            
+           
+            HttpResponseMessage PaymentMethodResponse = Service.GetResponse("GetPaymentMethods");
+
+            if(PaymentMethodResponse.StatusCode!=System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.PaymentMethod404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
+
+
+            List<PaymentMethods> listPaymentMethods = PaymentMethodResponse.Content.ReadAsAsync<List<PaymentMethods>>().Result;
+            targetChart.Series.Clear();
+            targetChart.Titles.Clear();
+            targetChart.ChartAreas.Clear();
+
+            foreach (var item in listPaymentMethods)
+            {
+                statisticsParameters.PaymentMethodID = item.PaymentMethodID;
+                HttpResponseMessage ResponsePM = Service.PostResponse(statisticsParameters, "TotalProfitByPaymentMethod");
+
+                if (ResponsePM.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+                Dictionary<string, decimal> tempDict = ResponsePM.Content.ReadAsAsync<Dictionary<string, decimal>>().Result;
+
+                Series tempSeries = new Series(item.Name);
+                tempSeries.ChartType = SeriesChartType.Line;
+                tempSeries.BorderWidth = 5;
+                foreach (KeyValuePair<string, decimal> kv in tempDict)
+                {
+                    tempSeries.Points.AddXY(kv.Key, kv.Value);
+                }
+                
+                targetChart.Series.Add(tempSeries);
+            }
+
+            if (!targetChart.Visible)
+                targetChart.Visible = true;
+            targetChart.Titles.Add(cmbAnalysisTypes.Text);
+            targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+            var chartArea = new ChartArea("NewChartArea");
+            chartArea.AxisX.Title = "Date";
+            chartArea.AxisX.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+            chartArea.AxisY.Title = "Profit (BAM)";
+            chartArea.AxisY.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+            foreach (var item in targetChart.Series)
+            {
+                item.ToolTip = "#VALX - #VALY BAM";
+            }
+            targetChart.ChartAreas.Add(chartArea);
+
+            targetChart.DataBind();       
+        }
+        public void TotalProfitByMovie(StatisticsParameters statisticsParameters, string MethodName)
+        {
+            HttpResponseMessage Response = Service.PostResponse(statisticsParameters, MethodName);
+
+            if (Response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Dictionary<string,decimal>Result= Response.Content.ReadAsAsync<Dictionary<string, decimal>>().Result;
+
+            if (!targetChart.Visible)
+                targetChart.Visible = true;
+
+            targetChart.Series.Clear();
+            targetChart.Titles.Clear();
+            targetChart.ChartAreas.Clear();
+
+            targetChart.Series.Add("Movies");           
+            targetChart.Series["Movies"].ChartType = SeriesChartType.Pie;
+
+            var Total = Result.Select(x => x.Value).Sum();
+          
+            
+
+            foreach (var item in Result)
+            {
+                float percentage = (float)((item.Value / Total) * (decimal)100.0);
+
+                var percentageRounded = Math.Round((Decimal)percentage, 2, MidpointRounding.AwayFromZero);
+
+
+
+                var label = $"{item.Key}[{percentageRounded.ToString()}%] {item.Value} BAM";
+                targetChart.Series["Movies"].Points.AddXY(label, item.Value);
+            }
+        
+            var chartArea = new ChartArea("NewChartArea");
+           
+            chartArea.Area3DStyle.Enable3D = true;
+            
+            targetChart.Titles.Add(cmbAnalysisTypes.Text);
+            targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+
+            targetChart.Series["Movies"]["PieLabelStyle"] = "Outside";
+            targetChart.Series["Movies"]["PieLineColor"] = "Transparent";
+            targetChart.Series["Movies"]["3DLabelLineSize"] = "30";
+            targetChart.Series["Movies"].Font= new System.Drawing.Font("Arial", 10, FontStyle.Bold);
+
+            targetChart.Series["Movies"].ToolTip = "#VALX";
+   
+            targetChart.ChartAreas.Add(chartArea);
+           
+            targetChart.DataBind();
+        }
+
+        public void TotalProfitByTechnologyType(StatisticsParameters statisticsParameters, string MethodName)
+        {
+
+            Service.Route = "api/Info";
+            HttpResponseMessage TechnologyTypeResponse = Service.GetResponse("GetTechnologyTypes");
+
+            if (TechnologyTypeResponse.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.TechnologyType404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Service.Route = "api/CinemaStatistics";
+
+
+
+            List<TechnologyTypes> listTechnologyTypes = TechnologyTypeResponse.Content.ReadAsAsync<List<TechnologyTypes>>().Result;
+            targetChart.Series.Clear();
+            targetChart.Titles.Clear();
+            targetChart.ChartAreas.Clear();
+
+            foreach (var item in listTechnologyTypes)
+            {
+                statisticsParameters.TechTypeID = item.TechnologyTypeID;
+                HttpResponseMessage ResponseTT = Service.PostResponse(statisticsParameters, "TotalProfitByTechnologyType");
+
+                if (ResponseTT.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+                Dictionary<DateTime, decimal> tempDict = ResponseTT.Content.ReadAsAsync<Dictionary<DateTime, decimal>>().Result;
+
+                Series tempSeries = new Series(item.Name);
+                tempSeries.ChartType = SeriesChartType.StackedColumn;
+
+
+                var tempList = tempDict.Keys.ToList();
+                var iteratorDate = tempList.FirstOrDefault();
+                var LastDate = tempList.LastOrDefault();
+
+                while (iteratorDate != LastDate)
+                {
+                    if (!tempList.Contains(iteratorDate))
+                        tempDict.Add(iteratorDate, 0);
+
+                    iteratorDate = iteratorDate.AddDays(1);
+                }
+
+
+                var FinalDict = tempDict.OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Month).ThenBy(x => x.Key.Day).ToDictionary(t => t.Key, t => t.Value);
+
+
+                foreach (KeyValuePair<DateTime, decimal> kv in FinalDict)
+                {
+                    var label = $"{kv.Key.Day.ToString()}.{kv.Key.Month.ToString()}";
+                    tempSeries.Points.AddXY(label, Decimal.ToInt32(kv.Value));
+
+                }
+                targetChart.Series.Add(tempSeries);               
+            }
+
+            if (!targetChart.Visible)
+                targetChart.Visible = true;
+            targetChart.Titles.Add(cmbAnalysisTypes.Text);
+            targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+            var chartArea = new ChartArea("NewChartArea");
+            chartArea.AxisX.Title = "Date";
+            chartArea.AxisX.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+            chartArea.AxisY.Title = "Profit (BAM)";
+            chartArea.AxisY.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+            chartArea.Area3DStyle.Enable3D = true;
+            
+            foreach (var item in targetChart.Series)
+            {
+                item.ToolTip = $"{item.Name} #VALX - #VALY BAM";
+            }
+
+            targetChart.ChartAreas.Add(chartArea);
+            targetChart.DataBind();
+            targetChart.AlignDataPointsByAxisLabel();
+
+        }
+        public void TotalProfitByMovieGenre(StatisticsParameters statisticsParameters, string MethodName)
+        {
+
+            Service.Route = "api/Info";
+            HttpResponseMessage GenreResponse = Service.GetResponse("GetGenres");
+
+            if (GenreResponse.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.Genre404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Service.Route = "api/CinemaStatistics";
+
+
+
+            List<Genres> listGenres = GenreResponse.Content.ReadAsAsync<List<Genres>>().Result;
+            targetChart.Series.Clear();
+            targetChart.Titles.Clear();
+            targetChart.ChartAreas.Clear();
+
+            foreach (var item in listGenres)
+            {
+                statisticsParameters.GenreID = item.GenreID;
+                HttpResponseMessage ResponseG = Service.PostResponse(statisticsParameters, "TotalProfitByMovieGenre");
+
+                if (ResponseG.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+                Dictionary<DateTime, decimal> tempDict = ResponseG.Content.ReadAsAsync<Dictionary<DateTime, decimal>>().Result;
+
+                Series tempSeries = new Series(item.Name);
+                tempSeries.ChartType = SeriesChartType.StackedColumn;
+
+                
+
+                var tempList = tempDict.Keys.ToList();
+                var iteratorDate = tempList.FirstOrDefault();
+                var LastDate = tempList.LastOrDefault();
+
+                while (iteratorDate != LastDate)
+                {
+                    if (!tempList.Contains(iteratorDate))
+                        tempDict.Add(iteratorDate, 0);
+
+                    iteratorDate = iteratorDate.AddDays(1);
+                }
+
+
+               var FinalDict= tempDict.OrderBy(x => x.Key.Year).ThenBy(x => x.Key.Month).ThenBy(x => x.Key.Day).ToDictionary(t => t.Key, t => t.Value);
+
+
+                foreach (KeyValuePair<DateTime, decimal> kv in FinalDict)
+                {
+                    var label = $"{kv.Key.Day.ToString()}.{kv.Key.Month.ToString()}";
+                    tempSeries.Points.AddXY(label, Decimal.ToInt32(kv.Value));
+
+                }
+                targetChart.Series.Add(tempSeries);
+            }
+
+            if (!targetChart.Visible)
+                targetChart.Visible = true;
+            targetChart.Titles.Add(cmbAnalysisTypes.Text);
+            targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+            var chartArea = new ChartArea("NewChartArea");
+            chartArea.AxisX.Title = "Date";
+            chartArea.AxisX.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+            chartArea.AxisY.Title = "Profit (BAM)";
+            chartArea.AxisY.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+            chartArea.Area3DStyle.Enable3D = true;
+
+            foreach (var item in targetChart.Series)
+            {
+                item.ToolTip = $"{item.Name} #VALX - #VALY BAM";
+            }
+
+            targetChart.ChartAreas.Add(chartArea);
+
+
+            targetChart.DataBind();
+            targetChart.AlignDataPointsByAxisLabel();
+
+        }
+
+        public void Top10SeatReservationFrequency(StatisticsParameters statisticsParameters, string MethodName)
+        {
+            HttpResponseMessage SeatFreqResponse = Service.PostResponse(statisticsParameters, MethodName);
+
+            if (SeatFreqResponse.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Dictionary<string, int> Result = SeatFreqResponse.Content.ReadAsAsync<Dictionary<string, int>>().Result;
+
+            if (!targetChart.Visible)
+                targetChart.Visible = true;
+
+            targetChart.Series.Clear();
+            targetChart.Titles.Clear();
+            targetChart.ChartAreas.Clear();
+
+            targetChart.Series.Add("Seats");
+            targetChart.Series["Seats"].ChartType = SeriesChartType.Doughnut;
+
+            
+
+
+
+            foreach (var item in Result)
+            {
+              
+
+                var label = $"{item.Key}:: {item.Value} times";
+                targetChart.Series["Seats"].Points.AddXY(label, item.Value);
+            }
+
+            var chartArea = new ChartArea("NewChartArea");
+
+            chartArea.Area3DStyle.Enable3D = true;
+
+            targetChart.Titles.Add(cmbAnalysisTypes.Text);
+            targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+
+            targetChart.Series["Seats"]["PieLabelStyle"] = "Outside";
+            targetChart.Series["Seats"]["PieLineColor"] = "Transparent";
+            targetChart.Series["Seats"]["3DLabelLineSize"] = "30";
+            targetChart.Series["Seats"].Font = new System.Drawing.Font("Arial", 10, FontStyle.Bold);
+
+            targetChart.Series["Seats"].ToolTip = "#VALX - #VALY times";
+
+            targetChart.ChartAreas.Add(chartArea);
+
+            targetChart.DataBind();
+        }
+
+        public void TotalTicketsSold(StatisticsParameters statisticsParameters, string MethodName)
+        {
+            HttpResponseMessage Response = Service.PostResponse(statisticsParameters, MethodName);
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if (!targetChart.Visible)
+                    targetChart.Visible = true;
+
+                targetChart.Series.Clear();
+                targetChart.Titles.Clear();
+                targetChart.ChartAreas.Clear();
+
+                Dictionary<string, int> Result = Response.Content.ReadAsAsync<Dictionary<string, int>>().Result;
+
+
+                targetChart.Series.Add("Total Tickets Sold");
+                targetChart.Series["Total Tickets Sold"].ChartType = SeriesChartType.Column;
+
+                targetChart.DataSource = Result;
+                targetChart.Titles.Add(cmbAnalysisTypes.Text);
+                targetChart.Titles[0].Font = new System.Drawing.Font("Arial", 16, FontStyle.Bold);
+
+                targetChart.Series[0].XValueMember = "Key";
+                targetChart.Series[0].YValueMembers = "Value";
+
+                targetChart.Series[0].ToolTip = "#VALX - #VALY sold";
+
+                Color temp = Color.FromArgb(0x3742fa);
+                Color result = Color.FromArgb(temp.R, temp.G, temp.B);
+
+
+                targetChart.Series[0].Color = result;
+                var chartArea = new ChartArea("NewChartArea");
+               
+                chartArea.AxisX.Title = "Date";
+                chartArea.AxisX.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+
+                chartArea.AxisY.Title = "Tickets Sold";
+                chartArea.AxisY.TitleFont = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+                targetChart.ChartAreas.Add(chartArea);
+                targetChart.DataBind();
+
+                
+
+
+
+
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+    }
+
+    public class PaymentMethods
+    {
+        public int PaymentMethodID { get; set; }
+
+        public string Name { get; set; }
+
+    }
+    public class TechnologyTypes
+    {
+        public int TechnologyTypeID { get; set; }
+
+        public string Name { get; set; }
+
+    }
+
+    public class Genres
+    {
+        public int GenreID { get; set; }
+
+        public string Name { get; set; }
+
+    }
+
+    public class StatisticsParameters
+    {
+        public int CinemaID { get; set; }
+        public int MovieID { get; set; }
+        public int TechTypeID { get; set; }
+        public DateTime DateTimeFrom { get; set; }
+        public DateTime DateTimeTo { get; set; }
+
+        public int PaymentMethodID { get; set; }
+
+        public int GenreID { get; set; }
+
+    }
+
+    public class TotalProfitResult
+    {
+        public string DayMonth { get; set; }
+        public int SumOfTicketPrice { get; set; }
+
+    }
+}

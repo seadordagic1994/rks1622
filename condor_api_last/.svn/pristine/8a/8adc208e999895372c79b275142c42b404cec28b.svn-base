@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+<div class="row" style="padding:10px;">
+
+    @using (Ajax.BeginForm("GetProjection", "Cinema", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "myModal", LoadingElementId = "loadingMovies" }))
+    {
+        @Html.Hidden("projectionID", Model.Projections.ProjectionID);
+        @Html.Hidden("jsonDictionary", Model.MyDictionaryToJson(Model.d));
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <button type="submit" style="background-color:transparent; border:none; padding:0px; margin:0px; outline:none;">
+                <i class="fa fa-chevron-left" style="color:white;" aria-hidden="true"></i>
+            </button>
+        </div>
+    }
+
+</div>

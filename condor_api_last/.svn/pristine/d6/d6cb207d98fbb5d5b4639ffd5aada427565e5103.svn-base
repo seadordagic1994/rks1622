@@ -1,0 +1,486 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class EmployeesManagementForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public List<Employees> Employees { get; set; }
+
+        private bool initialLoad { get; set; }
+        public EmployeesManagementForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            var currentCinema = AuthenticationUI.CurrentCinema;
+            this.Text = $"{currentCinema.Name} {currentCinema.City}:: Employee Management ::{loggedEmp.FirstName} {loggedEmp.LastName}";
+
+            lblCinema.Text = $"{currentCinema.Name} { currentCinema.City}";
+            lblAddress.Text = $"{currentCinema.Address}, {currentCinema.City}";
+            lblLocation.Text = currentCinema.Country;
+
+            AuthenticationUI.CheckForUpdates();
+
+
+            lblDirectorName.Text = $"{loggedEmp.FirstName} {loggedEmp.LastName}";
+            lblEmployeeCount.Text = $"{AuthenticationUI.NumberOfEmployees.ToString()}";
+
+
+
+            grdEmployees.Columns.AddRange(new DataGridViewColumn[] {
+                    new DataGridViewTextBoxColumn{Name="EmployeeID", Visible=false},
+                    new DataGridViewTextBoxColumn{Name="FirstName", HeaderText="First Name"},
+                    new DataGridViewTextBoxColumn{Name="LastName", HeaderText="Last Name"},
+                    new DataGridViewTextBoxColumn{Name="CityOfBirthID",Visible=false},
+                    new DataGridViewTextBoxColumn{Name="CityOfBirth", HeaderText="City of Birth"},
+                    new DataGridViewTextBoxColumn{Name="BirthDate", HeaderText="Birth Date"},
+                    new DataGridViewTextBoxColumn{Name="Gender", HeaderText="Gender"},
+                    new DataGridViewTextBoxColumn{Name="CurriculumVitae", HeaderText="Biography"},
+                    new DataGridViewTextBoxColumn{Name="PhoneNumber", HeaderText="Phone Number"},
+                    new DataGridViewTextBoxColumn{Name="Email", HeaderText="Email"},
+                    new DataGridViewTextBoxColumn{Name="Username", HeaderText="Username"},
+                    new DataGridViewCheckBoxColumn{Name="Active", Visible=false}
+                    
+
+                });
+            grdEmployees.AllowUserToAddRows = false;
+
+            grdEmployments.Columns.AddRange(new DataGridViewColumn[] {
+                    new DataGridViewTextBoxColumn{Name="EmploymentID", Visible=false},
+                    new DataGridViewTextBoxColumn{Name="EmployeeID", Visible=false},
+                    new DataGridViewTextBoxColumn{Name="FirstName", HeaderText="First Name"},
+                    new DataGridViewTextBoxColumn{Name="LastName", HeaderText="Last Name"},
+                    new DataGridViewTextBoxColumn{Name="EmploymentTypeID", Visible=false},
+                    new DataGridViewTextBoxColumn{Name="EmploymentTypeName", HeaderText="Employment Type"},
+                    new DataGridViewTextBoxColumn{Name="HireDate", HeaderText="Hire Date"},
+                    new DataGridViewTextBoxColumn{Name="CurrentSalary", HeaderText="Current Salary"},
+                    new DataGridViewTextBoxColumn{Name="BankAccountNumber", HeaderText="Bank Account Number"},
+                    new DataGridViewTextBoxColumn{Name="BankID", Visible=false},
+                    new DataGridViewTextBoxColumn{Name="BankName", HeaderText="Bank"},
+                    new DataGridViewCheckBoxColumn{Name="Active", Visible=false}
+
+                });
+            grdEmployments.AllowUserToAddRows = false;
+
+
+
+            var genders = new List<dynamic>
+            {
+                new { GenderID=0, Name="(Both Genders)"},
+                new { GenderID=1, Name="Male"},
+                new { GenderID=2, Name="Female"}
+            };
+            cmbGenders.DataSource = genders;
+            cmbGenders.ValueMember = "GenderID";
+            cmbGenders.DisplayMember = "Name";
+
+           
+            HttpResponseMessage CitiesResponse=Service.GetResponse("GetCitiesFilter");
+
+            if (CitiesResponse.IsSuccessStatusCode)
+            {
+                var Cities = CitiesResponse.Content.ReadAsAsync<List<object>>().Result;
+                cmbCities.DataSource = Cities;
+                cmbCities.ValueMember = "CityID";
+                cmbCities.DisplayMember = "Name";
+            }
+            else
+            {
+                MessageBox.Show(Messages.City404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            HttpResponseMessage EmploymentTypesResponse = Service.GetResponse("GetEmploymentTypes");
+
+            if (EmploymentTypesResponse.IsSuccessStatusCode)
+            {
+                var EmploymentTypes = EmploymentTypesResponse.Content.ReadAsAsync<List<object>>().Result;
+                cmbEmploymentTypes.DataSource = EmploymentTypes;
+                cmbEmploymentTypes.ValueMember = "EmploymentTypeID";
+                cmbEmploymentTypes.DisplayMember = "Name";
+            }
+            else
+            {
+                MessageBox.Show(Messages.EmploymentTypes404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            LoadEmployees();
+        }
+
+       
+
+        void LoadEmployees()
+        {
+
+
+            EmployeeInfoParameters employeeInfoParameters = new EmployeeInfoParameters()
+            {
+                CinemaID = AuthenticationUI.CurrentCinema.CinemaID,
+                FirstName = (!String.IsNullOrWhiteSpace(txtSearchByFirstName.Text)) ? txtSearchByFirstName.Text : "",
+                LastName = (!String.IsNullOrWhiteSpace(txtSearchByLastName.Text)) ? txtSearchByLastName.Text : "",
+                GenderID=Int32.Parse(cmbGenders.SelectedValue.ToString()),
+                CityBirthID = Int32.Parse(cmbCities.SelectedValue.ToString())
+
+            };
+
+            HttpResponseMessage Response = Service.PostResponse( employeeInfoParameters, "SearchEmployees");
+
+          
+
+            if (Response.StatusCode==System.Net.HttpStatusCode.OK)
+            {
+
+                var Result= Response.Content.ReadAsAsync<List<Employees>>().Result;
+                                
+                foreach (var record in Result)
+                {
+                    int RowId = grdEmployees.Rows.Add();
+                    DataGridViewRow row = grdEmployees.Rows[RowId];
+                    row.Cells["EmployeeID"].Value = record.EmployeeID;
+                    row.Cells["FirstName"].Value = record.FirstName;
+                    row.Cells["LastName"].Value = record.LastName;
+                    row.Cells["CityOfBirthID"].Value = record.CityBirthID;
+                    row.Cells["CityOfBirth"].Value = record.CityName;
+                    row.Cells["BirthDate"].Value = record.BirthDate;
+                    row.Cells["Gender"].Value = (!record.Gender) ? "Male" : "Female";
+                    row.Cells["CurriculumVitae"].Value = record.CurriculumVitae;
+                    row.Cells["PhoneNumber"].Value = record.PhoneNumber;
+                    row.Cells["Email"].Value = record.Email;
+                    row.Cells["Username"].Value = record.Username;
+                    row.Cells["Active"].Value = (!record.IsDeleted) ? true : false;
+                }
+            }
+            else
+            {          
+                grdEmployees.DataSource = null;
+            }
+        }
+
+        void LoadEmployments()
+        {
+            EmploymentInfoParameters employmentInfoParameters = new EmploymentInfoParameters()
+            {
+                CinemaID = AuthenticationUI.CurrentCinema.CinemaID,
+                FirstName = (!String.IsNullOrWhiteSpace(txtSearchByFirstNameEmpl.Text)) ? txtSearchByFirstNameEmpl.Text : "",
+                LastName = (!String.IsNullOrWhiteSpace(txtSearchByLastNameEmpl.Text)) ? txtSearchByLastNameEmpl.Text : "",
+                EmploymentTypeID = Int32.Parse(cmbEmploymentTypes.SelectedValue.ToString())
+               
+            };
+
+            HttpResponseMessage Response = Service.PostResponse(employmentInfoParameters, "SearchEmployments");
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+
+                var Result = Response.Content.ReadAsAsync<List<Employments>>().Result;
+
+                foreach (var record in Result)
+                {
+                    int RowId = grdEmployments.Rows.Add();
+                    DataGridViewRow row = grdEmployments.Rows[RowId];
+                    row.Cells["EmploymentID"].Value = record.EmploymentID;
+                    row.Cells["EmployeeID"].Value = record.EmployeeID;
+                    row.Cells["FirstName"].Value = record.FirstName;
+                    row.Cells["LastName"].Value = record.LastName;
+                    row.Cells["EmploymentTypeID"].Value = record.EmploymentTypeID;
+                    row.Cells["EmploymentTypeName"].Value = record.EmploymentTypeName;
+                    row.Cells["HireDate"].Value = record.HireDate;
+                    row.Cells["CurrentSalary"].Value = record.CurrentSalary;
+                    row.Cells["BankAccountNumber"].Value = record.BankAccountNumber;
+                    row.Cells["BankID"].Value = record.BankID;
+                    row.Cells["BankName"].Value = record.BankName;
+                    row.Cells["Active"].Value = (!record.IsDeleted) ? true : false;                   
+                }
+            }
+            else
+            {
+                grdEmployments.DataSource = null;
+            }
+        }
+
+
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            grdEmployees.Rows.Clear();
+            LoadEmployees();
+        }
+      
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            AddEmployeeForm addEmployeeForm = new AddEmployeeForm();
+            DialogResult dialogResult = addEmployeeForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                grdEmployees.Rows.Clear();
+                AuthenticationUI.CheckForUpdates();
+                lblEmployeeCount.Text = $"{AuthenticationUI.NumberOfEmployees}";
+                ClearFilters();
+                LoadEmployees();
+            }               
+        }
+
+        private void btnEditEmployee_Click(object sender, EventArgs e)
+        {
+            var Employee = new Employees();
+
+            if(grdEmployees.Rows.Count == 0)
+            {
+                MessageBox.Show(Messages.EmployeeSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            Employee.EmployeeID =(int) grdEmployees.SelectedRows[0].Cells["EmployeeID"].Value;
+            Employee.FirstName = grdEmployees.SelectedRows[0].Cells["FirstName"].Value as string;
+            Employee.LastName = grdEmployees.SelectedRows[0].Cells["LastName"].Value as string;
+            Employee.BirthDate =(DateTime)grdEmployees.SelectedRows[0].Cells["BirthDate"].Value;
+            Employee.CityBirthID =(int)grdEmployees.SelectedRows[0].Cells["CityOfBirthID"].Value;
+            Employee.Gender = ((string)grdEmployees.SelectedRows[0].Cells["Gender"].Value == "Male") ? false : true;
+            Employee.PhoneNumber = (string)grdEmployees.SelectedRows[0].Cells["PhoneNumber"].Value;
+            Employee.Email = (string)grdEmployees.SelectedRows[0].Cells["Email"].Value;
+            Employee.CurriculumVitae = grdEmployees.SelectedRows[0].Cells["CurriculumVitae"].Value as string;
+
+            EditEmployeeForm editEmployeeForm = new EditEmployeeForm(Employee);
+            DialogResult dialogResult = editEmployeeForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                grdEmployees.Rows.Clear();
+                AuthenticationUI.CheckForUpdates();
+                this.Text=
+                lblDirectorName.Text = $"{AuthenticationUI.LoggedEmployee.FirstName} {AuthenticationUI.LoggedEmployee.LastName}";
+                this.Text = $"{AuthenticationUI.CurrentCinema.Name} {AuthenticationUI.CurrentCinema.City}:: Employee Management ::{AuthenticationUI.LoggedEmployee.FirstName} {AuthenticationUI.LoggedEmployee.LastName}";
+                ClearFilters();
+                LoadEmployees();
+            }             
+        }
+
+        private void btnDeactivate_Click(object sender, EventArgs e)
+        {
+
+            if (grdEmployees.Rows.Count == 0)
+            {
+                MessageBox.Show(Messages.EmployeeSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            int EmployeeID=(int)grdEmployees.SelectedRows[0].Cells["EmployeeID"].Value;
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to deactivate this employee?", "Warning", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (EmployeeID == (int)AuthenticationUI.LoggedEmployee.EmployeeID)
+                    MessageBox.Show(Messages.DirectorDeactivationFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                {
+                    dynamic Employee = new { EmployeeID = EmployeeID };
+                    HttpResponseMessage DeactivateEmployeeMessage = Service.PutResponse(Employee, "MakeEmployeesInactive");
+
+                    if (DeactivateEmployeeMessage.StatusCode!=System.Net.HttpStatusCode.OK)
+                    {
+                        MessageBox.Show(Messages.EmployeeDeactivationFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    MessageBox.Show(Messages.EmployeeDeactivationSuccess, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    grdEmployees.Rows.Clear();
+                    AuthenticationUI.CheckForUpdates();
+                    lblEmployeeCount.Text = $"{AuthenticationUI.NumberOfEmployees}";
+                    ClearFilters();
+                    LoadEmployees();
+                }
+
+            }
+            
+            
+
+        }
+
+        private void btnSearchEmpl_Click(object sender, EventArgs e)
+        {
+            grdEmployments.Rows.Clear();
+            LoadEmployments();
+
+        }
+
+        private void btnEditEmployment_Click(object sender, EventArgs e)
+        {
+            if(grdEmployments.Rows.Count==0)
+            {
+                MessageBox.Show(Messages.EmploymentSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            var Employment = new Employments();
+            Employment.EmploymentID = (int)grdEmployments.SelectedRows[0].Cells["EmploymentID"].Value;
+            Employment.EmployeeID = (int)grdEmployments.SelectedRows[0].Cells["EmployeeID"].Value;
+            Employment.FirstName = grdEmployments.SelectedRows[0].Cells["FirstName"].Value as string;
+            Employment.LastName = grdEmployments.SelectedRows[0].Cells["LastName"].Value as string;
+            Employment.HireDate = (DateTime)grdEmployments.SelectedRows[0].Cells["HireDate"].Value;
+            Employment.CurrentSalary = (decimal)grdEmployments.SelectedRows[0].Cells["CurrentSalary"].Value;
+            Employment.EmploymentTypeID = (int)grdEmployments.SelectedRows[0].Cells["EmploymentTypeID"].Value;
+            Employment.BankAccountNumber = (string)grdEmployments.SelectedRows[0].Cells["BankAccountNumber"].Value;
+            Employment.BankID = (int)grdEmployments.SelectedRows[0].Cells["BankID"].Value;
+            
+
+            EditEmploymentForm editEmploymentForm = new EditEmploymentForm(Employment);
+            DialogResult dialogResult = editEmploymentForm.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                grdEmployments.Rows.Clear();
+                ClearFiltersEmployments();
+                LoadEmployments();
+            }
+
+        }
+
+        private void btnPayments_Click(object sender, EventArgs e)
+        {
+            if (grdEmployments.Rows.Count == 0)
+            {
+                MessageBox.Show(Messages.EmploymentSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var Employment = new Employments();
+            Employment.EmploymentID = (int)grdEmployments.SelectedRows[0].Cells["EmploymentID"].Value;
+            Employment.EmployeeID = (int)grdEmployments.SelectedRows[0].Cells["EmployeeID"].Value;
+            Employment.FirstName = grdEmployments.SelectedRows[0].Cells["FirstName"].Value as string;
+            Employment.LastName = grdEmployments.SelectedRows[0].Cells["LastName"].Value as string;
+            Employment.HireDate = (DateTime)grdEmployments.SelectedRows[0].Cells["HireDate"].Value;
+            Employment.CurrentSalary = (decimal)grdEmployments.SelectedRows[0].Cells["CurrentSalary"].Value;
+            Employment.EmploymentTypeID = (int)grdEmployments.SelectedRows[0].Cells["EmploymentTypeID"].Value;
+            Employment.BankAccountNumber = (string)grdEmployments.SelectedRows[0].Cells["BankAccountNumber"].Value;
+            Employment.BankID = (int)grdEmployments.SelectedRows[0].Cells["BankID"].Value;
+            Employment.BankName = (string)grdEmployments.SelectedRows[0].Cells["BankName"].Value;
+            Employment.EmploymentTypeName = (string)grdEmployments.SelectedRows[0].Cells["EmploymentTypeName"].Value;
+
+
+            EmployeePaymentsShowForm employeePaymentsShowForm = new EmployeePaymentsShowForm(Employment);
+            employeePaymentsShowForm.ShowDialog();
+        }
+
+        private void btnDeactivateEmployment_Click(object sender, EventArgs e)
+        {
+            if (grdEmployments.Rows.Count == 0)
+            {
+                MessageBox.Show(Messages.EmploymentSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int EmploymentID = (int)grdEmployments.SelectedRows[0].Cells["EmploymentID"].Value;
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to deactivate this employee?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+              
+               
+                    dynamic Employment = new { EmploymentID = EmploymentID };
+                    HttpResponseMessage DeactivateEmploymentMessage = Service.PutResponse(Employment, "MakeEmploymentsInactive");
+
+                    if (DeactivateEmploymentMessage.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        MessageBox.Show(Messages.EmploymentDeactivationFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    MessageBox.Show(Messages.EmploymentDeactivationSuccess, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    grdEmployments.Rows.Clear();
+                    ClearFiltersEmployments();
+                    LoadEmployments();
+                
+
+            }
+
+        }
+
+        private void btnAddEmployment_Click(object sender, EventArgs e)
+        {
+            AddEmploymentForm addEmploymentForm = new AddEmploymentForm();
+            DialogResult dialogResult = addEmploymentForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                grdEmployments.Rows.Clear();
+                ClearFiltersEmployments();
+                LoadEmployments();
+            }
+            
+        }
+
+        private void btnSystemRoles_Click(object sender, EventArgs e)
+        {
+            if (grdEmployees.Rows.Count == 0)
+            {
+                MessageBox.Show(Messages.EmployeeSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int EmployeeID = (int)grdEmployees.SelectedRows[0].Cells["EmployeeID"].Value;
+            string Username = (string)grdEmployees.SelectedRows[0].Cells["Username"].Value;
+
+            if (EmployeeID==(int)AuthenticationUI.LoggedEmployee.EmployeeID)
+            {
+                MessageBox.Show(Messages.DirectorSystemRolesAddOrEdit, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (String.IsNullOrWhiteSpace(Username))
+            {
+                MessageBox.Show(Messages.Username404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            SystemRolesForm systemRolesForm = new SystemRolesForm(EmployeeID,Username);
+            systemRolesForm.ShowDialog();
+        }
+
+        void ClearFilters()
+        {
+            txtSearchByFirstName.Text = "";
+            txtSearchByLastName.Text = "";
+            cmbGenders.SelectedIndex = 0;
+            cmbCities.SelectedIndex = 0;
+
+
+        }
+
+        void ClearFiltersEmployments()
+        {
+            txtSearchByFirstNameEmpl.Text = "";
+            txtSearchByLastNameEmpl.Text = "";
+            cmbEmploymentTypes.SelectedIndex = 0;
+
+
+        }
+    }
+
+    public class EmployeeInfoParameters
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int GenderID { get; set; }
+        public int CinemaID { get; set; }
+        public int CityBirthID { get; set; }
+
+    }
+
+    public class EmploymentInfoParameters
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int CinemaID { get; set; }
+        public int EmploymentTypeID { get; set; }
+
+    }
+
+
+
+}

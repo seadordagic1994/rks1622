@@ -1,0 +1,93 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@model CondorExtreme3.ModelsLocalDB.ProjectionTimesVM
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div id="seats" class="modal-body">
+            <div style="padding:0px 15px 0px 15px;" class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"> Movie name: <b>@Model.Projections.Movie.MovieName</b></div>
+                <div style="padding:0;" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 textRight"><button style="outline:none;" type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color:white;" aria-hidden="true">x</span></button></div>
+            </div>
+            <div style="padding:0px 15px 0px 15px;" class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="videoWrapper">
+                        Copy & Pasted from YouTube
+                        <iframe src="@Model.Projections.Movie.Trailler" frameborder="1" allowfullscreen></iframe>
+                    </div>
+
+
+                    <div style="padding:0" class="col-xs-12">
+                        <h5 style="font-family:'Quicksand'; font-size:13px; padding-bottom:10px;">
+                            <b>Projection time and types: </b>&nbsp;
+                            <img id="loadingSeats" style="z-index:1234; display:none;" width="11" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader" />
+                        </h5>
+                        @for (int i = 0; i < Model.d[Model.Projections.MovieID].Count(); i++)
+                        {
+                            using (Ajax.BeginForm("GetSeats", "Cinema", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "seats", LoadingElementId = "loadingSeats" }))
+                            {
+                                @Html.Hidden("movieID", Model.Projections.MovieID);
+                                @Html.Hidden("type", Model.d[Model.Projections.MovieID][i][0].ToString());
+                                @Html.Hidden("year", Model.d[Model.Projections.MovieID][i][4].ToString());
+                                @Html.Hidden("mounth", Model.d[Model.Projections.MovieID][i][5].ToString());
+                                @Html.Hidden("day", Model.d[Model.Projections.MovieID][i][6].ToString());
+                                @Html.Hidden("hours", Model.d[Model.Projections.MovieID][i][2].ToString());
+                                @Html.Hidden("minutes", Model.d[Model.Projections.MovieID][i][3].ToString());
+                                @Html.Hidden("jsonDictionary", Model.MyDictionaryToJson(Model.d));
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-bottom:0px;padding-right:0px; margin-left:3px; text-align:center; margin-bottom:7px;">
+                                    <button id="buttonTimes" type="submit" class="buttonTimes" style="width:100%;">
+
+                                        @Model.d[Model.Projections.MovieID][i][0].ToString() <br />
+                                        @Model.d[Model.Projections.MovieID][i][2].ToString():@Model.d[Model.Projections.MovieID][i][3].ToString()
+
+                                    </button>
+                                    @Model.d[Model.Projections.MovieID][i][1].ToString()
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+                </div>
+                <div style="padding:0px" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                    <table class="table">
+                        <tr><td width="35%"><b>Movie name:</b></td><td width="65%">@Model.Projections.Movie.MovieName</td></tr>
+                        <tr><td width="35%"><b>Original movie name:</b></td><td width="65%">@Model.Projections.Movie.OriginalName</td></tr>
+                        <tr><td width="35%"><b>Genre:</b></td><td width="65%">@Model.Projections.Movie.Genre.GenreName</td></tr>
+
+                        <tr>
+                            <td width="35%"><b>Directors:</b></td>
+                            <td width="65%">
+                                 @foreach (MovieDirection md in Model.Projections.Movie.MovieDirections.ToList())
+                                 { <b>@md.Director.FirstName.ToString() @md.Director.LastName.ToString(), </b> }
+                            </td>
+                        </tr>
+                       
+                        <tr>
+                            <td width="35%"><b>Actors:</b></td>
+                            <td width="65%">
+                                @foreach (MovieRole mr in Model.Projections.Movie.MovieRoles.ToList())
+                                { <b>@mr.Actor.FirstName.ToString() @mr.Actor.LastName.ToString(), </b> }
+                            </td>
+                        </tr>
+
+                        <tr><td width="35%"><b>Duration:</b></td><td width="65%">@Model.Projections.Movie.DurationInMinutes min</td></tr>
+                        <tr><td width="35%"><b>Age restriction:</b></td><td width="65%">@Model.Projections.Movie.AgeRestriction</td></tr>
+                        <tr><td width="35%"><b>Release year:</b></td><td width="65%">@Model.Projections.Movie.ReleaseYear</td></tr>
+                        <tr><td width="35%"><b>Synopsis:</b></td><td width="65%">@Model.Projections.Movie.Synopsis</td></tr>
+
+                    </table>
+                </div>
+            </div>
+
+           
+
+        </div>
+    </div>
+</div>
+<script>
+ $(".modal").on("hidden.bs.modal", function () {
+     $("#seats").html("");
+ });
+</script>

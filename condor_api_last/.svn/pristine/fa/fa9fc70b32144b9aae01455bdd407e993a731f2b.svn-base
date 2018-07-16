@@ -1,0 +1,203 @@
+﻿using System;
+using System.Collections.Generic;
+using CondorExtreme3_API.Models;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Web.Http.Results;
+using Newtonsoft.Json.Linq;
+using System.Data.Entity;
+using MoreLinq;
+using CondorExtreme3_API.Helper;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_API.Controllers
+{
+    [RoutePrefix("api/UserProjections")]
+    public class UserProjectionsController : ApiController
+    {
+        private CondorDBXEntities principal = new CondorDBXEntities();
+
+        [NonAction]
+        private async Task<List<int>> GetRecommendedMovies(int userID)
+        {
+            var service = new WebAPIHelper(Domains.APIDomain, "api/RecommendationSystem");
+            var response = service.GetResponse("GetRecommendedMovies", userID);
+
+            var result = JsonConvert.DeserializeObject<Dictionary<int, float>> (await response.Content.ReadAsStringAsync());
+            return result.Keys.ToList();
+        }
+
+        // GET api/<controller>
+        [HttpPost]
+        [Route("SearchForProjections")]
+        public IHttpActionResult SearchForProjections([FromBody]dynamic Parameters)
+        {
+            int RVisitorID = Parameters.RVisitorID;
+            float Latitude = Parameters.Latitude;
+            float Longitude = Parameters.Longitude;
+            bool GPSAquired = Parameters.GPSAquired;
+            string searchQuery = Parameters.SearchQuery;
+
+            
+
+            var CinemaDistances = new Dictionary<int, float>();
+            var CinemaIDs = new List<int>();
+            int CinemaID = 0;
+
+            if (GPSAquired)
+            {
+                foreach (var cinema in principal.CinemaCoordinates.Where(x => !x.Cinemas.IsDeleted).ToList())
+                {
+                    var vectorTarget = new VectorN(new float[] { (float)cinema.Latitude, (float)cinema.Longitude });
+                    var vectorMe = new VectorN(new float[] { Latitude, Longitude });
+                    CinemaDistances.Add(cinema.CinemaID, VectorN.Subtraction(vectorMe, vectorTarget).GetLength());
+                }
+
+                CinemaID = CinemaDistances.OrderBy(x => x.Value).Select(y => y.Key).FirstOrDefault();
+                CinemaIDs.Add(CinemaID);
+            }
+            else
+            {
+                CinemaIDs.AddRange(principal.Cinemas.Where(x => !x.IsDeleted).Select(x => x.CinemaID).ToList());
+            }
+
+            var recommendedProjections = new List<Projections>();
+
+            if (String.IsNullOrWhiteSpace(searchQuery))
+            {
+                var recommendedMovies = GetRecommendedMovies(RVisitorID).Result;
+
+                var projections = principal.Projections
+                    .Where(x => !x.IsDeleted &&
+                        DbFunctions.TruncateTime(x.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today) &&
+                        CinemaIDs.Contains(x.CinemaHalls.Cinemas.CinemaID))
+                    .OrderBy(x => x.Movies.Name)
+                    .DistinctBy(x => x.MovieID)
+                    .ToList();
+
+                foreach (var movieID in recommendedMovies)
+                {
+                    var projection = projections.Where(x => x.MovieID == movieID);
+                    if (projection.Any())
+                        recommendedProjections.Add(projection.FirstOrDefault());
+                }
+
+                foreach (var projection in recommendedProjections)
+                    projections.Remove(projection);
+
+                recommendedProjections.AddRange(projections);
+            }
+            else
+            {
+                List<string> Movies = principal.Projections
+                    .Where(x => !x.IsDeleted &&
+                        DbFunctions.TruncateTime(x.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today) &&
+                        CinemaIDs.Contains(x.CinemaHalls.Cinemas.CinemaID))
+                    .OrderBy(x => x.Movies.Name)
+                    .DistinctBy(x => x.Movies.Name)
+                    .Select(x=> x.Movies.Name + "$" + x.Movies.Synopsis)
+                    .ToList();
+
+                Movies.ContextSort(searchQuery);
+
+                foreach (var movie in Movies)
+                {
+                    string s = movie.Split('$')[0];
+                    recommendedProjections.AddRange(principal.Projections.Where(x => !x.IsDeleted &&
+                        DbFunctions.TruncateTime(x.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today) &&
+                        CinemaIDs.Contains(x.CinemaHalls.Cinemas.CinemaID) && x.Movies.Name == s).OrderBy(x => x.Movies.Name)
+                    .DistinctBy(x => x.Movies.Name).ToList());
+                }
+            }
+
+            return Ok(recommendedProjections.Select(x => new
+            {
+                MovieName = x.Movies.Name,
+                x.MovieID,
+                x.CinemaHallID,
+                x.DateTimeStart,
+                x.TicketPrice,
+                MovieCover = Convert.ToBase64String(x.Movies.PictureBytes),
+                Projections = principal.Projections
+                    .Where(y => DbFunctions.TruncateTime(y.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today) &&
+                        y.Movies.MovieID == x.Movies.MovieID && !y.IsDeleted
+                        && CinemaIDs.Contains(y.CinemaHalls.Cinemas.CinemaID))
+                    .OrderBy(y => y.DateTimeStart).Select(y => new {
+                        y.ProjectionID,
+                        y.MovieID,
+                        y.CinemaHallID,
+                        y.DateTimeStart,
+                        y.TechnologyTypes.Name,
+                        y.TicketPrice,
+                        CinemaHallName = y.CinemaHalls.Name,
+                        CinemaName = y.CinemaHalls.Cinemas.Name,
+                    }).Take(10)
+            }).ToList());
+        }
+
+        [HttpGet]
+        [Route("GetProjectionsForCinema/{id}")]
+        public IHttpActionResult GetProjectionsForCinema([FromUri]int id)
+        {
+
+            var recommendedProjections = new List<Projections>();
+
+            recommendedProjections = principal.Projections.Where(
+                x => x.CinemaHalls.CinemaID == id && !x.IsDeleted &&
+                DbFunctions.TruncateTime(x.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today)
+                ).OrderBy(x => x.Movies.Name)
+                    .DistinctBy(x => x.Movies.Name).ToList();
+
+            return Ok(recommendedProjections.Select(x => new
+            {
+                MovieName = x.Movies.Name,
+                x.MovieID,
+                x.CinemaHallID,
+                x.DateTimeStart,
+                x.TicketPrice,
+                MovieCover = Convert.ToBase64String(x.Movies.PictureBytes),
+                Projections = principal.Projections
+                    .Where(y => DbFunctions.TruncateTime(y.DateTimeStart) > DbFunctions.TruncateTime(DateTime.Today) &&
+                        y.Movies.MovieID == x.Movies.MovieID && !y.IsDeleted
+                        && y.CinemaHalls.CinemaID == id)
+                    .OrderBy(y => y.DateTimeStart).Select(y => new {
+                        y.ProjectionID,
+                        y.MovieID,
+                        y.CinemaHallID,
+                        y.DateTimeStart,
+                        y.TechnologyTypes.Name,
+                        y.TicketPrice,
+                        CinemaHallName = y.CinemaHalls.Name,
+                        CinemaName = y.CinemaHalls.Cinemas.Name,
+                    }).ToList()
+            }).ToList());
+        }
+
+
+        [HttpGet]
+        [Route("GetProjectionSeats/{value}")]
+        public IHttpActionResult GetProjectionSeats([FromUri]int value)
+        {
+            var projection = principal.Projections.Find(value);
+            var seats = principal.Seats.Where(x => x.CinemaHallID == projection.CinemaHallID && !x.IsDeleted);
+     
+            return Ok(seats.Select(x => new {
+                x.SeatID,
+                x.SeatRowID,
+                x.SeatColumnID,
+                IsReserved = principal.Tickets
+                    .Where(y => y.ProjectionID == projection.ProjectionID && y.SeatID == x.SeatID)
+                    .Any(),
+                SeatRowLabel = principal.SeatRows
+                    .Where(y => y.SeatRowID == x.SeatRowID && !y.IsDeleted)
+                    .FirstOrDefault().SeatRowLbl,
+                SeatColumnLabel = principal.SeatColumns
+                    .Where(y => y.SeatColumnID == x.SeatColumnID && !y.IsDeleted)
+                    .FirstOrDefault().SeatColumnLbl
+            }));
+        }
+    }
+}

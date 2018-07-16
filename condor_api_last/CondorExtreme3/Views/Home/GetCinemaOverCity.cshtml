@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+@model CondorExtreme3.Models.HomeIndexVM
+
+@using (@Html.BeginForm("Redirection", "Home", null))
+{
+    <h5 class="SelectH5">Choose your cinema: </h5>
+    <select name="cinema" onchange="$(this.form).submit(); loader()">
+        <option name="choose" value="0">Choose your cinema: </option>
+        @foreach (SelectListItem sl in Model.Cinemas)
+        {
+            <option value="@sl.Value">@sl.Text</option>
+        }
+    </select>
+}
+
+<script>
+    $(document).on("change", $("select[name='cinema']"), function () {
+        $("option[value='0'][name='choose']").remove();
+    });
+
+    function loader()
+    {
+        $("#loader").show();
+    }
+
+</script>

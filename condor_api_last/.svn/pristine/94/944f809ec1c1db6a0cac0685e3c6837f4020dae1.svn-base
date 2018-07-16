@@ -1,0 +1,230 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class editProjection : Form
+    {
+        public WebAPIHelper Service;
+
+        public dynamic SingleProjection { get; set; }
+        public dynamic SingleMovie { get; set; }
+        public int MovieId { get; set; }
+        public int? ProjectionId { get; set; }
+
+        public editProjection(int projectionId)
+        {
+            InitializeComponent();
+            ProjectionId = projectionId;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            this.AutoValidate = AutoValidate.Disable;
+
+            HttpResponseMessage projection = Service.GetResponse("GetProjection", ProjectionId);
+            if (projection.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                SingleProjection = projection.Content.ReadAsAsync<Object>().Result;
+
+                HttpResponseMessage m = Service.GetResponse("GetMovie", int.Parse(SingleProjection.MovieId.ToString()));
+                if(m.IsSuccessStatusCode)
+                { 
+                    SingleMovie = m.Content.ReadAsAsync<Object>().Result as dynamic;
+                    selectedMovielbl.Text = SingleMovie.MovieName;
+                    getMovie();
+
+                        HttpResponseMessage GetTechnologyTypes = Service.GetResponse("GetTechnologyTypes", null);
+                        if(GetTechnologyTypes.IsSuccessStatusCode)
+                        { 
+                            techCombo.DataSource = GetTechnologyTypes.Content.ReadAsAsync<List<Object>>().Result;
+                            techCombo.ValueMember = "Id";
+                            techCombo.DisplayMember = "Name";
+                            string name = SingleProjection.techTypeName.ToString();
+                            techCombo.SelectedIndex = techCombo.FindString(name);
+                        }
+                }
+                startTime.Format = DateTimePickerFormat.Custom;
+                startTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+
+                endTime.Format = DateTimePickerFormat.Custom;
+                endTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+
+                endTime.Enabled = false;
+            }
+            else if (projection.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show("Projection not found !", "Success", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+        private void getMovie()
+        {
+            if(ProjectionId != null)
+            {
+                if (!String.IsNullOrEmpty(SingleMovie.Image.ToString()))
+                {
+                    byte[] image = Convert.FromBase64String(SingleMovie.Image.ToString());
+                    MemoryStream ms = new MemoryStream(image);
+                    movieImage.Image = Image.FromStream(ms);
+                }
+                movieImage.SizeMode = PictureBoxSizeMode.StretchImage;
+                durationlbl.Text = SingleMovie.Duration;
+                yearlbl.Text = SingleMovie.ReleaseYear;
+                agelbl.Text = SingleMovie.Age;
+                movieNamelbl.Text = SingleMovie.MovieName;
+                synopsisBox.Text =  SingleMovie.Synopsis;
+                priceBox.Text = SingleProjection.price;
+
+                movieDetails.Visible = true;
+                setProjectionGroup.Visible = true;
+                setProjectionGroup1.Visible = true;
+
+                DateTime end = DateTime.Parse(SingleProjection.DateTimeStart.ToString());
+                startTime.Value = DateTime.Parse(SingleProjection.DateTimeStart.ToString());
+                endTime.Value = end.AddMinutes(int.Parse(SingleMovie.Duration.ToString()));
+
+                dynamic dt = new { Id = SingleProjection.CinemaHallId.ToString(), Name = SingleProjection.CinemaHall.ToString() };
+
+                findCinemaHalls(dt);
+
+
+            }
+        }
+
+        private void endTime_Validating(object sender, CancelEventArgs e)
+        {
+          
+        }
+
+        private void addProjectionBtn_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren())
+            {
+                dynamic Projection = new
+                {
+                    MovieId = int.Parse(SingleMovie.Id.ToString()),
+                    ProjectionId = ProjectionId,
+                    CinemaHallId = int.Parse(cinemaHallcombo.SelectedValue.ToString()),
+                    DateTimeStart = startTime.Value,
+                    techTypeId = int.Parse(techCombo.SelectedValue.ToString()),
+                    Price = double.Parse(priceBox.Text, CultureInfo.InvariantCulture),
+                };
+
+                HttpResponseMessage Response = Service.PutResponse(Projection, "EditProjection");
+
+                if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.ProjectionSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if (Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = Response.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("We could not edit your projection!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+        }
+
+        private void priceBox_Validating(object sender, CancelEventArgs e)
+        {
+            decimal result;
+            if (!decimal.TryParse(priceBox.Text, out result))
+            {
+                e.Cancel = true;
+                errors.SetError(priceBox, Messages.Digit_err);
+            }
+        }
+
+        private void priceBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+             (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void cinemaHallcombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (cinemaHallcombo.SelectedItem == null)
+            {
+                e.Cancel = true;
+                errors.SetError(cinemaHallcombo, Messages.Required);
+            }
+        }
+
+        private void techCombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (techCombo.SelectedItem == null)
+            {
+                e.Cancel = true;
+                errors.SetError(techCombo, Messages.Required);
+            }
+        }
+
+        private void endTime_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        public void findCinemaHalls(dynamic edit = null)
+        {
+            dynamic dt = new
+            {
+                start = startTime.Value,
+                end = endTime.Value,
+                ProjectionId = this.ProjectionId,
+                cinemaId = AuthenticationUI.CurrentCinema.CinemaID.ToString(),
+            };
+
+
+            HttpResponseMessage cinemaHall = Service.PostResponse(dt, "GetCinemaHalls");
+            if(cinemaHall.IsSuccessStatusCode)
+            { 
+                cinemaHallcombo.DataSource = cinemaHall.Content.ReadAsAsync<List<Object>>().Result;
+                cinemaHallcombo.ValueMember = "Id";
+                cinemaHallcombo.DisplayMember = "Name";
+            }
+
+            cinemaHallcombo.SelectedIndex = edit == null ? -1 : cinemaHallcombo.FindString(edit.Name.ToString());
+
+            endTimeLbl.ForeColor = System.Drawing.Color.Black;
+            addProjectionBtn.Enabled = true;
+            priceBox.Enabled = true;
+            techCombo.Enabled = true;
+            cinemaHallcombo.Enabled = true;
+        }
+
+        private void startTime_Leave(object sender, EventArgs e)
+        {
+            findCinemaHalls();
+        }
+
+        private void startTime_ValueChanged_1(object sender, EventArgs e)
+        {
+            endTime.Value = startTime.Value.AddMinutes(int.Parse(durationlbl.Text) + 20);
+        }
+    }
+}

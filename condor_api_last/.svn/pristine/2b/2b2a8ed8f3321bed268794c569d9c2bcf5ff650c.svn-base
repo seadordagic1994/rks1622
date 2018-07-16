@@ -1,0 +1,360 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CondorExtreme3_UI.Projections;
+using CondorExtreme3_API.Models;
+using System.IO;
+using System.Configuration;
+using Newtonsoft.Json.Linq;
+
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class addMovie : Form
+    {
+        public WebAPIHelper Service;
+        private CondorExtreme3_API.Models.Movies movie { get; set; } = new Movies();
+        private Image imgThumb { get; set; }
+        public addMovie()
+        {
+            InitializeComponent();
+            this.AutoValidate = AutoValidate.Disable;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            HttpResponseMessage Response = Service.GetResponse("GetGenres", null);
+            HttpResponseMessage Response1 = Service.GetResponse("GetAge", null);
+            HttpResponseMessage Response2 = Service.GetResponse("GetActors", null);
+            HttpResponseMessage Response3 = Service.GetResponse("GetDirectors", null);
+
+            if (!Response.IsSuccessStatusCode || !Response1.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Can not load inital data for genre or age restriction!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                GenreCombo.DataSource = Response.Content.ReadAsAsync<List<Object>>().Result;
+                ageCombo.DataSource = Response1.Content.ReadAsAsync<List<Object>>().Result;
+                GenreCombo.ValueMember = "GenreID";
+                ageCombo.ValueMember = "AgeRestrictionID";
+                GenreCombo.DisplayMember = "Name";
+                ageCombo.DisplayMember = "Name";
+                GenreCombo.SelectedItem = null;
+                ageCombo.SelectedItem = null;
+                
+                
+
+                actorsBox.DataSource = Response2.Content.ReadAsAsync<List<Object>>().Result;
+                actorsBox.ValueMember = "ActorID";
+                actorsBox.DisplayMember = "Name";
+                actorsBox.SelectedIndex = -1;
+
+                DirectorsBox.DataSource = Response3.Content.ReadAsAsync<List<Object>>().Result;
+                DirectorsBox.ValueMember = "DirectorId";
+                DirectorsBox.DisplayMember = "Name";
+                DirectorsBox.SelectedIndex = -1;
+            }
+
+        }
+
+        private void addMovie_Load(object sender, EventArgs e)
+        {
+            player.Movie = $"https://www.youtube.com/v/2cv2ueYnKjg";
+        }
+
+        private void addMovie_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                movie = new CondorExtreme3_API.Models.Movies();
+
+                openFileDialog.ShowDialog();
+
+
+                Image orgImg = Image.FromFile(openFileDialog.FileName);
+                movie.PictureBytes = File.ReadAllBytes(openFileDialog.FileName);
+
+                int resizedImgWidth = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImgWidth"]);
+                int resizedImgHeight = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImgHeight"]);
+                int croppedImgWidth = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImgWidth"]);
+                int croppedImgHeight = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImgHeight"]);
+
+                if (orgImg.Width > resizedImgWidth)
+                {
+                    Image resizedImg = UIHelper.ResizeImage(orgImg, new Size(resizedImgWidth, resizedImgHeight));
+
+                    if (resizedImg.Width > croppedImgWidth && resizedImg.Height > croppedImgHeight)
+                    {
+                        int croppedXPosition = (resizedImg.Width - croppedImgWidth) / 2;
+                        int croppedYPosition = (resizedImg.Height - croppedImgHeight) / 2;
+
+                        Image croppedImg = UIHelper.CropImage(resizedImg, new Rectangle(croppedXPosition, croppedYPosition, croppedImgWidth, croppedImgHeight));
+
+                        //From Image to byte[]
+                        MemoryStream ms = new MemoryStream();
+                        croppedImg.Save(ms, orgImg.RawFormat);
+
+                        movie.ImageThumb = ms.ToArray();
+
+                        movieImage.Image = croppedImg;
+                    }
+                    else
+                    {
+                        MessageBox.Show(Messages.MovieImage + " " + resizedImgWidth + "x" + resizedImgHeight + ".", Messages.MovieImage,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        movie = null;
+                    }
+                    
+                }
+            }
+            catch (Exception)
+            {
+                movie = null;
+                movieImage.Image = null;
+               
+            }
+
+        }
+
+        private void addNewMovieBtn_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            if (this.ValidateChildren())
+            {
+                Service.Route = "api/Projections";
+
+                var age = ageCombo.SelectedValue;
+                var genre = GenreCombo.SelectedValue;
+
+
+                string s = DirectorsBox.SelectedValue.ToString();
+                movie.MovieDirectorID = int.Parse(s);
+                movie.AgeRestrictionID = int.Parse(age.ToString());
+                movie.GenreID = int.Parse(genre.ToString());
+
+                movie.AgeRestrictionID =Int32.Parse(ageCombo.SelectedValue.ToString());
+                movie.GenreID = int.Parse(genre.ToString());
+
+
+                int restriction = 0;
+                if (int.TryParse(age.ToString(), out restriction))
+                    movie.AgeRestrictionID = restriction;
+
+                int genreValue = 0;
+                if (int.TryParse(genre.ToString(), out genreValue))
+                    movie.GenreID = genreValue;
+
+                
+
+                movie.Name = movieName.Text;
+                movie.OriginalName = originalMovieName.Text;
+
+                int relase = 0;
+                if (int.TryParse(releaseYearText.Text, out relase))
+                    movie.ReleaseYear = relase;
+
+                if(movieImage.Image != null)
+                movie.PictureBytes = File.ReadAllBytes(openFileDialog.FileName);
+                movie.Synopsis = Synopsis.Text;
+                movie.DurationInMinutes = int.Parse(durationtxt.Text);
+
+                int duration = 0;
+                if (int.TryParse(durationtxt.Text, out duration))
+                    movie.DurationInMinutes = duration;
+
+                movie.Trailer = "trailler";
+                movie.IsCurrent = isCurrent.Checked ? true : false;
+
+                List<int> movieActor = new List<int>();
+
+                foreach (dynamic c in actorsBox.CheckedItems )
+                {
+                    int value = (int)c.ActorID.Value;
+                    movieActor.Add(value);
+                };
+
+                foreach (dynamic c in DirectorsBox.CheckedItems)
+                {
+                    int value = (int)c.DirectorId.Value;
+                    movie.MovieDirectorID = value;
+                };
+
+                dynamic MovieInfo = new
+                {
+                    movie,
+                    movieActor
+                };
+
+
+                HttpResponseMessage Response = Service.PostResponse(MovieInfo, "PostMovies");
+               
+                if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show("Movie added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+
+                    addProjection p = new addProjection();                   
+                    p.StartPosition = FormStartPosition.CenterScreen;
+                    p.ShowDialog();
+                }
+                else if (Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = Response.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Movie Added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                //addProjection.Enabled = true;
+            }
+        }
+
+        private void movieName_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void durationtxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                  e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void releaseYearText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+              (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void movieName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(movieName.Text))
+            {
+                e.Cancel = true;
+                errors.SetError(movieName, Messages.MovieNameRequired);
+            }
+        }
+
+        private void originalMovieName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(originalMovieName.Text))
+            {
+                e.Cancel = true;
+                errors.SetError(originalMovieName, Messages.Required);
+            }
+        }
+
+        private void GenreCombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (GenreCombo.SelectedValue == null)
+            {
+                e.Cancel = true;
+                errors.SetError(GenreCombo, Messages.Required);
+            }
+        }
+
+        private void ageCombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (ageCombo.SelectedValue == null)
+            {
+                e.Cancel = true;
+                errors.SetError(ageCombo, Messages.Required);
+            }
+        }
+
+        private void durationtxt_Validating(object sender, CancelEventArgs e)
+        {
+            int result;
+            if (!int.TryParse(durationtxt.Text, out result))
+            {
+                e.Cancel = true;
+                errors.SetError(durationtxt, Messages.Digit_err);
+            }
+        }
+
+        private void releaseYearText_Validating(object sender, CancelEventArgs e)
+        {
+            int result;
+            if (!int.TryParse(releaseYearText.Text, out result))
+            {
+                e.Cancel = true;
+                errors.SetError(releaseYearText, Messages.Digit_err);
+            }
+        }
+
+        private void movieImage_Validating(object sender, CancelEventArgs e)
+        {
+            if (movieImage.Image == null)
+            {
+                e.Cancel = true;
+                errors.SetError(movieImage, Messages.Required);
+            }
+
+        }
+
+        private void Synopsis_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Synopsis.Text))
+            {
+                e.Cancel = true;
+                errors.SetError(Synopsis, Messages.Required);
+            }
+        }
+
+        private void DirectorsBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            for (int ix = 0; ix < DirectorsBox.Items.Count; ++ix)
+                if (ix != e.Index) DirectorsBox.SetItemChecked(ix, false);
+        }
+
+        private void actorsBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (actorsBox.CheckedItems.Count == 0)
+            {
+                e.Cancel = true;
+                errors.SetError(actorsBox, Messages.Required);
+            }
+        }
+
+        private void DirectorsBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (DirectorsBox.CheckedItems.Count == 0)
+            {
+                e.Cancel = true;
+                errors.SetError(DirectorsBox, Messages.Required);
+            }
+        }
+    }
+}

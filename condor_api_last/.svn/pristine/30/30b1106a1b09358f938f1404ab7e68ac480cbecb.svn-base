@@ -1,0 +1,301 @@
+﻿namespace CondorExtreme3_UI.Cinemas
+{
+    partial class StatisticsForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.cmbAnalysisTypes = new System.Windows.Forms.ComboBox();
+            this.cmbTechnologyTypes = new System.Windows.Forms.ComboBox();
+            this.cmbMovies = new System.Windows.Forms.ComboBox();
+            this.dtPeriodFrom = new System.Windows.Forms.DateTimePicker();
+            this.btnGenerateChart = new System.Windows.Forms.Button();
+            this.targetChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dtPeriodTo = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pnlAnalysisTypes = new System.Windows.Forms.Panel();
+            this.pnlDateFromTo = new System.Windows.Forms.Panel();
+            this.pnlMovies = new System.Windows.Forms.Panel();
+            this.pnlTechnologyTypes = new System.Windows.Forms.Panel();
+            this.pnlGenerateChart = new System.Windows.Forms.Panel();
+            this.flpParameters = new System.Windows.Forms.FlowLayoutPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.targetChart)).BeginInit();
+            this.pnlAnalysisTypes.SuspendLayout();
+            this.pnlDateFromTo.SuspendLayout();
+            this.pnlMovies.SuspendLayout();
+            this.pnlTechnologyTypes.SuspendLayout();
+            this.pnlGenerateChart.SuspendLayout();
+            this.flpParameters.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // cmbAnalysisTypes
+            // 
+            this.cmbAnalysisTypes.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbAnalysisTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAnalysisTypes.FormattingEnabled = true;
+            this.cmbAnalysisTypes.Location = new System.Drawing.Point(6, 42);
+            this.cmbAnalysisTypes.Name = "cmbAnalysisTypes";
+            this.cmbAnalysisTypes.Size = new System.Drawing.Size(185, 21);
+            this.cmbAnalysisTypes.TabIndex = 0;
+            this.cmbAnalysisTypes.SelectionChangeCommitted += new System.EventHandler(this.cmbAnalysisTypes_SelectionChangeCommitted);
+            // 
+            // cmbTechnologyTypes
+            // 
+            this.cmbTechnologyTypes.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbTechnologyTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTechnologyTypes.FormattingEnabled = true;
+            this.cmbTechnologyTypes.Location = new System.Drawing.Point(3, 43);
+            this.cmbTechnologyTypes.Name = "cmbTechnologyTypes";
+            this.cmbTechnologyTypes.Size = new System.Drawing.Size(164, 21);
+            this.cmbTechnologyTypes.TabIndex = 2;
+            this.cmbTechnologyTypes.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // cmbMovies
+            // 
+            this.cmbMovies.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cmbMovies.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMovies.FormattingEnabled = true;
+            this.cmbMovies.Location = new System.Drawing.Point(3, 42);
+            this.cmbMovies.Name = "cmbMovies";
+            this.cmbMovies.Size = new System.Drawing.Size(182, 21);
+            this.cmbMovies.TabIndex = 3;
+            this.cmbMovies.SelectedIndexChanged += new System.EventHandler(this.cmbMovies_SelectedIndexChanged);
+            // 
+            // dtPeriodFrom
+            // 
+            this.dtPeriodFrom.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.dtPeriodFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtPeriodFrom.Location = new System.Drawing.Point(3, 44);
+            this.dtPeriodFrom.Name = "dtPeriodFrom";
+            this.dtPeriodFrom.Size = new System.Drawing.Size(175, 20);
+            this.dtPeriodFrom.TabIndex = 4;
+            this.dtPeriodFrom.ValueChanged += new System.EventHandler(this.dtPeriodFrom_ValueChanged);
+            // 
+            // btnGenerateChart
+            // 
+            this.btnGenerateChart.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnGenerateChart.Location = new System.Drawing.Point(3, 41);
+            this.btnGenerateChart.Name = "btnGenerateChart";
+            this.btnGenerateChart.Size = new System.Drawing.Size(156, 23);
+            this.btnGenerateChart.TabIndex = 5;
+            this.btnGenerateChart.Text = "Generate Chart";
+            this.btnGenerateChart.UseVisualStyleBackColor = true;
+            this.btnGenerateChart.Click += new System.EventHandler(this.btnGenerateChart_Click);
+            // 
+            // targetChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.targetChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.targetChart.Legends.Add(legend1);
+            this.targetChart.Location = new System.Drawing.Point(21, 101);
+            this.targetChart.Name = "targetChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.targetChart.Series.Add(series1);
+            this.targetChart.Size = new System.Drawing.Size(1247, 402);
+            this.targetChart.TabIndex = 6;
+            this.targetChart.Text = "targetChart";
+            // 
+            // dtPeriodTo
+            // 
+            this.dtPeriodTo.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.dtPeriodTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtPeriodTo.Location = new System.Drawing.Point(184, 44);
+            this.dtPeriodTo.Name = "dtPeriodTo";
+            this.dtPeriodTo.Size = new System.Drawing.Size(175, 20);
+            this.dtPeriodTo.TabIndex = 7;
+            this.dtPeriodTo.ValueChanged += new System.EventHandler(this.dtPeriodTo_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Analysis Type";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(-3, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Time Period (From)";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(181, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Time Period (To)";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(-3, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Movies";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(-3, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(95, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Technology Types";
+            // 
+            // pnlAnalysisTypes
+            // 
+            this.pnlAnalysisTypes.Controls.Add(this.label1);
+            this.pnlAnalysisTypes.Controls.Add(this.cmbAnalysisTypes);
+            this.pnlAnalysisTypes.Location = new System.Drawing.Point(3, 3);
+            this.pnlAnalysisTypes.Name = "pnlAnalysisTypes";
+            this.pnlAnalysisTypes.Size = new System.Drawing.Size(193, 80);
+            this.pnlAnalysisTypes.TabIndex = 14;
+            // 
+            // pnlDateFromTo
+            // 
+            this.pnlDateFromTo.Controls.Add(this.label3);
+            this.pnlDateFromTo.Controls.Add(this.dtPeriodTo);
+            this.pnlDateFromTo.Controls.Add(this.label2);
+            this.pnlDateFromTo.Controls.Add(this.dtPeriodFrom);
+            this.pnlDateFromTo.Location = new System.Drawing.Point(202, 3);
+            this.pnlDateFromTo.Name = "pnlDateFromTo";
+            this.pnlDateFromTo.Size = new System.Drawing.Size(367, 80);
+            this.pnlDateFromTo.TabIndex = 15;
+            // 
+            // pnlMovies
+            // 
+            this.pnlMovies.Controls.Add(this.label4);
+            this.pnlMovies.Controls.Add(this.cmbMovies);
+            this.pnlMovies.Location = new System.Drawing.Point(575, 3);
+            this.pnlMovies.Name = "pnlMovies";
+            this.pnlMovies.Size = new System.Drawing.Size(188, 80);
+            this.pnlMovies.TabIndex = 17;
+            // 
+            // pnlTechnologyTypes
+            // 
+            this.pnlTechnologyTypes.Controls.Add(this.label5);
+            this.pnlTechnologyTypes.Controls.Add(this.cmbTechnologyTypes);
+            this.pnlTechnologyTypes.Location = new System.Drawing.Point(769, 3);
+            this.pnlTechnologyTypes.Name = "pnlTechnologyTypes";
+            this.pnlTechnologyTypes.Size = new System.Drawing.Size(170, 80);
+            this.pnlTechnologyTypes.TabIndex = 18;
+            // 
+            // pnlGenerateChart
+            // 
+            this.pnlGenerateChart.Controls.Add(this.btnGenerateChart);
+            this.pnlGenerateChart.Location = new System.Drawing.Point(945, 3);
+            this.pnlGenerateChart.Name = "pnlGenerateChart";
+            this.pnlGenerateChart.Size = new System.Drawing.Size(172, 80);
+            this.pnlGenerateChart.TabIndex = 19;
+            // 
+            // flpParameters
+            // 
+            this.flpParameters.Controls.Add(this.pnlAnalysisTypes);
+            this.flpParameters.Controls.Add(this.pnlDateFromTo);
+            this.flpParameters.Controls.Add(this.pnlMovies);
+            this.flpParameters.Controls.Add(this.pnlTechnologyTypes);
+            this.flpParameters.Controls.Add(this.pnlGenerateChart);
+            this.flpParameters.Location = new System.Drawing.Point(12, -5);
+            this.flpParameters.Name = "flpParameters";
+            this.flpParameters.Size = new System.Drawing.Size(1129, 100);
+            this.flpParameters.TabIndex = 6;
+            // 
+            // StatisticsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1274, 532);
+            this.Controls.Add(this.flpParameters);
+            this.Controls.Add(this.targetChart);
+            this.Location = new System.Drawing.Point(350, 200);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "StatisticsForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "StatisticsForm";
+            ((System.ComponentModel.ISupportInitialize)(this.targetChart)).EndInit();
+            this.pnlAnalysisTypes.ResumeLayout(false);
+            this.pnlAnalysisTypes.PerformLayout();
+            this.pnlDateFromTo.ResumeLayout(false);
+            this.pnlDateFromTo.PerformLayout();
+            this.pnlMovies.ResumeLayout(false);
+            this.pnlMovies.PerformLayout();
+            this.pnlTechnologyTypes.ResumeLayout(false);
+            this.pnlTechnologyTypes.PerformLayout();
+            this.pnlGenerateChart.ResumeLayout(false);
+            this.flpParameters.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.ComboBox cmbAnalysisTypes;
+        private System.Windows.Forms.ComboBox cmbTechnologyTypes;
+        private System.Windows.Forms.ComboBox cmbMovies;
+        private System.Windows.Forms.DateTimePicker dtPeriodFrom;
+        private System.Windows.Forms.Button btnGenerateChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart targetChart;
+        private System.Windows.Forms.DateTimePicker dtPeriodTo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel pnlAnalysisTypes;
+        private System.Windows.Forms.Panel pnlDateFromTo;
+        private System.Windows.Forms.Panel pnlMovies;
+        private System.Windows.Forms.Panel pnlTechnologyTypes;
+        private System.Windows.Forms.Panel pnlGenerateChart;
+        private System.Windows.Forms.FlowLayoutPanel flpParameters;
+    }
+}

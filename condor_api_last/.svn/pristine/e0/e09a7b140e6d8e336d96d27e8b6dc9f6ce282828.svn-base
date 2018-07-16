@@ -1,0 +1,111 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+
+<div class="row" style="margin-bottom:25px;">
+    <div class="col-xs-1 col-sm-1 col-md-1"><i class="fa fa-chevron-left" aria-hidden="true"></i> <small></small></div>
+    <div class="col-xs-10 col-sm-10 col-md-10"><b>Add new projection</b></div>
+    @using (Html.BeginForm("GetProjections", "ProjectionManager",  FormMethod.Post))
+    {
+        <input hidden="hidden" name="layout" value="~/Areas/Local/Views/Shared/_LayoutProjectionManager.cshtml"/>
+    <div class="col-xs-1 col-sm-1 col-md-1"><button type="submit" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+    }
+</div>
+
+
+@using (Ajax.BeginForm("ShowTrailler", "ProjectionManager", null, new AjaxOptions
+{
+    HttpMethod = "post",
+    UpdateTargetId = "showProjection",
+    LoadingElementId = "loader"
+}, new { enctype = "multipart/form-data", id="SetProjection" }))
+{
+
+
+
+        <div class="col-md-4 col-sm-6 col-xs-12" >        
+
+            @Html.LabelFor(x => x.Projection.Movie.MovieName, "Movie name:", new { @class = "fontSize" })
+            @Html.TextBoxFor(x => x.Projection.Movie.MovieName, new { @onchange = "$(this.form).submit()", @class = "form-control inputTransp fontSize", Style="font-weight:600;" })
+
+            @Html.LabelFor(x => x.Projection.Movie.OriginalName, "Original movie name:", new { @class = "fontSize" })
+            @Html.TextBoxFor(x => x.Projection.Movie.OriginalName, new { @class = "form-control inputTransp fontSize", Style = "font-weight:600;" })
+            
+            @Html.LabelFor(x => x.Projection.Movie.Genre.GenreName, "Select genre: ", new { @class = "fontSize " })
+            @Html.ValidationMessageFor(x=>x.GenreID, null, new { style="color:red; float:right;"})
+            @Html.DropDownListFor(x => x.GenreID, Model.Genres, "", new { @class = "form-control inputTransp fontSize", Style = "font-weight:600;" })
+
+            <div class="col-md-4" style="padding-left:0px; padding-right:0px;">
+                @Html.Label("Duration:", new { @class = "fontSize" })
+                @Html.TextBoxFor(x => x.Projection.Movie.DurationInMinutes, new {@class = "form-control inputTransp fontSize", Style = "font-weight:600;" })    
+            </div>
+
+            <div class="col-md-4" style="padding-left:0px; padding-right:0px;">
+                @Html.Label("Age:", new { @class = "fontSize" })
+                @Html.TextBoxFor(x => x.Projection.Movie.AgeRestriction, new {@class = "form-control inputTransp fontSize", Style = "font-weight:600;" })
+            </div>
+
+            <div class="col-md-4" style="padding-left:0px; padding-right:0px;">
+                @Html.Label("Release:", new { @class = "fontSize" })
+                @Html.TextBoxFor(x => x.Projection.Movie.ReleaseYear, new { @class = "form-control inputTransp fontSize", Style = "font-weight:600;" })
+            </div>
+            
+            @Html.Label("Synopsis:", new { @class = "fontSize" })
+            @Html.TextAreaFor(x=> x.Projection.Movie.Synopsis, new { @class = "form-control inputTransp fontSize", rows="4", Style= "resize: none; font-weight:600;" })
+           
+            <div class="col-md-6" style="padding-left:0px; padding-right:0px;">
+                <div class="fileUpload btn btn-default fontSize">
+                    <span>Cover picture</span>
+                    <input type="file" class="upload" name="Picture" />
+                </div>
+            </div>
+
+            <div class="col-md-6" style="padding-left:0px; padding-right:0px; padding-top:5px; text-align:right;">
+                @Html.Label("Current movie:", new { @class = "fontSize" })
+                @Html.CheckBoxFor(x=>x.Projection.Movie.IsCurrent)
+            </div>
+
+            <div class="form-group col-md-12" style="padding-left:0px; padding-right:0px; margin-top:7px;">
+            @Html.Label("Select actors:", new { @class = "fontSize" })
+            @Html.DropDownListFor(x=> x.ActorsIDs, Model.Actors, new { @class = "form-control select2 select2-hidden-accessible inputTransp fontSize", multiple = "", @data_placeholder = "", Style = "width: 100%; background-color: rgba(255,255,255,0); font-size:12px;", tabindex = "-1", @aria_hidden = "true" })             
+            </div>
+
+            <div class="form-group col-md-12" style="padding-left:0px; padding-right:0px;">
+                @Html.Label("Select directors:", new { @class = "fontSize" })
+                @Html.DropDownListFor(x => x.DirectorsIDs, Model.Directors, new { @class = "form-control select2 select2-hidden-accessible inputTransp fontSize", multiple = "", @data_placeholder = "", Style = "width: 100%; background-color: rgba(255,255,255,0); font-size:12px;", tabindex = "-1", @aria_hidden = "true" })
+            </div>
+
+            <div class="col-md-6" style="padding-left:0px; padding-right:0px; margin-bottom:7px;">
+                <button type="submit" name="ButtonType" value="save" class="btn btn-block btn-danger btn-xs" style="width:98%; border:0;"><i class="fa fa-fw fa-angle-double-up"></i> Add movie</button>
+            </div>
+
+
+            <div class="col-md-6" style="padding-left:0px; padding-right:0px; margin-bottom:7px;">
+                <button type="submit" name="ButtonType" value="next" class="btn btn-block btn-danger btn-xs pull-right" style="width:98%; border:0;">Skip step <i class="fa fa-fw fa-angle-double-right"></i></button>
+            </div>
+
+
+        </div>
+}
+        <div id="showProjection" class="col-md-8 col-sm-6 col-xs-12 fontSize" style="color:darkred;">          
+            @if (Model.SuccessDescription != null)
+            {<div class="label label-success" >
+                  @Model.SuccessDescription 
+            </div>
+            }    
+               <p>You will be able to add a projection after you add a movie or skip the add movie step</p>
+            <br />
+            <img id="loading1" style="z-index:1234; display:none; width:30px; text-align:center; margin-top:30px;" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader" />
+            </div>
+
+
+
+
+    <div class="row" style="clear:both;"></div>
+<script>
+    $(".select2").select2();
+</script>
+  

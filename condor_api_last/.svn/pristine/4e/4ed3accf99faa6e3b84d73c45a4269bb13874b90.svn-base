@@ -1,0 +1,125 @@
+﻿@model List<CondorExtreme3.Areas.Local.Models.CinemaHallShowVM>
+@{
+    ViewBag.Title = "CinemaHallManagement";
+    Layout = "~/Areas/Local/Views/Shared/_LayoutDirector.cshtml";
+}
+<style>
+    .info-box {
+        display: block;
+        min-height: 90px;
+        background: #dde3fc;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+    }
+
+    body {
+        font-family: font96003, sans-serif;
+        font-weight: 400;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .btn-app {
+        border-radius: 3px;
+        position: relative;
+        padding: 5px 15px 5px 15px;
+        margin: 0 0 10px 0px;
+        width: 50%;
+        text-align: center;
+        color: #666;
+        border: 1px solid #ddd;
+        font-size: 12px;
+    }
+
+    
+</style>
+
+
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+
+        @using (Ajax.BeginForm("CreateCinemaHall", "Director", new AjaxOptions { UpdateTargetId = "ModalCH" }))
+        {
+            <button type="submit" class="btn bg-red-gradient" style="width:70px; margin-top:5px;" data-toggle="modal" data-target="#ModalCH">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        }
+
+
+
+
+
+    </div>
+
+
+</div>
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-light-blue-gradient"><i class="fa fa-film" aria-hidden="true"></i></span>
+
+                <div class="info-box-content">
+
+                   
+                    <span class="info-box-text"><b style="font-size:16px;">@item.Name</b></span>
+
+                    <span class="info-box-text"><small style="font-size:10px;">Number of seats:</small> <b style="font-size:12px">@item.NumberOfSeats</b></span>
+                   
+                    @foreach (var i in item.AllTechnologyTypes)
+                    {
+                        switch (i)
+                        {
+                            case "2D":<span class="label label-info">2D</span> ; break;
+                            case "2DX":<span class="label label-success">2DX</span> ; break;
+                            case "3D":<span class="label label-warning">3D</span> ; break;
+                            case "3DX":<span class="label label-primary">3DX</span> ; break;
+                            case "Real 3D":<span class="label label-danger">Real 3D</span> ; break;
+                            default:
+                                break;
+                        }
+                    }
+
+                </div>
+
+
+            </div>
+
+            <div class="divContainerCinemaHall">
+
+                @using (Ajax.BeginForm("DeleteCinemaHall", "Director", new { CinemaHallID = item.CinemaHallID }, new AjaxOptions { UpdateTargetId = "ModalCH" }))
+                {
+                    <a class="btn btn-app pull-right modalAnchor" href="#" data-toggle="modal" data-target="#ModalCH" onclick="$(this).closest('form').submit()">
+                        <i class="fa fa-trash"></i> Delete
+                    </a>
+                }
+
+
+                
+                @using (Ajax.BeginForm("EditCinemaHall", "Director", new { CinemaHallID = item.CinemaHallID }, new AjaxOptions { UpdateTargetId = "ModalCH" }))
+                {
+                    <a class="btn btn-app pull-right modalAnchor" href="#" data-toggle="modal" data-target="#ModalCH" onclick="$(this).closest('form').submit()">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                }
+
+
+              
+               
+
+            </div>
+
+        </div>
+    }
+</div>
+
+
+<div class="modal" id="ModalCH">
+
+</div>
+

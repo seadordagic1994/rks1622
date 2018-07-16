@@ -1,0 +1,611 @@
+﻿namespace CondorExtreme3_UI.Employees
+{
+    partial class EmployeesManagementForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.grdEmployees = new System.Windows.Forms.DataGridView();
+            this.lblCinema = new System.Windows.Forms.Label();
+            this.groupBoxCinemaInfo = new System.Windows.Forms.GroupBox();
+            this.lblDirectorName = new System.Windows.Forms.Label();
+            this.lblEmployeeCount = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblLocation = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAddEmployee = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblGenders = new System.Windows.Forms.Label();
+            this.cmbCities = new System.Windows.Forms.ComboBox();
+            this.cmbGenders = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtSearchByLastName = new System.Windows.Forms.TextBox();
+            this.txtSearchByFirstName = new System.Windows.Forms.TextBox();
+            this.tabEmployees = new System.Windows.Forms.TabControl();
+            this.pageEmployeeInfo = new System.Windows.Forms.TabPage();
+            this.btnSystemRoles = new System.Windows.Forms.Button();
+            this.btnEditEmployee = new System.Windows.Forms.Button();
+            this.btnDeactivate = new System.Windows.Forms.Button();
+            this.pageEmployment = new System.Windows.Forms.TabPage();
+            this.btnDeactivateEmployment = new System.Windows.Forms.Button();
+            this.btnPayments = new System.Windows.Forms.Button();
+            this.btnEditEmployment = new System.Windows.Forms.Button();
+            this.btnAddEmployment = new System.Windows.Forms.Button();
+            this.grdEmployments = new System.Windows.Forms.DataGridView();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cmbEmploymentTypes = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnSearchEmpl = new System.Windows.Forms.Button();
+            this.txtSearchByLastNameEmpl = new System.Windows.Forms.TextBox();
+            this.txtSearchByFirstNameEmpl = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployees)).BeginInit();
+            this.groupBoxCinemaInfo.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabEmployees.SuspendLayout();
+            this.pageEmployeeInfo.SuspendLayout();
+            this.pageEmployment.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployments)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // grdEmployees
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.grdEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEmployees.Location = new System.Drawing.Point(6, 96);
+            this.grdEmployees.MultiSelect = false;
+            this.grdEmployees.Name = "grdEmployees";
+            this.grdEmployees.ReadOnly = true;
+            this.grdEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdEmployees.Size = new System.Drawing.Size(786, 283);
+            this.grdEmployees.TabIndex = 0;
+            // 
+            // lblCinema
+            // 
+            this.lblCinema.Font = new System.Drawing.Font("Arial Narrow", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCinema.Location = new System.Drawing.Point(179, 9);
+            this.lblCinema.Name = "lblCinema";
+            this.lblCinema.Size = new System.Drawing.Size(489, 51);
+            this.lblCinema.TabIndex = 3;
+            this.lblCinema.Text = "Cinema Name";
+            // 
+            // groupBoxCinemaInfo
+            // 
+            this.groupBoxCinemaInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBoxCinemaInfo.Controls.Add(this.lblDirectorName);
+            this.groupBoxCinemaInfo.Controls.Add(this.lblEmployeeCount);
+            this.groupBoxCinemaInfo.Controls.Add(this.label2);
+            this.groupBoxCinemaInfo.Controls.Add(this.label4);
+            this.groupBoxCinemaInfo.Controls.Add(this.label3);
+            this.groupBoxCinemaInfo.Controls.Add(this.lblLocation);
+            this.groupBoxCinemaInfo.Controls.Add(this.lblAddress);
+            this.groupBoxCinemaInfo.Controls.Add(this.label1);
+            this.groupBoxCinemaInfo.Location = new System.Drawing.Point(16, 46);
+            this.groupBoxCinemaInfo.Name = "groupBoxCinemaInfo";
+            this.groupBoxCinemaInfo.Size = new System.Drawing.Size(813, 107);
+            this.groupBoxCinemaInfo.TabIndex = 4;
+            this.groupBoxCinemaInfo.TabStop = false;
+            this.groupBoxCinemaInfo.Text = "Cinema Info";
+            // 
+            // lblDirectorName
+            // 
+            this.lblDirectorName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblDirectorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirectorName.Location = new System.Drawing.Point(541, 58);
+            this.lblDirectorName.Name = "lblDirectorName";
+            this.lblDirectorName.Size = new System.Drawing.Size(158, 25);
+            this.lblDirectorName.TabIndex = 10;
+            this.lblDirectorName.Text = "DirectorXY";
+            this.lblDirectorName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblEmployeeCount
+            // 
+            this.lblEmployeeCount.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblEmployeeCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmployeeCount.Location = new System.Drawing.Point(541, 26);
+            this.lblEmployeeCount.Name = "lblEmployeeCount";
+            this.lblEmployeeCount.Size = new System.Drawing.Size(158, 25);
+            this.lblEmployeeCount.TabIndex = 7;
+            this.lblEmployeeCount.Text = "0";
+            this.lblEmployeeCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(47, 58);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(109, 25);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Location:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(389, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(142, 25);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Director:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(389, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(146, 25);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Employees:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblLocation
+            // 
+            this.lblLocation.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocation.Location = new System.Drawing.Point(152, 58);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(209, 25);
+            this.lblLocation.TabIndex = 5;
+            this.lblLocation.Text = "Location";
+            this.lblLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(152, 26);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(209, 25);
+            this.lblAddress.TabIndex = 4;
+            this.lblAddress.Text = "Address";
+            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(47, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 25);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Address:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnAddEmployee
+            // 
+            this.btnAddEmployee.Location = new System.Drawing.Point(6, 398);
+            this.btnAddEmployee.Name = "btnAddEmployee";
+            this.btnAddEmployee.Size = new System.Drawing.Size(188, 33);
+            this.btnAddEmployee.TabIndex = 3;
+            this.btnAddEmployee.Text = "Add Employee";
+            this.btnAddEmployee.UseVisualStyleBackColor = true;
+            this.btnAddEmployee.Click += new System.EventHandler(this.btnAddEmployee_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.lblGenders);
+            this.groupBox1.Controls.Add(this.cmbCities);
+            this.groupBox1.Controls.Add(this.cmbGenders);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.btnSearch);
+            this.groupBox1.Controls.Add(this.txtSearchByLastName);
+            this.groupBox1.Controls.Add(this.txtSearchByFirstName);
+            this.groupBox1.Location = new System.Drawing.Point(8, 18);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(784, 72);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Search";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(444, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(24, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "City";
+            // 
+            // lblGenders
+            // 
+            this.lblGenders.AutoSize = true;
+            this.lblGenders.Location = new System.Drawing.Point(296, 16);
+            this.lblGenders.Name = "lblGenders";
+            this.lblGenders.Size = new System.Drawing.Size(42, 13);
+            this.lblGenders.TabIndex = 14;
+            this.lblGenders.Text = "Gender";
+            // 
+            // cmbCities
+            // 
+            this.cmbCities.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCities.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCities.FormattingEnabled = true;
+            this.cmbCities.Location = new System.Drawing.Point(447, 33);
+            this.cmbCities.Name = "cmbCities";
+            this.cmbCities.Size = new System.Drawing.Size(142, 26);
+            this.cmbCities.TabIndex = 13;
+            // 
+            // cmbGenders
+            // 
+            this.cmbGenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGenders.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbGenders.FormattingEnabled = true;
+            this.cmbGenders.Location = new System.Drawing.Point(299, 33);
+            this.cmbGenders.Name = "cmbGenders";
+            this.cmbGenders.Size = new System.Drawing.Size(142, 26);
+            this.cmbGenders.TabIndex = 11;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(157, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Last Name";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "First Name";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(595, 31);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(159, 28);
+            this.btnSearch.TabIndex = 10;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtSearchByLastName
+            // 
+            this.txtSearchByLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchByLastName.Location = new System.Drawing.Point(160, 33);
+            this.txtSearchByLastName.Name = "txtSearchByLastName";
+            this.txtSearchByLastName.Size = new System.Drawing.Size(133, 24);
+            this.txtSearchByLastName.TabIndex = 9;
+            // 
+            // txtSearchByFirstName
+            // 
+            this.txtSearchByFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchByFirstName.Location = new System.Drawing.Point(10, 33);
+            this.txtSearchByFirstName.Name = "txtSearchByFirstName";
+            this.txtSearchByFirstName.Size = new System.Drawing.Size(144, 24);
+            this.txtSearchByFirstName.TabIndex = 8;
+            // 
+            // tabEmployees
+            // 
+            this.tabEmployees.Controls.Add(this.pageEmployeeInfo);
+            this.tabEmployees.Controls.Add(this.pageEmployment);
+            this.tabEmployees.Location = new System.Drawing.Point(12, 159);
+            this.tabEmployees.Name = "tabEmployees";
+            this.tabEmployees.SelectedIndex = 0;
+            this.tabEmployees.Size = new System.Drawing.Size(821, 460);
+            this.tabEmployees.TabIndex = 8;
+            // 
+            // pageEmployeeInfo
+            // 
+            this.pageEmployeeInfo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageEmployeeInfo.Controls.Add(this.btnSystemRoles);
+            this.pageEmployeeInfo.Controls.Add(this.btnAddEmployee);
+            this.pageEmployeeInfo.Controls.Add(this.groupBox1);
+            this.pageEmployeeInfo.Controls.Add(this.btnEditEmployee);
+            this.pageEmployeeInfo.Controls.Add(this.btnDeactivate);
+            this.pageEmployeeInfo.Controls.Add(this.grdEmployees);
+            this.pageEmployeeInfo.Location = new System.Drawing.Point(4, 22);
+            this.pageEmployeeInfo.Name = "pageEmployeeInfo";
+            this.pageEmployeeInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.pageEmployeeInfo.Size = new System.Drawing.Size(813, 434);
+            this.pageEmployeeInfo.TabIndex = 0;
+            this.pageEmployeeInfo.Text = "Employees Info";
+            // 
+            // btnSystemRoles
+            // 
+            this.btnSystemRoles.Location = new System.Drawing.Point(588, 398);
+            this.btnSystemRoles.Name = "btnSystemRoles";
+            this.btnSystemRoles.Size = new System.Drawing.Size(188, 33);
+            this.btnSystemRoles.TabIndex = 8;
+            this.btnSystemRoles.Text = "System Roles";
+            this.btnSystemRoles.UseVisualStyleBackColor = true;
+            this.btnSystemRoles.Click += new System.EventHandler(this.btnSystemRoles_Click);
+            // 
+            // btnEditEmployee
+            // 
+            this.btnEditEmployee.Location = new System.Drawing.Point(200, 398);
+            this.btnEditEmployee.Name = "btnEditEmployee";
+            this.btnEditEmployee.Size = new System.Drawing.Size(188, 33);
+            this.btnEditEmployee.TabIndex = 6;
+            this.btnEditEmployee.Text = "Edit Employee";
+            this.btnEditEmployee.UseVisualStyleBackColor = true;
+            this.btnEditEmployee.Click += new System.EventHandler(this.btnEditEmployee_Click);
+            // 
+            // btnDeactivate
+            // 
+            this.btnDeactivate.Location = new System.Drawing.Point(394, 398);
+            this.btnDeactivate.Name = "btnDeactivate";
+            this.btnDeactivate.Size = new System.Drawing.Size(188, 33);
+            this.btnDeactivate.TabIndex = 6;
+            this.btnDeactivate.Text = "Deactivate Employee";
+            this.btnDeactivate.UseVisualStyleBackColor = true;
+            this.btnDeactivate.Click += new System.EventHandler(this.btnDeactivate_Click);
+            // 
+            // pageEmployment
+            // 
+            this.pageEmployment.BackColor = System.Drawing.SystemColors.Control;
+            this.pageEmployment.Controls.Add(this.btnDeactivateEmployment);
+            this.pageEmployment.Controls.Add(this.btnPayments);
+            this.pageEmployment.Controls.Add(this.btnEditEmployment);
+            this.pageEmployment.Controls.Add(this.btnAddEmployment);
+            this.pageEmployment.Controls.Add(this.grdEmployments);
+            this.pageEmployment.Controls.Add(this.groupBox2);
+            this.pageEmployment.Location = new System.Drawing.Point(4, 22);
+            this.pageEmployment.Name = "pageEmployment";
+            this.pageEmployment.Padding = new System.Windows.Forms.Padding(3);
+            this.pageEmployment.Size = new System.Drawing.Size(813, 434);
+            this.pageEmployment.TabIndex = 1;
+            this.pageEmployment.Text = "Employments";
+            // 
+            // btnDeactivateEmployment
+            // 
+            this.btnDeactivateEmployment.Location = new System.Drawing.Point(587, 398);
+            this.btnDeactivateEmployment.Name = "btnDeactivateEmployment";
+            this.btnDeactivateEmployment.Size = new System.Drawing.Size(188, 33);
+            this.btnDeactivateEmployment.TabIndex = 12;
+            this.btnDeactivateEmployment.Text = "Deactivate Employment";
+            this.btnDeactivateEmployment.UseVisualStyleBackColor = true;
+            this.btnDeactivateEmployment.Click += new System.EventHandler(this.btnDeactivateEmployment_Click);
+            // 
+            // btnPayments
+            // 
+            this.btnPayments.Location = new System.Drawing.Point(393, 398);
+            this.btnPayments.Name = "btnPayments";
+            this.btnPayments.Size = new System.Drawing.Size(188, 33);
+            this.btnPayments.TabIndex = 11;
+            this.btnPayments.Text = "Payments";
+            this.btnPayments.UseVisualStyleBackColor = true;
+            this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
+            // 
+            // btnEditEmployment
+            // 
+            this.btnEditEmployment.Location = new System.Drawing.Point(200, 398);
+            this.btnEditEmployment.Name = "btnEditEmployment";
+            this.btnEditEmployment.Size = new System.Drawing.Size(188, 33);
+            this.btnEditEmployment.TabIndex = 10;
+            this.btnEditEmployment.Text = "Edit Employment";
+            this.btnEditEmployment.UseVisualStyleBackColor = true;
+            this.btnEditEmployment.Click += new System.EventHandler(this.btnEditEmployment_Click);
+            // 
+            // btnAddEmployment
+            // 
+            this.btnAddEmployment.Location = new System.Drawing.Point(6, 398);
+            this.btnAddEmployment.Name = "btnAddEmployment";
+            this.btnAddEmployment.Size = new System.Drawing.Size(188, 33);
+            this.btnAddEmployment.TabIndex = 9;
+            this.btnAddEmployment.Text = "Add Employment";
+            this.btnAddEmployment.UseVisualStyleBackColor = true;
+            this.btnAddEmployment.Click += new System.EventHandler(this.btnAddEmployment_Click);
+            // 
+            // grdEmployments
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdEmployments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.grdEmployments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEmployments.Location = new System.Drawing.Point(6, 96);
+            this.grdEmployments.MultiSelect = false;
+            this.grdEmployments.Name = "grdEmployments";
+            this.grdEmployments.ReadOnly = true;
+            this.grdEmployments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdEmployments.Size = new System.Drawing.Size(786, 283);
+            this.grdEmployments.TabIndex = 9;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.cmbEmploymentTypes);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.btnSearchEmpl);
+            this.groupBox2.Controls.Add(this.txtSearchByLastNameEmpl);
+            this.groupBox2.Controls.Add(this.txtSearchByFirstNameEmpl);
+            this.groupBox2.Location = new System.Drawing.Point(8, 18);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(784, 72);
+            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Search";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(296, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(91, 13);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "Employment Type";
+            // 
+            // cmbEmploymentTypes
+            // 
+            this.cmbEmploymentTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmploymentTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbEmploymentTypes.FormattingEnabled = true;
+            this.cmbEmploymentTypes.Location = new System.Drawing.Point(299, 32);
+            this.cmbEmploymentTypes.Name = "cmbEmploymentTypes";
+            this.cmbEmploymentTypes.Size = new System.Drawing.Size(204, 26);
+            this.cmbEmploymentTypes.TabIndex = 11;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(157, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(58, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Last Name";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "First Name";
+            // 
+            // btnSearchEmpl
+            // 
+            this.btnSearchEmpl.Location = new System.Drawing.Point(509, 31);
+            this.btnSearchEmpl.Name = "btnSearchEmpl";
+            this.btnSearchEmpl.Size = new System.Drawing.Size(144, 28);
+            this.btnSearchEmpl.TabIndex = 10;
+            this.btnSearchEmpl.Text = "Search";
+            this.btnSearchEmpl.UseVisualStyleBackColor = true;
+            this.btnSearchEmpl.Click += new System.EventHandler(this.btnSearchEmpl_Click);
+            // 
+            // txtSearchByLastNameEmpl
+            // 
+            this.txtSearchByLastNameEmpl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchByLastNameEmpl.Location = new System.Drawing.Point(160, 33);
+            this.txtSearchByLastNameEmpl.Name = "txtSearchByLastNameEmpl";
+            this.txtSearchByLastNameEmpl.Size = new System.Drawing.Size(133, 24);
+            this.txtSearchByLastNameEmpl.TabIndex = 9;
+            // 
+            // txtSearchByFirstNameEmpl
+            // 
+            this.txtSearchByFirstNameEmpl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchByFirstNameEmpl.Location = new System.Drawing.Point(10, 33);
+            this.txtSearchByFirstNameEmpl.Name = "txtSearchByFirstNameEmpl";
+            this.txtSearchByFirstNameEmpl.Size = new System.Drawing.Size(144, 24);
+            this.txtSearchByFirstNameEmpl.TabIndex = 8;
+            // 
+            // EmployeesManagementForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(863, 681);
+            this.Controls.Add(this.tabEmployees);
+            this.Controls.Add(this.lblCinema);
+            this.Controls.Add(this.groupBoxCinemaInfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "EmployeesManagementForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Employees Management";
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployees)).EndInit();
+            this.groupBoxCinemaInfo.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.tabEmployees.ResumeLayout(false);
+            this.pageEmployeeInfo.ResumeLayout(false);
+            this.pageEmployment.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployments)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.DataGridView grdEmployees;
+        private System.Windows.Forms.Label lblCinema;
+        private System.Windows.Forms.GroupBox groupBoxCinemaInfo;
+        private System.Windows.Forms.Label lblLocation;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddEmployee;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblEmployeeCount;
+        private System.Windows.Forms.Label lblDirectorName;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtSearchByLastName;
+        private System.Windows.Forms.TextBox txtSearchByFirstName;
+        private System.Windows.Forms.TabControl tabEmployees;
+        private System.Windows.Forms.TabPage pageEmployeeInfo;
+        private System.Windows.Forms.TabPage pageEmployment;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblGenders;
+        private System.Windows.Forms.ComboBox cmbCities;
+        private System.Windows.Forms.ComboBox cmbGenders;
+        private System.Windows.Forms.Button btnAddEmployment;
+        private System.Windows.Forms.DataGridView grdEmployments;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cmbEmploymentTypes;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnSearchEmpl;
+        private System.Windows.Forms.TextBox txtSearchByLastNameEmpl;
+        private System.Windows.Forms.TextBox txtSearchByFirstNameEmpl;
+        private System.Windows.Forms.Button btnEditEmployee;
+        private System.Windows.Forms.Button btnDeactivate;
+        private System.Windows.Forms.Button btnDeactivateEmployment;
+        private System.Windows.Forms.Button btnPayments;
+        private System.Windows.Forms.Button btnEditEmployment;
+        private System.Windows.Forms.Button btnSystemRoles;
+    }
+}

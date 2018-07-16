@@ -1,0 +1,71 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace CondorExtreme3_Xamarin
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class MovieRatingsPage : ContentPage
+	{
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/RecommendationSystem");
+
+        public MovieRatingsPage()
+		{
+			InitializeComponent();
+            LoadWatchedMovies();
+		}
+
+        public async void LoadWatchedMovies()
+        {
+            var response = service.GetResponse("GetWatchedMovies", Authentication.CurrentUser.UserID);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                JArray movies = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+                if (movies.Count == 0)
+                    mainStackLayout.Children.Add(new Label()
+                    {
+                        Text = "You haven't watched any movies yet!",
+                        FontSize = 30
+                    });
+
+                foreach (var movie in movies)
+                {
+                    var frame = new StackLayout() { Spacing = 0 };
+
+                    frame.Children.Add(new Label()
+                    {
+                        Text = movie["MovieName"].ToString(),
+                        FontSize = 14,
+                        HeightRequest = 30,
+                        TextColor = Color.White,
+                        BackgroundColor = Color.FromHex("#AA0000"),
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center
+                    });
+                    
+                    frame.Children.Add(new Image()
+                    {
+                        BackgroundColor = Color.FromHex("#CB5C5C"),
+                        HeightRequest = 220,
+                        Aspect = Aspect.AspectFill,
+                        Source = ImageSource.FromStream(() => new System.IO.MemoryStream(
+                            Convert.FromBase64String(movie["MovieCover"].ToString()
+                        ))),
+                    });
+
+                    int movieRating = (!movie["MovieRating"].HasValues) ? int.Parse(movie["MovieRating"].ToString()) : 0;
+                    frame.Children.Add(new RatingControl(int.Parse(movie["MovieID"].ToString()), movieRating));
+                    mainStackLayout.Children.Add(frame);
+                }
+            }
+        }
+    }
+}

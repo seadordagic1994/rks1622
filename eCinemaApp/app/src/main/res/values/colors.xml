@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="redActionBar">#D32F2F</color>
+    <color name="smoothBlack">#212121</color>
+    <color name="textOnSmoothColors">#FFFF</color>
+    <color name="redHighlighted">#F44336</color>
+    <color name="blackOp">#99000000</color>
+    <color name="smoothGray">#757575</color>
+    <color name="lightRed">#FFCDD2</color>
+    <color name="lightGray">#e7e7e7</color>
+    <color name="redButton">#e57373</color>
+</resources>

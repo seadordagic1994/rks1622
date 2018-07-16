@@ -1,0 +1,86 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+        
+<section class="content-header">
+    <span class="info-box-text">Projekcije</span>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li class="active">Projections</li>
+    </ol>
+
+</section>
+
+<section class="content-header">
+
+    @using (Ajax.BeginForm("AddProjection", "ProjectionManager", null, new AjaxOptions
+    {
+        HttpMethod = "post", UpdateTargetId = "modelContent",
+        LoadingElementId = "loader"
+    }))
+    {
+        <button type="submit" class="btn bg-red-gradient" style="margin-bottom:0px;" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <br /><br />
+    }
+</section>
+
+<div class="content">
+    <div class="row">
+@foreach(Projection p in Model.Projections)
+{ 
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-black" style="background: url(@p.Movie.Picture) center center;">
+                    
+                        @using (Html.BeginForm("ImageUpload", "ProjectionManager", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input hidden="hidden" name="MovieID" value="@p.Movie.MovieID" />
+
+                            <div class="fileUpload pull-right" style="background-color:#121212; border:0; box-shadow: 0px 0px 5px black; border-radius:3px; padding:3px 5px 3px 5px; margin:-25px -25px;" data-toggle="tooltip" data-placement="left" title="Add new movie image">
+                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                <input type="file" class="upload" name="image" onchange="$(this.form).submit()" />
+                            </div>
+                        }
+                    <h3 class="widget-user-username">@p.Movie.MovieName</h3>
+                    <h5 class="widget-user-desc">@p.Movie.Genre.GenreName</h5>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block" style="font-size:13px;">
+                                <b>Cinema hall</b> <br />
+                                @p.CinemaHall.Name, @p.TechnologyType.Name
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block" style="font-size:13px;">
+                                <b>Ticket price</b> <br />
+                                <b style="color:darkred">@p.TicketPrice KM </b>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="description-block" style="font-size:13px;">
+                                <b>Release year</b> <br />
+                                @p.Movie.ReleaseYear 
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+}
+
+    </div>
+</div>

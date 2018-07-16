@@ -1,0 +1,66 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Projections
+{
+
+    public partial class searchMovie : Form
+    {
+        public WebAPIHelper Service;
+        public searchMovie()
+        {
+
+            InitializeComponent();
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            this.AutoValidate = AutoValidate.Disable;
+            HttpResponseMessage movies = Service.GetResponse("GetMovies", null);
+
+            if (movies.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                moviesCombo.DataSource = movies.Content.ReadAsAsync<List<Object>>().Result;
+                moviesCombo.ValueMember = "Id";
+                moviesCombo.DisplayMember = "MovieName";
+                moviesCombo.SelectedItem = null;
+                moviesCombo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            }
+            else if (movies.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show(Messages.Movie404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void EditMovie_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren())
+            {
+                editMovie em = new editMovie(int.Parse(moviesCombo.SelectedValue.ToString()));
+                em.StartPosition = FormStartPosition.CenterScreen;
+                em.ShowDialog();
+            }
+        }
+
+        private void moviesCombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (moviesCombo.SelectedItem == null)
+            {
+                e.Cancel = true;
+                errors.SetError(moviesCombo, Messages.Required);
+            }
+            else
+            {
+                errors.SetError(moviesCombo, null);
+            }
+        }
+    }
+}

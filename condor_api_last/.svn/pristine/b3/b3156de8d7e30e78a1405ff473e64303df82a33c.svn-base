@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Xamarin.Forms;
+
+namespace CondorExtreme3_Xamarin
+{
+    public static class NavigationHelper
+    {
+        public static void ChangePageTo<Menu, Main>() 
+            where Menu : ContentPage, new()
+            where Main : ContentPage, new()
+        {
+            MasterDetailPage fmp = new MasterDetailPage();
+            fmp.Master = new Menu() { Title = "Master" };
+            fmp.Detail = new NavigationPage(new Main()) { BarBackgroundColor = Color.FromHex("CB5C5C"), Title = "Detail" };
+            Application.Current.MainPage = fmp;
+            fmp.IsPresented = false;
+        }
+    }
+}

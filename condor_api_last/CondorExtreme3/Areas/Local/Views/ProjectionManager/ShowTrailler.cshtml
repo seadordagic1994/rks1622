@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+
+<div class="col-xs-12" style="margin-bottom:3px;">
+    @for (int i = 0, j = 1; i < Model.Traillers.Count; i++, j++)
+    {
+        <button type="button" name="trailler" id="@Model.Traillers[i]" class="btn btn-default btn-xs pull-left" style="width:33.3333%; border:0;">Trailler @j</button>
+    }
+</div>
+<div class="col-xs-12" style="margin-bottom:12px;">
+    <div class="container">
+        <iframe src="@Model.Traillers[0]"
+                frameborder="0" allowfullscreen class="video"></iframe>
+    </div>
+</div>
+
+<div class="col-md-8">
+    <p style="color:darkred;"><b>Other inserted data will be shown after you add the new movie or skip to the next step</b></p>
+    
+</div>
+
+<script>
+    $("button[name='trailler']").on("click", function () {
+        $(".container > iframe").attr('src', $(this).attr('id'));        
+    });
+</script>
+
+

@@ -1,0 +1,664 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dynamsoft.BarcodeReader</name>
+    </assembly>
+    <members>
+        <member name="T:Dynamsoft.Barcode.BarcodeReader">
+            <summary>
+             Defines a class provides functions for working with extracting barcode data.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.#ctor">
+            <summary>
+             Create an instance of BarcodeReader with default setting.
+            </summary>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            	The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.#ctor(System.String)">
+            <summary>
+             Create an instance of BarcodeReader and set license keys.
+            </summary>
+            <param name="strLicenseKey">
+             The license keys to be set.
+            </param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            	The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.DecodeFile(System.String)">
+            <summary>
+             Read barcodes from a file with full path.
+            </summary>
+            <param name="strFileName">
+             The local path of the file.
+            </param>
+            <returns>
+             All barcodes have been read. If no barcodes are read, null is returned.
+            </returns>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            	The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.DecodeBitmap(System.Drawing.Bitmap)">
+            <summary>
+             Read barcodes from an image. Only decode the current page when handling multi-page images.
+            </summary>
+            <param name="bitmap">
+             The image to be decoded.
+            </param>
+            <returns>
+             All barcodes have been read. If no barcodes are read, null is returned.
+            </returns>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            	The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.DecodeBuffer(System.Byte[],System.Int32,System.Int32,System.Int32,Dynamsoft.Barcode.ImagePixelFormat)">
+            <summary>
+             Read barcodes from raw buffer.
+            </summary>
+            <param name="bytBuffer">
+             The image raw buffer.
+            </param>
+            <param name="iWidth">
+             The width of image buffer.
+            </param>
+            <param name="iHeight">
+             The height of image buffer.
+            </param>
+            <param name="iStride">
+             The stride width (also called scan width) of the image buffer.
+            </param>
+            <param name="emFormat">
+             The pixel format of image buffer.
+            </param>
+            <returns>
+             All barcodes have been read. If no barcodes are read, null is returned.
+            </returns>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            	The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.DecodeStream(System.Byte[])">
+            <summary>
+            Read barcodes from the byte array of a file.
+            </summary>
+            <param name="bytFileStream">The byte array of a file.</param>
+            <returns>All barcodes have been read. If no barcodes are read, null is returned.</returns>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.DecodeBase64String(System.String)">
+            <summary>
+            Read barcodes from the base64 encoded string of a file.
+            </summary>
+            <param name="strBase64">The base64 encoded string of a file.</param>
+            <returns>All barcodes have been read. If no barcodes are read, null is returned.</returns>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddPage(System.Int32)">
+            <summary>
+            Adds a page of a file(tiff or pdf format) to the selection for the barcode search.
+            </summary>
+            <param name="iPage">The page of a file.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetPageCount">
+            <summary>
+            Returns the number of pages in the selection.
+            </summary>
+            <returns>The number of pages in the selection</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetPage(System.Int32,System.Int32@)">
+            <summary>
+            Get a page number by the index of pages array.
+            </summary>
+            <param name="iIndex">The index of pages array.</param>
+            <param name="iPage">The page number corresponding to the index.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllPages">
+            <summary>
+            Clears all pages from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddRegion(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Adds an area of the image to the selection for barcode recognition.
+            </summary>
+            <param name="iLeft">The left-most coordinate of the area.</param>
+            <param name="iTop">The top-most coordinate of the area.</param>
+            <param name="iRight">The right-most coordinate of the area.</param>
+            <param name="iBottom">The bottom-most coordinate of the area.</param>
+            <param name="bByPercentage">Indicates the coordinate is measured by percentage or not.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddRegion(Dynamsoft.Barcode.ScanRegionSide,System.Int32)">
+            <summary>
+            Adds an area of the image to the selection for barcode recognition.
+            </summary>
+            <param name="emSide">The type of the area.</param>
+            <param name="iPercentage">The percentage measured from region side based on the parameter "emSide".</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetRegionCount">
+            <summary>
+            Returns the number of regions in the selection.
+            </summary>
+            <returns>The number of regions in the selection</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetRegion(System.Int32,System.Int32@,System.Int32@,System.Int32@,System.Int32@,System.Boolean@)">
+            <summary>
+            Get a region by the index of regions array.
+            </summary>
+            <param name="iIndex">The index of regions array.</param>
+            <param name="piLeft">The left-most coordinate of the area.</param>
+            <param name="piTop">The top-most coordinate of the area.</param>
+            <param name="piRight">The right-most coordinate of the area.</param>
+            <param name="piBottom">The bottom-most coordinate of the area.</param>
+            <param name="pbByPercentage">Indicates the coordinate is measured by percentage or not.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllRegions">
+            <summary>
+            Clears all regions from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddWidthRange(System.Int32,System.Int32)">
+            <summary>
+            Adds a range of barcode widths (in pixels) to the selection for the barcode search.
+            </summary>
+            <param name="iMinWidth">The minimal width of the searching barcode.</param>
+            <param name="iMaxWidth">The maximal width of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetWidthRangeCount">
+            <summary>
+            Returns the number of barcode width ranges in the selection.
+            </summary>
+            <returns>The number of barcode width ranges in the selection.</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetWidthRange(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Get a width range by the index of width ranges array.
+            </summary>
+            <param name="iIndex">The index of width ranges array.</param>
+            <param name="piMinWidth">The minimal width of the searching barcode.</param>
+            <param name="piMaxWidth">The maximal width of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllWidthRanges">
+            <summary>
+            Clears all width ranges from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddHeightRange(System.Int32,System.Int32)">
+            <summary>
+            Adds a range of barcode heights (in pixels) to the selection for the barcode search.
+            </summary>
+            <param name="iMinHeight">The minimal height of the searching barcode.</param>
+            <param name="iMaxHeight">The maximal height of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetHeightRangeCount">
+            <summary>
+            Returns the number of barcode height ranges in the selection.
+            </summary>
+            <returns>The number of barcode height ranges in the selection.</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetHeightRange(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Gets a height range by the index of height ranges array.
+            </summary>
+            <param name="iIndex">The index of height ranges array.</param>
+            <param name="piMinHeight">The minimal height of the searching barcode.</param>
+            <param name="piMaxHeight">The maximal height of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllHeightRanges">
+            <summary>
+            Clears all height ranges from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddModuleSizeRange(System.Int32,System.Int32)">
+            <summary>
+            Adds a range of barcode module size in pixels (the minimum bar width) to the selection for the barcode search.
+            </summary>
+            <param name="iMinModuleSize">The minimal module size of the searching barcode.</param>
+            <param name="iMaxModuleSize">The maximal module size of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetModuleSizeRangeCount">
+            <summary>
+            Returns the number of barcode module size ranges in the selection.
+            </summary>
+            <returns>The number of barcode module size ranges in the selection.</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetModuleSizeRange(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Gets a module size range by the index of module size ranges array.
+            </summary>
+            <param name="iIndex">The index of module size ranges array.</param>
+            <param name="piMinModuleSize">The minimal module size of the searching barcode.</param>
+            <param name="piMaxModuleSize">The maximal module size of the searching barcode.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllModuleSizeRanges">
+            <summary>
+            Clears all module size ranges from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddAngleRange(System.Int32,System.Int32)">
+            <summary>
+            Adds a range of angles (in degrees) to the selection for the barcode search.
+            </summary>
+            <param name="iFromAngle">The lower bound of angle range.</param>
+            <param name="iToAngle">The upper bound of angle range.</param>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.AddAngle(Dynamsoft.Barcode.BarcodeOrientationType)">
+            <summary>
+            Adds an orientation type of barcodes to the selection for the barcode search.
+            </summary>
+            <param name="emType">The orientation type of barcodes for searching.</param>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetAngleRangeCount">
+            <summary>
+            Returns the number of angle ranges in the selection.
+            </summary>
+            <returns>The number of angle ranges in the selection.</returns>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.GetAngleRange(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Gets an angle range by the index of angle ranges array.
+            </summary>
+            <param name="iIndex">The index of angle ranges array.</param>
+            <param name="piFromAngle">The lower bound of angle range.</param>
+            <param name="piToAngle">The upper bound of angle range.</param>
+            <exception cref="T:Dynamsoft.Barcode.BarcodeReaderException">
+            The exception thrown by Dynamsoft Barcode Reader.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.ClearAllAngleRanges">
+            <summary>
+            Clears all angle ranges from the selection.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReader.LoadSetting(System.String)">
+            <summary>
+            Loads the settings to be used in recognizing barcodes from a JSON string.
+            </summary>
+            <param name="strJsonSetting">The JSON string of barcode recognizing setting.</param>
+            <returns>If the input is not a valid json format string, return false. </returns>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeReader.LicenseKeys">
+            <summary>
+            Get or set the license key string.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeReader.ReaderOptions">
+            <summary>
+             Get or set the reading options, such as max number and type of barcode to read.
+            </summary>
+            <remarks>
+             With default reading options, BarcodeReader will decode all format and all barcodes.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.Barcode.ErrorCode">
+            <summary>
+             Defines the error code of Dynamsoft.BarcodeReader.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_SUCCESS">
+            <summary>
+             No errors occur.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_UNKNOWN">
+            <summary>
+             An unknown error occurs.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_NOMEMORY">
+            <summary>
+             Out of memory.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_NULL_REFERENCE">
+            <summary>
+             The object isn't set to an instance.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_LICENSE_INVALID">
+            <summary>
+             The license is invalid.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_LICENSE_EXPIRED">
+            <summary>
+             The license is expired.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_FILE_NOT_FOUND">
+            <summary>
+             The file isn't found.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_FILETYPE_NOT_SUPPORT">
+            <summary>
+             The type of file is not supported.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_BPP_NOT_SUPPORT">
+            <summary>
+             The format of the bitmap is not supported.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_INDEX_INVALID">
+            <summary>
+             The index is invalid.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_BARCODE_FORMAT_INVALID">
+            <summary>
+             The barcode format is invalid.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_CUSTOM_REGION_INVALID">
+            <summary>
+             Input region parameter is invalid.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_MAX_BARCODE_NUMBER_INVALID">
+            <summary>
+             Max barcode number is invalid.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_IMAGE_READ_FAIL">
+            <summary>
+             The image is read unsuccessfully.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_TIFF_READ_FAIL">
+            <summary>
+             Tiff image is read unsuccessfully.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_FULL_USE_TRIAL_LICENSE">
+            <summary>
+             You are running a full version but the license is for trial version.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_TRIAL_USE_FULL_LICENSE">
+            <summary>
+             You are running a trial version but the license is for full version.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_QR_LICENSE_INVALID">
+            <summary>
+             You do not have a valid QR Barcode license.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_1D_LICENSE_INVALID">
+            <summary>
+             You do not have a valid 1D Barcode license.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_INVALID_DIB_BUFFER">
+            <summary>
+             Invalid DIB buffer.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_PDF417_LICENSE_INVALID">
+            <summary>
+             You do not have a valid PDF417 barcode license.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_DATAMATRIX_LICENSE_INVALID">
+            <summary>
+             You do not have a valid DATAMATRIX barcode license.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_PDF_READ_FAIL">
+            <summary>
+            PDF file read failed.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_PDF_DLL_MISS">
+            <summary>
+            PDF Rasterizer Dll Miss.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.Barcode.ErrorCode.DBR_SYSTEM_EXCEPTION">
+            <summary>
+             The system exceptions.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeReaderException">
+            <summary>
+             The exception of Dynamsoft.BarcodeReader.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.BarcodeReaderException.#ctor">
+            <summary>
+             Create an instance of BarcodeReaderException.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeReaderException.Code">
+            <summary>
+             Get or set the error code.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeReaderException.Message">
+            <summary>
+             Get the message that describes the current exception.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeReaderException.StackTrace">
+            <summary>
+             Get the string representation of the frames on the call stack at the time the current exception was thrown.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeFormat">
+            <summary>
+             Decribes the type of the barcode.
+            </summary>
+            <remarks>
+             All the formats can be combined, such as BarcodeFormat.CODE_39 | BarcodeFormat.CODE_128.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.Barcode.ImageCaptureDevice">
+            <summary>
+             Decribes the image capture device.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeColorMode">
+            <summary>
+             Decribes the barcode color mode.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.ScanRegionSide">
+            <summary>
+             Decribes the barcode region side type.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeOrientationType">
+            <summary>
+             Decribes the barcode orientation type.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeTextEncoding">
+            <summary>
+             Decribes the barcode text encoding.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.ImagePixelFormat">
+            <summary>
+             Decribes the image pixel format.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.ReaderOptions">
+            <summary>
+             The options of decoding, such as the type and number of barcodes.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Barcode.ReaderOptions.#ctor">
+            <summary>
+             Create an instance of ReaderOptions with default setting.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.ImageCaptureDevice">
+            <summary>
+             Get or set where is the image captured.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.BarcodeColorMode">
+            <summary>
+             Get or set the color for barcodes search
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.BarcodeTextEncoding">
+            <summary>
+             Get or set barcode text encoding
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.TimeoutPerPage">
+            <summary>
+             Get or set maximum time to read barcode per page.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.UseOneDDeblur">
+            <summary>
+             Get or set a value that indicating whether the deblur workflow for OneD is enabed.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.ReturnUnrecognizedBarcode">
+            <summary>
+             Get or set a value that indicating whether the unrecognized barcode should be returned.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.MaxBarcodesToReadPerPage">
+            <summary>
+             Get or set maximum number to read barcode per page.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.ReaderOptions.BarcodeFormats">
+            <summary>
+             Get or set type to read barcode.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.BarcodeResult">
+            <summary>
+             Store the barcode type, contents, boundary, vertices, etc.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.Angle">
+            <summary>
+             Get the barcode angle.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.ModuleSize">
+            <summary>
+             Get the barcode module size.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.IsUnrecognized">
+            <summary>
+             Get a value that indicating whether the barcode is recognized or not.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.BarcodeFormat">
+            <summary>
+             Get the barcode type.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.BarcodeText">
+            <summary>
+             Get the barcode string.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.BarcodeData">
+            <summary>
+             Get the barcode data as bytes.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.BoundingRect">
+            <summary>
+             Get the barcode boundary.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.ResultPoints">
+            <summary>
+             Get the coordinates of the barcode vertices.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.BarcodeResult.PageNumber">
+            <summary>
+             Get the page number that the barcode located in.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Barcode.Resource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.DynamicPdf">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.DynamicPdfx64">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.DynamsoftBarcodeReaderx64">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.Barcode.Resource.DynamsoftBarcodeReaderx86">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+    </members>
+</doc>

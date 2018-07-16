@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net.Http;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+
+namespace CondorExtreme3_Xamarin
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class RegistrationPage : ContentPage
+	{
+        private Dictionary<string, int> cityIDs = new Dictionary<string, int>();
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/Users");
+
+        public RegistrationPage()
+		{
+            InitializeComponent();
+            var response = new WebAPIHelper(Domains.APIDomain, "api/Info").GetResponse("GetCities", null);
+
+            if (!response.IsSuccessStatusCode)
+                DisplayAlert("Error", "Could not request data from server. Check your internet connection or try later!", "Ok");
+            else
+            {
+                var data = response.Content.ReadAsStringAsync().Result;
+                var parsedData = JArray.Parse(data);
+                
+                pickerCity.Title = "Choose city";
+                foreach (var city in parsedData)
+                {
+                    pickerCity.Items.Add(city["Name"].ToString());
+                    cityIDs.Add(city["Name"].ToString(), int.Parse(city["CityID"].ToString()));
+                }
+            }
+		}
+
+        private async void buttonRegister_Clicked(object sender, EventArgs e)
+        {
+            bool pickerSelected = pickerCity.SelectedIndex != -1;
+
+            JObject RVisitor = new JObject()
+            {
+                { "FirstName", entryFirstName.Text },
+                { "LastName", entryLastName.Text },
+                { "CityID", (pickerSelected)? cityIDs[pickerCity.SelectedItem.ToString()] : -1 },
+                { "Email", entryEmail.Text },
+                { "PhoneNumber", entryPhoneNumber.Text },
+                { "Username", entryUsername.Text },
+                { "PasswordHash", entryPassword.Text },
+                { "VirtualPointsTotal", 0 },
+                { "IsDeleted", false }
+            };
+
+            var response = service.PostResponse(RVisitor.ToString(), "PostUsers");
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                string jString = await response.Content.ReadAsStringAsync();
+                var modelErrors = JObject.Parse(jString);
+
+                FirstNameValidationMessage.Text = modelErrors["FirstName"].ToString();
+                if (FirstNameValidationMessage.Text != "") FirstNameValidationMessage.IsVisible = true;
+                else FirstNameValidationMessage.IsVisible = false;
+
+                LastNameValidationMessage.Text = modelErrors["LastName"].ToString();
+                if (LastNameValidationMessage.Text != "") LastNameValidationMessage.IsVisible = true;
+                else LastNameValidationMessage.IsVisible = false;
+
+                CityValidationMessage.Text = modelErrors["City"].ToString();
+                if (CityValidationMessage.Text != "") CityValidationMessage.IsVisible = true;
+                else CityValidationMessage.IsVisible = false;
+
+                EmailValidationMessage.Text = modelErrors["Email"].ToString();
+                if (EmailValidationMessage.Text != "") EmailValidationMessage.IsVisible = true;
+                else EmailValidationMessage.IsVisible = false;
+
+                PhoneNumberValidationMessage.Text = modelErrors["PhoneNumber"].ToString();
+                if (PhoneNumberValidationMessage.Text != "") PhoneNumberValidationMessage.IsVisible = true;
+                else PhoneNumberValidationMessage.IsVisible = false;
+
+                UsernameValidationMessage.Text = modelErrors["Username"].ToString();
+                if (UsernameValidationMessage.Text != "") UsernameValidationMessage.IsVisible = true;
+                else UsernameValidationMessage.IsVisible = false;
+
+                PasswordValidationMessage.Text = modelErrors["Password"].ToString();
+                if (PasswordValidationMessage.Text != "") PasswordValidationMessage.IsVisible = true;
+                else PasswordValidationMessage.IsVisible = false;
+            }
+            else
+            {
+                await DisplayAlert("Info", "You have successfully registered!", "Ok");
+                await Navigation.PopToRootAsync();
+            }
+        }
+    }
+}

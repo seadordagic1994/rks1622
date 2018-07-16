@@ -1,0 +1,67 @@
+﻿namespace CondorExtreme3_UI.Index
+{
+    partial class NavForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.flpAllButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.SuspendLayout();
+            // 
+            // flpAllButtons
+            // 
+            this.flpAllButtons.AutoScroll = true;
+            this.flpAllButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpAllButtons.Location = new System.Drawing.Point(0, 0);
+            this.flpAllButtons.MaximumSize = new System.Drawing.Size(329, 0);
+            this.flpAllButtons.MinimumSize = new System.Drawing.Size(329, 0);
+            this.flpAllButtons.Name = "flpAllButtons";
+            this.flpAllButtons.Size = new System.Drawing.Size(329, 271);
+            this.flpAllButtons.TabIndex = 0;
+            // 
+            // NavForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(329, 271);
+            this.Controls.Add(this.flpAllButtons);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "NavForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "NavForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NavForm_FormClosed);
+            this.Load += new System.EventHandler(this.NavForm_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel flpAllButtons;
+    }
+}

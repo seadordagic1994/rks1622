@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthorizationUIFailed" xml:space="preserve">
+    <value>You are not authorized to access application resources!</value>
+  </data>
+  <data name="BankAccountNumberInvalidFormat" xml:space="preserve">
+    <value>Bank Account should be between 10 and 20 characters long, and it should contain only numbers!</value>
+  </data>
+  <data name="BankAccountNumberRequired" xml:space="preserve">
+    <value>Bank account number is required!</value>
+  </data>
+  <data name="Banks404" xml:space="preserve">
+    <value>No bank has been found!</value>
+  </data>
+  <data name="Cinema404" xml:space="preserve">
+    <value>No cinema has been found for selected value of city field!</value>
+  </data>
+  <data name="CinemaAddressRequired" xml:space="preserve">
+    <value>Cinema address is required!</value>
+  </data>
+  <data name="CinemaHallAddFailure" xml:space="preserve">
+    <value>Cinema hall failed to add!</value>
+  </data>
+  <data name="CinemaHallAddSuccess" xml:space="preserve">
+    <value>Cinema hall has been added successfully!</value>
+  </data>
+  <data name="CinemaHallEditFailure" xml:space="preserve">
+    <value>Cinema hall could not be edited!</value>
+  </data>
+  <data name="CinemaHallEditSuccess" xml:space="preserve">
+    <value>Cinema hall edited successfully!</value>
+  </data>
+  <data name="CinemaHallNameRequired" xml:space="preserve">
+    <value>Cinema hall name is required!</value>
+  </data>
+  <data name="CinemaHallRemoveFailure" xml:space="preserve">
+    <value>Cinema hall could not be removed!</value>
+  </data>
+  <data name="CinemaHallRemoveSuccess" xml:space="preserve">
+    <value>Cinema hall removed successfully!</value>
+  </data>
+  <data name="CinemaHallSelectedNull" xml:space="preserve">
+    <value>No cinema hall has been selected!</value>
+  </data>
+  <data name="CinemaNameRequired" xml:space="preserve">
+    <value>Cinema name is required!</value>
+  </data>
+  <data name="City404" xml:space="preserve">
+    <value>No city has been found for selected value of country field!</value>
+  </data>
+  <data name="CityRequired" xml:space="preserve">
+    <value>City is required!</value>
+  </data>
+  <data name="Country404" xml:space="preserve">
+    <value>No country has been found!</value>
+  </data>
+  <data name="CredentialsSavedFailure" xml:space="preserve">
+    <value>Employee credentials could not be saved!</value>
+  </data>
+  <data name="CredentialsSavedSuccess" xml:space="preserve">
+    <value>Employee credentials saved successfully!</value>
+  </data>
+  <data name="Digit_err" xml:space="preserve">
+    <value>Value must be a digit !</value>
+  </data>
+  <data name="DirectorDeactivationFailure" xml:space="preserve">
+    <value>You cannot deactivate employee with a system role of Director!</value>
+  </data>
+  <data name="DirectorEmploymentAdd" xml:space="preserve">
+    <value>You cannot assign employment for employee with a system role of Director!</value>
+  </data>
+  <data name="DirectorSystemRolesAddOrEdit" xml:space="preserve">
+    <value>Additional system roles could not be bound to existing user with role of Director! </value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is required!</value>
+  </data>
+  <data name="EmailWrongFormat" xml:space="preserve">
+    <value>Entered email is not properly formated!</value>
+  </data>
+  <data name="Employee404" xml:space="preserve">
+    <value>No employee has been found!</value>
+  </data>
+  <data name="EmployeeAccountUpdateFailure" xml:space="preserve">
+    <value>Account data failed to update!</value>
+  </data>
+  <data name="EmployeeAccountUpdateSuccess" xml:space="preserve">
+    <value>Account data updated successfully!</value>
+  </data>
+  <data name="EmployeeAddFailure" xml:space="preserve">
+    <value>Employee could not be added!</value>
+  </data>
+  <data name="EmployeeAddSuccess" xml:space="preserve">
+    <value>Employee has been added succesfully!</value>
+  </data>
+  <data name="EmployeeDeactivationFailure" xml:space="preserve">
+    <value>Employee deactivated unsuccessfully!</value>
+  </data>
+  <data name="EmployeeDeactivationSuccess" xml:space="preserve">
+    <value>Employee deactivated successfully!</value>
+  </data>
+  <data name="EmployeeEditFailure" xml:space="preserve">
+    <value>Employee edit failed!</value>
+  </data>
+  <data name="EmployeeEditSuccess" xml:space="preserve">
+    <value>Employee edited successfully!</value>
+  </data>
+  <data name="EmployeeForCinema404" xml:space="preserve">
+    <value>No employee has been found for specified cinema!</value>
+  </data>
+  <data name="EmployeePaymentAddFailure" xml:space="preserve">
+    <value>Transaction could not be commited!</value>
+  </data>
+  <data name="EmployeePaymentAddSuccess" xml:space="preserve">
+    <value>Transaction has been commited successfully!</value>
+  </data>
+  <data name="EmployeeRoleAddFailure" xml:space="preserve">
+    <value>Employee role could not be added!</value>
+  </data>
+  <data name="EmployeeRoleAddSuccess" xml:space="preserve">
+    <value>Employee role added successfully!</value>
+  </data>
+  <data name="EmployeeRoleRemoveFailure" xml:space="preserve">
+    <value>Employee role could not be removed!</value>
+  </data>
+  <data name="EmployeeRoleRemoveSuccess" xml:space="preserve">
+    <value>Employee role removed successfully!</value>
+  </data>
+  <data name="EmployeeRoleSelectedNull" xml:space="preserve">
+    <value>No employee role has been selected!</value>
+  </data>
+  <data name="EmployeeSelectedNull" xml:space="preserve">
+    <value>No employee selected!</value>
+  </data>
+  <data name="EmployeesPayments404" xml:space="preserve">
+    <value>No payment has been found for specified employee!</value>
+  </data>
+  <data name="EmploymentAddFailure" xml:space="preserve">
+    <value>Employment added unsuccessfully!</value>
+  </data>
+  <data name="EmploymentAddSuccess" xml:space="preserve">
+    <value>Employment added successfully!</value>
+  </data>
+  <data name="EmploymentDeactivationFailure" xml:space="preserve">
+    <value>Employee deactivated unsuccessfully!</value>
+  </data>
+  <data name="EmploymentDeactivationSuccess" xml:space="preserve">
+    <value>Employee deactivated successfully!</value>
+  </data>
+  <data name="EmploymentEditFailure" xml:space="preserve">
+    <value>Employment edited unsuccessfully!</value>
+  </data>
+  <data name="EmploymentEditSuccess" xml:space="preserve">
+    <value>Employment edited successfully!</value>
+  </data>
+  <data name="EmploymentSelectedNull" xml:space="preserve">
+    <value>No employment selected!</value>
+  </data>
+  <data name="EmploymentTypes404" xml:space="preserve">
+    <value>No employment type has been found!</value>
+  </data>
+  <data name="FirstNameRequired" xml:space="preserve">
+    <value>First name is required!</value>
+  </data>
+  <data name="Genre404" xml:space="preserve">
+    <value>No movie genre has been found!</value>
+  </data>
+  <data name="LastNameRequired" xml:space="preserve">
+    <value>Last name is required!</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Username or password is incorrect!</value>
+  </data>
+  <data name="Movie404" xml:space="preserve">
+    <value>No movie has been found!</value>
+  </data>
+  <data name="MovieImage" xml:space="preserve">
+    <value>Slika ne može biti procesirana</value>
+  </data>
+  <data name="MovieNameRequired" xml:space="preserve">
+    <value>Movie name required!</value>
+  </data>
+  <data name="Movies404" xml:space="preserve">
+    <value>Could not select movies for projections !</value>
+  </data>
+  <data name="NoDataWarning" xml:space="preserve">
+    <value>No data matches given parameters!</value>
+  </data>
+  <data name="PasswordLengthViolation" xml:space="preserve">
+    <value>Password should be between 6 and 15 characters long!</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required!</value>
+  </data>
+  <data name="PasswordRetypedIncorrectly" xml:space="preserve">
+    <value>Two passwords don't match!</value>
+  </data>
+  <data name="PaymentMethod404" xml:space="preserve">
+    <value>No payment method has been found!</value>
+  </data>
+  <data name="PhoneNumberRequired" xml:space="preserve">
+    <value>Phone number is not entered properly!</value>
+  </data>
+  <data name="ProjectionSuccess" xml:space="preserve">
+    <value>Projections added/edited successfully!</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required !</value>
+  </data>
+  <data name="RootCinemaAndDirectorAddFailure" xml:space="preserve">
+    <value>Cinema [with specified director] failed to add!</value>
+  </data>
+  <data name="RootCinemaAndDirectorAddSuccess" xml:space="preserve">
+    <value>Cinema [with specified director] has been added successfully!</value>
+  </data>
+  <data name="RootCinemaEditFailure" xml:space="preserve">
+    <value>Cinema failed to edit!</value>
+  </data>
+  <data name="RootCinemaEditSuccess" xml:space="preserve">
+    <value>Cinema has been edited successfully!</value>
+  </data>
+  <data name="RootCinemaRemoveFailure" xml:space="preserve">
+    <value>Cinema could not be deactivated!</value>
+  </data>
+  <data name="RootCinemaRemoveSuccess" xml:space="preserve">
+    <value>Cinema has been deactivated successfully!</value>
+  </data>
+  <data name="RootCinemaSelectedNull" xml:space="preserve">
+    <value>No cinema has been selected!</value>
+  </data>
+  <data name="RootLoginFailure" xml:space="preserve">
+    <value>Root username or password is incorrect!</value>
+  </data>
+  <data name="RootUser404" xml:space="preserve">
+    <value>No RootUser has been found!</value>
+  </data>
+  <data name="TechnologyType404" xml:space="preserve">
+    <value>No technology type has been found!</value>
+  </data>
+  <data name="Username404" xml:space="preserve">
+    <value>No username has been found!</value>
+  </data>
+  <data name="UsernameInvalidFormat" xml:space="preserve">
+    <value>Username can only contain letters and numbers!</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Username is required!</value>
+  </data>
+  <data name="VPAddFailure" xml:space="preserve">
+    <value>Virtual points packet failed to add!</value>
+  </data>
+  <data name="VPAddSuccess" xml:space="preserve">
+    <value>Virtual points packet has been added successfully!</value>
+  </data>
+  <data name="VPRemoveFailure" xml:space="preserve">
+    <value>Virtual points packet failed to remove!</value>
+  </data>
+  <data name="VPRemoveSuccess" xml:space="preserve">
+    <value>Virtual points packet has been removed successfully!</value>
+  </data>
+  <data name="VPSelectedNull" xml:space="preserve">
+    <value>No Virtual points packet has been selected!</value>
+  </data>
+</root>

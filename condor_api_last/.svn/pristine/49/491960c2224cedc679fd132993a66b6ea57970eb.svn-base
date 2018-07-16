@@ -1,0 +1,116 @@
+﻿namespace CondorExtreme3_UI.Employees
+{
+    partial class SystemRolesAddForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.cmbEmployeeRoles = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblCurrentUsername = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSaveSystemRole = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // cmbEmployeeRoles
+            // 
+            this.cmbEmployeeRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEmployeeRoles.FormattingEnabled = true;
+            this.cmbEmployeeRoles.Location = new System.Drawing.Point(136, 63);
+            this.cmbEmployeeRoles.Name = "cmbEmployeeRoles";
+            this.cmbEmployeeRoles.Size = new System.Drawing.Size(160, 21);
+            this.cmbEmployeeRoles.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(39, 28);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 20);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Username:";
+            // 
+            // lblCurrentUsername
+            // 
+            this.lblCurrentUsername.AutoSize = true;
+            this.lblCurrentUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentUsername.Location = new System.Drawing.Point(132, 28);
+            this.lblCurrentUsername.Name = "lblCurrentUsername";
+            this.lblCurrentUsername.Size = new System.Drawing.Size(134, 20);
+            this.lblCurrentUsername.TabIndex = 7;
+            this.lblCurrentUsername.Text = "someUsername";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(39, 61);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Role:";
+            // 
+            // btnSaveSystemRole
+            // 
+            this.btnSaveSystemRole.Location = new System.Drawing.Point(135, 95);
+            this.btnSaveSystemRole.Name = "btnSaveSystemRole";
+            this.btnSaveSystemRole.Size = new System.Drawing.Size(161, 38);
+            this.btnSaveSystemRole.TabIndex = 9;
+            this.btnSaveSystemRole.Text = "Save";
+            this.btnSaveSystemRole.UseVisualStyleBackColor = true;
+            this.btnSaveSystemRole.Click += new System.EventHandler(this.btnSaveSystemRole_Click);
+            // 
+            // SystemRolesAddForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(307, 145);
+            this.Controls.Add(this.btnSaveSystemRole);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblCurrentUsername);
+            this.Controls.Add(this.cmbEmployeeRoles);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "SystemRolesAddForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "New System Role";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.ComboBox cmbEmployeeRoles;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCurrentUsername;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSaveSystemRole;
+    }
+}

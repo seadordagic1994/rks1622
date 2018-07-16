@@ -1,0 +1,302 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Mail;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    public partial class RootAddCinemaForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public RootAddCinemaForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/RootAdministration");
+          
+            HttpResponseMessage Response = Service.GetResponse("GetCitiesWithCountryNames", null);
+            var cities = Response.Content.ReadAsAsync<List<Object>>().Result;
+            cities.RemoveAt(0);
+            var finalCities = cities;
+            var finalCities2 = new List<object>(finalCities);
+
+            cmbCitiesCinema.DataSource = finalCities;
+            cmbCitiesCinema.ValueMember = "CityID";
+            cmbCitiesCinema.DisplayMember = "CityNameAndCountry";
+            cmbCitiesCinema.SelectedIndex = -1;
+           
+            cmbCities.DataSource = finalCities2;
+            cmbCities.ValueMember = "CityID";
+            cmbCities.DisplayMember = "CityNameAndCountry";
+            cmbCities.SelectedIndex = -1;
+
+            string[] Genders = { "Male", "Female" };
+            cmbGender.DataSource = Genders;
+
+        }
+
+
+        private void btnSubmitCinemaAndDirector_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren()) { 
+
+                CinemaInfo cinemaInfo = new CinemaInfo();
+                cinemaInfo.Name = txtCinemaName.Text;
+                cinemaInfo.CityID = Int32.Parse(cmbCitiesCinema.SelectedValue.ToString());
+                cinemaInfo.Address = txtAddress.Text;
+
+                Employees.Employees Employee = new Employees.Employees();
+                Employee.FirstName = txtFirstName.Text;
+                Employee.LastName = txtLastName.Text;
+                Employee.CityBirthID = Int32.Parse(cmbCities.SelectedValue.ToString());
+                Employee.BirthDate = dtpBirthDate.Value;
+                Employee.Gender = (cmbGender.Text == "Male") ? false : true;
+                Employee.CurriculumVitae = txtCurriculumVitae.Text;
+                Employee.Email = txtEmail.Text;
+                Employee.PhoneNumber = txtPhoneNumber.Text;
+                Employee.IsDeleted = false;
+           
+                Employee.Username = (!String.IsNullOrWhiteSpace(txtUsername.Text)) ? txtUsername.Text : null;
+            
+
+                if (!String.IsNullOrWhiteSpace(txtPassword.Text))
+                {
+                    string Password = txtPassword.Text;
+                    Employee.PasswordSalt = UIHelper.GenerateSalt();
+                    Employee.PasswordHash = UIHelper.GenerateHash(Password, Employee.PasswordSalt);
+                }
+
+                var CinemaAndDirector = new
+                {
+                    cinemaInfo = cinemaInfo,
+                    employeeInfo = Employee
+                };
+
+
+                HttpResponseMessage Response = Service.PostResponse(CinemaAndDirector, "PostCinemasAndDirectors");
+
+                if (Response.StatusCode==System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.RootCinemaAndDirectorAddSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if(Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = Response.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show(Messages.RootCinemaAndDirectorAddFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+
+        }
+
+        private void txtCinemaName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtCinemaName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtCinemaName, Messages.CinemaNameRequired);
+            }
+            else
+                errorProvider.SetError(txtCinemaName, null);
+        }
+
+        private void txtCinemaName_TextChanged(object sender, EventArgs e)
+        {
+            txtCinemaName_Validating(sender, new CancelEventArgs { });
+        }
+        private void txtAddress_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtAddress.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtAddress, Messages.CinemaAddressRequired);
+            }
+            else
+                errorProvider.SetError(txtAddress, null);
+        }
+
+        private void cmbCitiesCinema_Validating(object sender, CancelEventArgs e)
+        {
+            if (cmbCitiesCinema.SelectedIndex == -1)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(cmbCitiesCinema, Messages.CityRequired);
+            }
+            else
+                errorProvider.SetError(cmbCitiesCinema, null);
+        }
+
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtFirstName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtFirstName, Messages.FirstNameRequired);
+            }
+            else
+                errorProvider.SetError(txtFirstName, null);
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtLastName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtLastName, Messages.LastNameRequired);
+            }
+            else
+                errorProvider.SetError(txtLastName, null);
+        }
+
+        private void cmbCities_Validating(object sender, CancelEventArgs e)
+        {     
+            if (cmbCities.SelectedIndex == -1)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(cmbCities, Messages.CityRequired);
+            }
+            else
+                errorProvider.SetError(cmbCities, null);           
+        }
+
+        private void txtPhoneNumber_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtPhoneNumber.MaskCompleted)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtPhoneNumber, Messages.PhoneNumberRequired);
+            }
+            else
+                errorProvider.SetError(txtPhoneNumber, null);
+        }
+
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtEmail, Messages.EmailRequired);
+            }
+            else
+            {
+                try
+                {
+                    MailAddress mailAddress = new MailAddress(txtEmail.Text);
+                }
+                catch (Exception)
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(txtEmail, Messages.EmailWrongFormat);
+                }
+                if(!e.Cancel)
+                    errorProvider.SetError(txtEmail, null);
+
+            }
+
+        }
+
+        private void txtUsername_Validating(object sender, CancelEventArgs e)
+        {
+            string pattern = @"^[a-zA-Z0-9]*$";
+            Regex regex = new Regex(pattern);
+
+
+            if (String.IsNullOrWhiteSpace(txtUsername.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, Messages.UsernameRequired);
+            }
+            else if(!regex.IsMatch(txtUsername.Text))             
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, Messages.UsernameInvalidFormat);
+            }
+            else
+                errorProvider.SetError(txtUsername, null);
+        }
+
+        private void txtPassword_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtPassword, Messages.PasswordRequired);
+            }
+            else if(txtPassword.Text.Length<6 || txtPassword.Text.Length > 15)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtPassword, Messages.PasswordLengthViolation);
+            }
+            else
+                errorProvider.SetError(txtPassword, null);
+        }
+
+
+
+
+        private void cmbCitiesCinema_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cmbCitiesCinema_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void cmbCities_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cmbCities_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtAddress_TextChanged(object sender, EventArgs e)
+        {
+            txtAddress_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtFirstName_TextChanged(object sender, EventArgs e)
+        {
+            txtFirstName_Validating(sender, new CancelEventArgs { });
+
+        }
+
+        private void txtLastName_TextChanged(object sender, EventArgs e)
+        {
+            txtLastName_Validating(sender, new CancelEventArgs { });
+
+        }     
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            txtEmail_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+            txtUsername_Validating(sender, new CancelEventArgs { });
+
+        }
+
+        private void txtPhoneNumber_TextChanged(object sender, EventArgs e)
+        {
+            txtPhoneNumber_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            txtPassword_Validating(sender, new CancelEventArgs { });
+        }
+
+    }
+}

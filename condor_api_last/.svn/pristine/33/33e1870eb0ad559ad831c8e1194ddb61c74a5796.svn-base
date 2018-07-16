@@ -1,0 +1,81 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CondorExtreme3_UI.ReportModels;
+using CondorExtreme3_UI.Helper;
+using System.Net.Http;
+using Microsoft.Reporting.WinForms;
+
+namespace CondorExtreme3_UI.Reports
+{
+    public partial class DailyReportForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+        public DailyReportForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CashRegister");
+        }
+
+        private void Generate_Click(object sender, EventArgs e)
+        {
+            int CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+
+            this.rptViewer.LocalReport.DataSources.Clear();
+            this.rptViewer.LocalReport.ReportEmbeddedResource = null;
+
+            dynamic d = new
+            {
+                cinemaId = CinemaID,
+                EmpId = loggedEmp.EmployeeID,
+                date = PickDatePicker.Value,
+            };
+
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(d, "DailyReportCashRegister");
+            if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var List = httpResponseMessage.Content.ReadAsAsync<dynamic>().Result;
+
+                CashRegisterDataset testXDataset = new CashRegisterDataset();
+                CashRegisterDataset.DailyItemsSoldDataTable dataTable = testXDataset.DailyItemsSold;
+
+
+                foreach (var item in List.Items)
+                {
+                    DataRow dr = dataTable.NewRow();
+                    dr["FisklaniRacun"] = item.ZaglavljeId;
+                    dr["Stavka"] = item.Name;
+                    dr["Datum"] = item.Datum.ToString("dd/MM/yyyy");
+                    dr["Kolicina"] = item.Kolicina;
+                    dr["Cijena"] = item.Cijena;
+                    dr["Iznos"] = item.Iznos;
+                    dr["Sum"] = List.sum;
+                    dataTable.Rows.Add(dr);
+                }
+                ReportDataSource reportDataSource = new ReportDataSource();
+                reportDataSource.Value = testXDataset.Tables["DailyItemsSold"];
+                reportDataSource.Name = "DailyReport";
+                this.rptViewer.LocalReport.DataSources.Add(reportDataSource);
+                this.rptViewer.LocalReport.ReportEmbeddedResource = "CondorExtreme3_UI.Reports.DailyReport.rdlc";
+                this.rptViewer.RefreshReport();
+
+            }
+            else
+            {
+                MessageBox.Show(Messages.NoDataWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
+
+        }
+    }
+}

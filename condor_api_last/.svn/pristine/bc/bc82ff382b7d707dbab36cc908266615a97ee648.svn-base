@@ -1,0 +1,628 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Dynamsoft.UVC;
+using Dynamsoft.Core;
+using ZXing;
+using CondorExtreme3_UI.Helper;
+using System.Globalization;
+
+namespace CondorExtreme3_UI.KasaRacuni
+{
+    public partial class Kasa : Form
+    {
+        public WebAPIHelper Service;
+
+        private Dynamsoft.Core.ImageCore m_ImageCore = null;
+        private CameraManager m_CameraManager = null;
+        private Dynamsoft.PDF.PDFRasterizer m_PDFRasterizer = null;
+        private string m_StrProductKey = "t0068MgAAADRcl63A47LOjl7OOIajlQ6GHPopjzJwYA7Lf+lNvEW35zLouJ2xMLoZnOrS1L+Xwk/qUAd1/GLwrpjmTW5gIKM=";
+        Camera tempCamera { get; set; } = null;
+        public int projectionId { get; set; }
+        public Kasa()
+        {
+            InitializeComponent();
+
+
+
+            m_CameraManager = new CameraManager(m_StrProductKey);
+            m_PDFRasterizer = new Dynamsoft.PDF.PDFRasterizer(m_StrProductKey);
+
+            if (m_CameraManager.GetCameraNames() != null)
+            {
+                List<String> tempCameraNames = m_CameraManager.GetCameraNames();
+
+                tempCamera = m_CameraManager.SelectCamera(0);
+
+                tempCamera.Open();
+                tempCamera.SetVideoContainer(this.qrcodePicture.Handle);
+            }
+
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            var cinema = AuthenticationUI.CurrentCinema;
+            emplLbl.Text = "Employee: " + $"{loggedEmp.FirstName.ToString()} {loggedEmp.LastName.ToString()}";
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CashRegister");
+            HttpResponseMessage Response = Service.GetResponse("GetProjections", int.Parse(cinema.CinemaID.ToString()));
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show("There are no projection for today");
+                Close();
+            }
+            else if (Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                MessageBox.Show("Bad request, contact administrator!");
+                Close();
+            }
+
+            dynamic singleProjections = Response.Content.ReadAsAsync<List<Object>>().Result;
+
+            racunBox.Text = "Current bill ";
+            racunBox.Tag = (int.Parse(singleProjections[0].ZaglavljeCount.ToString()) +1);
+
+            projectionCombo.DataSource = singleProjections;
+            projectionCombo.ValueMember = "ProjectionId";
+            projectionCombo.DisplayMember = "Name";
+            projectionCombo.SelectedItem = null;
+
+            
+
+            BillBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#34495e");
+            timeLbl.BackColor = System.Drawing.ColorTranslator.FromHtml("#34495e");
+            emplLbl.BackColor = System.Drawing.ColorTranslator.FromHtml("#34495e");
+            racunBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#34495e");
+            logo.BackColor = System.Drawing.ColorTranslator.FromHtml("#34495e");          
+            timeLbl.ForeColor = System.Drawing.Color.White;
+            emplLbl.ForeColor = System.Drawing.Color.White;
+            racunBox.ForeColor = System.Drawing.Color.White;
+
+            todayLbl.Text = DateTime.Now.ToShortDateString();
+
+
+            //prvi header flowLayout unutar billLayouta
+            FlowLayoutPanel header = new FlowLayoutPanel();
+            header.Width = 363;
+            header.Height = 30;
+            header.Name = "header";
+            Label Naziv = new Label();
+            Naziv.Text = "Title";
+            Naziv.AutoSize = false;
+            Naziv.Width = 160;
+
+            Label Kolicina = new Label();
+            Kolicina.Text = "Amount";
+            Kolicina.AutoSize = false;
+            Kolicina.Width = 53;
+
+            Label Cijena = new Label();
+            Cijena.Text = "Price";
+            Cijena.AutoSize = false;
+            Cijena.Width = 53;
+
+            Label Iznos = new Label();
+            Iznos.Text = "Sum";
+            Iznos.AutoSize = false;
+            Iznos.Width = 53;
+
+            header.Controls.Add(Naziv);
+            header.Controls.Add(Kolicina);
+            header.Controls.Add(Cijena);
+            header.Controls.Add(Iznos);
+            billPanel.Controls.Add(header);
+
+            foreach (Control control in header.Controls)
+            {
+                if (control is Label)
+                {
+                    Label textBox = (Label)control;
+                    textBox.Font = new Font(textBox.Font, FontStyle.Bold);
+                }
+            }
+
+            HttpResponseMessage BillItemsResponse = Service.GetResponse("GetBillItems", null);
+
+            dynamic Items = BillItemsResponse.Content.ReadAsAsync<dynamic>().Result;
+
+            Dictionary<int, dynamic> dictItems = JsonConvert.DeserializeObject<Dictionary<int, dynamic>>(Items.ToString());
+
+            foreach (KeyValuePair<int, dynamic> kvp in dictItems)
+            {
+                FlowLayoutPanel ItemPanel = new FlowLayoutPanel();
+                ItemPanel.Width = 201;
+                ItemPanel.Margin = new Padding(0, 0, 3, 0);
+                ItemPanel.BackColor = System.Drawing.Color.Azure;
+                ItemPanel.Height = MainItemsPanel.Height;
+                
+
+                foreach (dynamic d in kvp.Value)
+                {
+                    FlowLayoutPanel Item = new FlowLayoutPanel();
+                    ItemPanel.BackColor = System.Drawing.ColorTranslator.FromHtml("#ced6e0");
+                    Item.Width = ItemPanel.Width;
+                    Item.Height = ItemPanel.Height / 7;
+
+                    Label l = new Label();
+                    l.Text = d.Naziv.ToString();
+                    l.ForeColor = System.Drawing.ColorTranslator.FromHtml("#2f3542");
+                    l.TextAlign = ContentAlignment.MiddleCenter;
+                    l.Width = Item.Width / 2;
+                    l.Height = Item.Height;
+
+                    Button b = new Button();
+                    b.Height = Item.Height;
+                    b.Name = d.Naziv.ToString();
+                    b.Tag = d.Id.ToString() + "_" + "Item";
+                    b.AccessibleDescription = d.Price.ToString();
+                    byte[] image = Convert.FromBase64String(d.Image.ToString());
+                    MemoryStream ms = new MemoryStream(image);
+                    b.BackgroundImage = Image.FromStream(ms);
+                    b.BackgroundImageLayout = ImageLayout.Stretch;
+                    b.Click += new EventHandler(this.ItemButtonClick);
+                    Item.Controls.Add(l);
+                    Item.Controls.Add(b);
+
+                    ItemPanel.Controls.Add(Item);
+                }
+                MainItemsPanel.Controls.Add(ItemPanel);
+
+            }
+
+           
+
+        }
+
+        private void dateTime_Tick(object sender, EventArgs e)
+        {
+            timeLbl.Text = DateTime.Now.TimeOfDay.ToString("hh\\:mm\\:ss");
+        }
+
+        private void projectionCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+
+            if (projectionCombo.SelectedItem != null)
+            {
+
+                List<Control> listControls = projectionsFlow.Controls.Cast<Control>().ToList();
+                foreach (Control c in listControls)
+                {
+                    projectionsFlow.Controls.Remove(c);
+                }
+
+                if (SelectedSeats.Seats.Count == 0)
+                {
+                    HttpResponseMessage Response = Service.GetResponse("GetProjectionsForToday", int.Parse(projectionCombo.SelectedValue.ToString()));
+
+                    dynamic projections = Response.Content.ReadAsAsync<Object>().Result;
+
+                    Dictionary<int, KeyValuePair<DateTime, string>> starts = JsonConvert.DeserializeObject<Dictionary<int, KeyValuePair<DateTime, string>>>(projections.pStarts.ToString());
+
+                    foreach (KeyValuePair<int, KeyValuePair<DateTime, string>> kvp in starts)
+                    {
+                        Button b = new Button();
+                        b.AutoSize = true;
+                        b.Width = 85;
+                        b.Height = 60;
+                        b.Text = kvp.Value.Key.TimeOfDay.ToString() + Environment.NewLine + kvp.Value.Value;
+                        b.Name = "projection_" + kvp.Key.ToString();
+                        b.Click += new EventHandler(this.OpenSeatsForm);
+                        projectionsFlow.Controls.Add(b);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You can only pick one projection for one bill!");
+                }
+
+            }
+        }
+
+        private void OpenSeatsForm(object sender, EventArgs e)
+        {
+            projectionCombo.SelectedItem = null;
+
+            List<Control> listControls = projectionsFlow.Controls.Cast<Control>().ToList();
+
+            foreach (Control control in listControls)
+            {
+                    projectionsFlow.Controls.Remove(control);
+                    control.Dispose();
+            }
+
+            Button clicked = sender as Button;
+            int ProjectionId = int.Parse(clicked.Name.Split('_')[1]);
+            this.projectionId = ProjectionId;
+            Seats seatsForm = new Seats(ProjectionId);
+            seatsForm.FormClosing += new FormClosingEventHandler(this.addTicketFlow);
+            seatsForm.ShowDialog();
+            
+
+        }
+
+        private void addTicketFlow(object sender, FormClosingEventArgs e)
+        {
+            if(SelectedSeats.BillItem != null)
+            { 
+                FlowLayoutPanel header = new FlowLayoutPanel();
+                header.Name = "header_" + SelectedSeats.BillItem.projectionId.ToString() + "_Projection";
+                header.Tag = SelectedSeats.BillItem.projectionId.ToString() + "_Projection";
+                header.Width = billPanel.Width;
+                header.Height = 20;
+
+                Label Naziv = new Label();
+                Naziv.Name = "ItemName_" + SelectedSeats.BillItem.MovieName.ToString();
+                Naziv.Text = SelectedSeats.BillItem.MovieName.ToString();
+                Naziv.AutoSize = false;
+                Naziv.Width = 160;
+
+                Label Kolicina = new Label();
+                Kolicina.Name = "amount_" + SelectedSeats.BillItem.projectionId.ToString();
+                Kolicina.Text = SelectedSeats.Seats.Count.ToString();
+                Kolicina.AutoSize = false;
+                Kolicina.Width = 53;
+
+                Label Cijena = new Label();
+                Cijena.Name = "price_" + SelectedSeats.BillItem.projectionId.ToString();
+                Cijena.Text = String.Format("{0:0.00}", SelectedSeats.BillItem.Price.ToString());
+                Cijena.AutoSize = false;
+                Cijena.Width = 53;
+                
+                double sum = double.Parse(Cijena.Text,CultureInfo.InvariantCulture) * double.Parse(Kolicina.Text, CultureInfo.InvariantCulture);
+
+                Label Iznos = new Label();
+                Iznos.Name = "sum_" + SelectedSeats.BillItem.projectionId.ToString();
+                Iznos.Text = String.Format("{0:0.00}", sum);
+                Iznos.AutoSize = false;
+                Iznos.Width = 53;
+
+                PictureBox p = new PictureBox();
+                p.Image = Properties.Resources.close_red;
+                p.Name = "image_" + header.Tag;
+                p.Tag = header.Tag;
+                p.Size = new Size(19, 19);
+                p.Margin = new Padding(0, 0, 0, 0);
+                p.SizeMode = PictureBoxSizeMode.StretchImage;
+                p.Click += new EventHandler(this.removeBillItem);
+
+                header.Controls.Add(Naziv);
+                header.Controls.Add(Kolicina);
+                header.Controls.Add(Cijena);
+                header.Controls.Add(Iznos);
+                header.Controls.Add(p);
+                billPanel.Controls.Add(header);
+
+                SumAllItems();
+
+                SelectedSeats.BillItem = null;
+            }
+        }
+
+        public void SumAllItems()
+        {
+            TotalLbl.Text = "0,00";
+            TotalToPayLbl.Text = "0,00";
+            foreach (FlowLayoutPanel f in billPanel.Controls)
+            {
+                if(f.Name != "header")
+                { 
+                    Label l = f.Controls[3] as Label;
+                    TotalLbl.Text = String.Format("{0:0.00}", (double.Parse(l.Text) + double.Parse(TotalLbl.Text)));
+                    TotalToPayLbl.Text = String.Format("{0:0.00}", (double.Parse(TotalLbl.Text) + (double.Parse(TotalLbl.Text) * 0.17)));
+                }
+            }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ItemButtonClick(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            AddBillItems(btn.Name, btn.Tag.ToString(), decimal.Parse(btn.AccessibleDescription));
+        }
+
+        private void AddBillItems(string name, string Tag, decimal SinglePrice = 0, string Amount = "1")
+        {
+            bool exists = false;
+            FlowLayoutPanel control = billPanel.Controls.Find("header_"+ Tag, true).FirstOrDefault() as FlowLayoutPanel;
+
+            if (control != null)
+            {
+                exists = true;
+
+                int amount = 0;
+                double price = 0;
+                double sum = 0;
+
+                foreach (Control labels in control.Controls)
+                {
+                    if (labels.Name == "naziv_"+ Tag)
+                        continue;
+                    else if (labels.Name == "amount_"+ Tag)
+                    { amount = (int.Parse(labels.Text) + 1); labels.Text = Convert.ToString(amount); }
+                    else if (labels.Name == "price_"+ Tag)
+                    { price = double.Parse(labels.Text); }
+                    else if (labels.Name == "sum_"+ Tag)
+                    { sum = amount * price; labels.Text = String.Format("{0:0.00}", sum); ; }
+                }               
+            }
+            if (!exists)
+            {
+                FlowLayoutPanel header = new FlowLayoutPanel();
+                header.Name = "header_"+ Tag;
+                header.Tag = Tag;
+                header.Width = billPanel.Width;
+                header.Height = 20;
+
+                Label Naziv = new Label();
+                Naziv.Name = "ItemName_"+ Tag;
+                Naziv.Text = name;
+                Naziv.AutoSize = false;
+                Naziv.Width = 160;
+
+                Label Kolicina = new Label();
+                Kolicina.Name = "amount_"+ Tag;
+                Kolicina.Text = Amount;
+                Kolicina.AutoSize = false;
+                Kolicina.Width = 53;
+
+                Label Cijena = new Label();
+                Cijena.Text = SinglePrice.ToString();
+                Cijena.Name = "price_"+ Tag;
+                Cijena.AutoSize = false;
+                Cijena.Width = 53;
+
+                Label Iznos = new Label();
+                Iznos.Name = "sum_"+ Tag;
+                Iznos.Text = Convert.ToString((double.Parse(Cijena.Text) * double.Parse(Kolicina.Text)));
+                Iznos.AutoSize = false;
+                Iznos.Width = 53;
+
+                PictureBox p = new PictureBox();
+                p.Name = "image_"+Tag;
+                p.Tag = Tag;
+                p.Image = Properties.Resources.close_red;
+                p.Size = new Size(19, 19);
+                p.Margin = new Padding(0, 0, 0, 0);
+                p.Click += new EventHandler(this.removeBillItem);
+                p.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                header.Controls.Add(Naziv);
+                header.Controls.Add(Kolicina);
+                header.Controls.Add(Cijena);
+                header.Controls.Add(Iznos);
+                header.Controls.Add(p);
+                billPanel.Controls.Add(header);
+   
+            }
+            SumAllItems();
+        }
+
+        private void removeBillItem(object sender, EventArgs e)
+        {
+            PictureBox p = sender as PictureBox;
+            foreach (FlowLayoutPanel f in billPanel.Controls)
+            {
+                if (f.Name == "header_" + p.Tag)
+                {
+                    if (p.Name.Split('_')[2] == "Projection")
+                        SelectedSeats.Seats = new List<int>();
+                    billPanel.Controls.Remove(f);
+                }
+            }
+            SumAllItems();
+        }
+
+        private void projectionsFlow_MouseEnter(object sender, EventArgs e)
+        {
+            projectionsFlow.Focus();
+        }
+
+        private void printFiscalBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you ready to print a fiscal bill ?", "Confirm", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                List<dynamic> items = new List<dynamic>();
+
+                foreach (FlowLayoutPanel f in billPanel.Controls)
+                {
+                    if (f.Name == "header")
+                        continue;
+
+                    if (f.Name.Split('_')[2] == "Projection")
+                    {
+                        items.Add(new {
+                            HeaderId = racunBox.Tag,
+                            Identification = "P",
+                            Id = f.Name.Split('_')[1],
+                            Price = f.Controls[2].Text,
+                            Amount = f.Controls[1].Text,
+                        });
+                    }
+
+
+                    if (f.Name.Split('_')[2] == "Item")
+                    {
+                        items.Add(new
+                        {
+                            HeaderId = racunBox.Tag,
+                            Identification = "I",
+                            Id = f.Name.Split('_')[1],
+                            Price = f.Controls[2].Text,
+                            Amount = f.Controls[1].Text,
+                        });
+                    }
+
+                }
+
+                if (items.Count != 0)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    dynamic BillItems = new { projectionId = this.projectionId, seats = SelectedSeats.Seats, dynamicItems = items };
+                    HttpResponseMessage Response = Service.PostResponse(BillItems, "MakeTickets");
+
+                    if(Response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        dynamic obj = Response.Content.ReadAsAsync<dynamic>().Result;
+
+                        //CreateFiscalBill bill = new CreateFiscalBill();
+                        //bill.MyMethodAsync(Convert.ToInt32(obj.zaglavljeId),false);
+
+                        //dynamic d = new {
+                        //    zaglavljeId = obj.zaglavljeId,
+                        //    fiskalniBroj = bill.BrojFiskalni
+                        //};
+
+                        //HttpResponseMessage r = Service.PostResponse(d,"AddFicscalNubmer");
+
+                        //dynamic number = r.Content.ReadAsAsync<object>().Result;
+                        MessageBox.Show("Broj fiskalnog je: " + obj.zaglavljeId.ToString());
+
+                        List<Control> listControls = billPanel.Controls.Cast<Control>().ToList();
+
+                        foreach (Control control in listControls)
+                        {
+                            if (control.Name != "header")
+                            {
+                                billPanel.Controls.Remove(control);
+                                control.Dispose();
+                            }
+                        }
+
+                        SelectedSeats.Seats = new List<int>();
+                        SelectedSeats.BillItem = null;
+
+                        racunBox.Tag = (int.Parse(racunBox.Tag.ToString()) + 1);
+
+                        SumAllItems();
+
+                    }
+                }
+
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+               
+            }
+        }
+
+        private void ReklamacijaBtn_Click(object sender, EventArgs e)
+        {
+            List<Control> listControls = projectionsFlow.Controls.Cast<Control>().ToList();
+            foreach (Control c in listControls)
+            {
+                projectionsFlow.Controls.Remove(c);
+            }
+
+            Reklamacija r = new Reklamacija();
+            r.FormClosing += new FormClosingEventHandler(this.AddItemsFromReclamation);
+            r.ShowDialog();
+        }
+
+        private void AddItemsFromReclamation(object sender, FormClosingEventArgs e)
+        {
+            if (ItemsFromReclamation.ReclamationItems != null)
+            {
+                List<Control> listControls = billPanel.Controls.Cast<Control>().ToList();
+
+                foreach (Control control in listControls)
+                {
+                    if (control.Name != "header")
+                    {
+                        billPanel.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                foreach (dynamic d in ItemsFromReclamation.ReclamationItems)
+                {
+                    if (d.Indicator.ToString() == "P")
+                    { 
+                        AddBillItems(d.Naziv.ToString(), d.ProjectionId.ToString() + "_Projection", decimal.Parse(d.Cijena.ToString()), d.Kolicina.ToString());
+                        SelectedSeats.Seats = JsonConvert.DeserializeObject<List<int>>(d.seats.ToString());
+                    }
+                    else
+                        AddBillItems(d.Naziv.ToString(), d.StavkaId.ToString() + "_Item", decimal.Parse(d.Cijena.ToString()), d.Kolicina.ToString());
+                }
+
+                ItemsFromReclamation.ReclamationItems = null;
+                racunBox.Tag = (int.Parse(racunBox.Tag.ToString()) + 1);
+            }
+
+            SumAllItems();
+
+        }
+
+        private void CashBtn_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            HttpResponseMessage Response = Service.GetResponse( "TotalInRegister", loggedEmp.EmployeeID);
+
+            if (Response.IsSuccessStatusCode)
+            {
+                var total = Response.Content.ReadAsAsync<object>().Result;
+
+                MessageBox.Show("Total cash in register: " + total.ToString() + " KM", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Could not open 'total' dialog", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void OpenCameraBtn_Click(object sender, EventArgs e)
+        {
+
+            Camera tempCamera = m_CameraManager.SelectCamera(m_CameraManager.CurrentSourceName);
+            Bitmap tempBit = tempCamera.GrabImage();
+
+            ZXing.BarcodeReader Reader = new ZXing.BarcodeReader();
+            Result result = Reader.Decode(tempBit);
+
+            if (result != null && int.TryParse(result.ToString(),out var broj))
+            { 
+
+                HttpResponseMessage response = Service.GetResponse("GetReservationFromCamera", broj);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Control> listControls = projectionsFlow.Controls.Cast<Control>().ToList();
+                    foreach (Control c in listControls)
+                    {
+                        projectionsFlow.Controls.Remove(c);
+                    }
+
+                    FromCamera.Projection = response.Content.ReadAsAsync<dynamic>().Result;                   
+
+                    if(SelectedSeats.Seats == null)
+                    { 
+                    AddBillItems(FromCamera.Projection.Naziv.ToString(), FromCamera.Projection.ProjectionId.ToString() + "_Projection", decimal.Parse(FromCamera.Projection.Cijena.ToString()), FromCamera.Projection.Kolicina.ToString());
+                    //SelectedSeats.Seats = JsonConvert.DeserializeObject<List<int>>(FromCamera.Projection.seats.ToString());
+                    }
+                }
+            }
+        }
+
+        private void Kasa_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (tempCamera != null)
+                tempCamera.Close();
+        }
+    }   
+}

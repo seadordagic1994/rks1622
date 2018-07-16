@@ -1,0 +1,178 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MoreLinq;
+using Xamarin.Forms;
+
+namespace CondorExtreme3_Xamarin
+{
+	public class ReservationModalPage : ContentPage
+	{
+        private int projectionID;
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/UserProjections");
+        private Dictionary<string, dynamic> seatMap = new Dictionary<string, dynamic>();
+        private TapGestureRecognizer tapRecognizer = new TapGestureRecognizer();
+        private List<Seat> selectedSeats = new List<Seat>();
+
+        public ReservationModalPage(int projectionID)
+		{
+            this.projectionID = projectionID;
+            LoadProjectionSeats();
+        }
+
+        public async void LoadProjectionSeats()
+        {
+            var response = service.GetResponse("GetProjectionSeats", projectionID);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                JArray seats = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+                var rows = seats.DistinctBy(x => x["SeatRowID"])
+                    .Select(x => x["SeatRowLabel"])
+                    .ToList();
+
+                var cols = seats.DistinctBy(x => x["SeatColumnID"])
+                    .Select(x => x["SeatColumnLabel"])
+                    .ToList();
+
+                // DB Design fault: seats have no orientation!
+                // Implementing temporary hack assuming labels 
+                // are sorted alphanumerically in ascending order (top -> bottom, left -> right)
+                foreach (var seat in seats)
+                    seatMap.Add($"{seat["SeatRowLabel"]},{seat["SeatColumnLabel"]}",
+                       new { SeatID = int.Parse(seat["SeatID"].ToString()),
+                           IsReserved = seat["IsReserved"]});
+                
+                int rowCount = rows.Count();
+                int colCount = cols.Count();
+
+                var grid = new Grid() {
+                    Margin = new Thickness(5, 15, 5, 0),
+                    RowSpacing = 1, ColumnSpacing = 1,
+                    HorizontalOptions = LayoutOptions.Center
+                };
+                
+                // Plus one for the label
+                for (int i = 0; i < rowCount + 1; i++)
+                {
+                    grid.RowDefinitions.Add(new RowDefinition {
+                        Height = new GridLength(1, GridUnitType.Auto)
+                    });
+                }
+
+                // Plus one for the label
+                for (int i = 0; i < colCount + 1; i++)
+                {
+                    grid.ColumnDefinitions.Add(new ColumnDefinition {
+                        Width = new GridLength(1, GridUnitType.Auto)
+                    });
+                }
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    for (int j = 0; j < colCount; j++)
+                    {
+                        if (!seatMap.ContainsKey($"{rows[i].Value<string>()},{cols[j].Value<string>()}"))
+                            continue;
+
+                        var seat = new Seat(ref selectedSeats, DisplayAlert) {
+                            SeatID = seatMap[$"{rows[i].Value<string>()},{cols[j].Value<string>()}"].SeatID,
+                            SeatType = ((bool)seatMap[$"{rows[i].Value<string>()},{cols[j].Value<string>()}"].IsReserved) ? 
+                                Seat.SeatTypes.Reserved : Seat.SeatTypes.Available,
+                            HeightRequest = 30,
+                            WidthRequest = 30,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        };
+                        grid.Children.Add(seat, j + 1, i + 1);
+                    }
+                }
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    grid.Children.Add(new Label() {
+                        Text = rows[i].Value<string>(),
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                        FontSize = 12
+                    }, 0, i + 1);
+                }
+
+                for (int i = 0; i < colCount; i++)
+                {
+                    grid.Children.Add(new Label()
+                    {
+                        Text = cols[i].Value<string>(),
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                        FontSize = 12
+                    }, i + 1, 0);
+                }
+
+                StackLayout mainStackLayout = new StackLayout() { Padding = 15 };
+
+                var btnBack = new Button()
+                {
+                    Text = "Go Back",
+                    HorizontalOptions = LayoutOptions.Start,
+                    WidthRequest = 75,
+                    HeightRequest = 40
+                };
+
+                btnBack.Clicked += async (sender, args) => {
+                    await Navigation.PopModalAsync();
+                };
+
+
+                mainStackLayout.Children.Add(btnBack);
+                mainStackLayout.Children.Add(new BoxView()
+                {
+                    HeightRequest = 1,
+                    BackgroundColor = Color.FromHex("#AAA")
+                });
+
+                mainStackLayout.Children.Add(new Label() {
+                    Text = "Maximum seats allowed: 4",
+                });
+
+                mainStackLayout.Children.Add(grid);
+                var btn = new Button() { Text = "Make Reservation!", Margin = new Thickness(0, 30, 0, 0)};
+                btn.Clicked += async (sender, args) => {
+                    if (selectedSeats.Count == 0)
+                    {
+                        await DisplayAlert("Error", "You have not selected any seats!", "Ok");
+                        return;
+                    }
+
+                    JObject jObjReservation = new JObject()
+                    {
+                        { "ProjectionID", projectionID },
+                        { "RVisitorID", Authentication.CurrentUser.UserID },
+                        { "SelectedSeats", JArray.FromObject(selectedSeats.Select(x => x.SeatID)) }
+                    };
+
+                    var api = new WebAPIHelper(Domains.APIDomain, "api/UserReservations");
+                    response = api.PostResponse(jObjReservation.ToString(), "PostMakeReservation");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        await DisplayAlert("Info", "Your reservation was created!", "Ok");
+
+                        int numModals = Application.Current.MainPage.Navigation.ModalStack.Count;
+                        for (int currModal = 0; currModal < numModals; currModal++)
+                        {
+                            await Application.Current.MainPage.Navigation.PopModalAsync();
+                        }
+                    }
+                    else await DisplayAlert("Error", "There has been an error creating your reservation!", "Ok");
+                };
+
+                mainStackLayout.Children.Add(btn);
+                Content = mainStackLayout;
+            }
+        }
+	}
+}

@@ -1,0 +1,68 @@
+﻿@using CondorExtreme3.Models;
+@{
+    Layout = null;
+
+    List<City>cities= (List<City>) ViewData["cities"];
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddCinemaView</title>
+</head>
+<body>
+    <div> 
+        <form action="/Administrators/Cinema/SubmitCinema">
+            <table>
+                <tr>
+                    <td>Cinema name: </td>
+                    <td><input type="text" name="Name"/></td>
+
+                </tr>
+                <tr>
+                    <td>Address: </td>
+                    <td><input type="text" name="AddressLine"/></td>
+
+                </tr>
+                <tr>
+                    <td>City: </td>
+                    <td>
+                        <select name="CityID">
+                            @foreach(City c in cities)
+                            {
+                                <option value="@c.CityID">@c.Name</option>
+                            }
+
+                        </select>
+
+
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"/></td>
+
+                </tr>
+
+
+            </table>
+
+
+
+
+
+            
+
+
+
+        </form>
+
+
+
+    </div>
+</body>
+</html>

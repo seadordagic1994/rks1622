@@ -1,0 +1,119 @@
+﻿namespace CondorExtreme3_UI.Employees
+{
+    partial class SystemRolesForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.grdEmployeeRoles = new System.Windows.Forms.DataGridView();
+            this.btnAddRole = new System.Windows.Forms.Button();
+            this.btnRemoveRole = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblCurrentUsername = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployeeRoles)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // grdEmployeeRoles
+            // 
+            this.grdEmployeeRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEmployeeRoles.Location = new System.Drawing.Point(12, 46);
+            this.grdEmployeeRoles.MultiSelect = false;
+            this.grdEmployeeRoles.Name = "grdEmployeeRoles";
+            this.grdEmployeeRoles.ReadOnly = true;
+            this.grdEmployeeRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdEmployeeRoles.Size = new System.Drawing.Size(420, 150);
+            this.grdEmployeeRoles.TabIndex = 1;
+            // 
+            // btnAddRole
+            // 
+            this.btnAddRole.Location = new System.Drawing.Point(12, 211);
+            this.btnAddRole.Name = "btnAddRole";
+            this.btnAddRole.Size = new System.Drawing.Size(207, 36);
+            this.btnAddRole.TabIndex = 4;
+            this.btnAddRole.Text = "Add Role";
+            this.btnAddRole.UseVisualStyleBackColor = true;
+            this.btnAddRole.Click += new System.EventHandler(this.btnAddRole_Click);
+            // 
+            // btnRemoveRole
+            // 
+            this.btnRemoveRole.Location = new System.Drawing.Point(225, 211);
+            this.btnRemoveRole.Name = "btnRemoveRole";
+            this.btnRemoveRole.Size = new System.Drawing.Size(207, 36);
+            this.btnRemoveRole.TabIndex = 6;
+            this.btnRemoveRole.Text = "Remove Role";
+            this.btnRemoveRole.UseVisualStyleBackColor = true;
+            this.btnRemoveRole.Click += new System.EventHandler(this.btnRemoveRole_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(84, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 20);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Username:";
+            // 
+            // lblCurrentUsername
+            // 
+            this.lblCurrentUsername.AutoSize = true;
+            this.lblCurrentUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentUsername.Location = new System.Drawing.Point(200, 9);
+            this.lblCurrentUsername.Name = "lblCurrentUsername";
+            this.lblCurrentUsername.Size = new System.Drawing.Size(134, 20);
+            this.lblCurrentUsername.TabIndex = 5;
+            this.lblCurrentUsername.Text = "someUsername";
+            // 
+            // SystemRolesForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(444, 257);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblCurrentUsername);
+            this.Controls.Add(this.btnRemoveRole);
+            this.Controls.Add(this.btnAddRole);
+            this.Controls.Add(this.grdEmployeeRoles);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "SystemRolesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "System Roles";
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployeeRoles)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+        private System.Windows.Forms.DataGridView grdEmployeeRoles;
+        private System.Windows.Forms.Button btnAddRole;
+        private System.Windows.Forms.Button btnRemoveRole;
+        private System.Windows.Forms.Label lblCurrentUsername;
+        private System.Windows.Forms.Label label3;
+    }
+}

@@ -1,0 +1,158 @@
+﻿using CondorExtreme3_API.Models;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using MoreLinq;
+using CondorExtreme3_API.Helper;
+
+namespace CondorExtreme3_API.Controllers
+{
+    [RoutePrefix("api/RecommendationSystem")]
+    public class RecommendationSystemController : ApiController
+    {
+        private CondorDBXEntities principal = new CondorDBXEntities();
+
+        [HttpPost]
+        [Route("PostMovieRating")]
+        public IHttpActionResult PostMovieRating([FromBody]dynamic value)
+        {
+            JObject jObj = JObject.FromObject(value);
+            
+            var isValidUser = (principal.RVisitors.Find(int.Parse(jObj["RVisitorID"].ToString())) != null);
+            var isValidMovie = (principal.Movies.Find(int.Parse(jObj["MovieID"].ToString())) != null);
+
+            var user = principal.RVisitors.Find(int.Parse(jObj["RVisitorID"].ToString()));
+            var movie = principal.Movies.Find(int.Parse(jObj["MovieID"].ToString()));
+            var movieRating = principal.MovieRatings
+                .Where(x => x.RVisitorID == user.RVisitorID && x.MovieID == movie.MovieID)
+                .FirstOrDefault();
+
+            if (movieRating != null)
+                movieRating.Rating = int.Parse(jObj["Rating"].ToString());
+            else
+            {
+                principal.MovieRatings.Add(new MovieRatings()
+                {
+                    RVisitorID = int.Parse(jObj["RVisitorID"].ToString()),
+                    MovieID = int.Parse(jObj["MovieID"].ToString()),
+                    Rating = int.Parse(jObj["Rating"].ToString())
+                });
+
+                user.VirtualPointsTotal += 2;
+            }
+
+            principal.SaveChanges();
+            return Ok("Successfully saved movie rating!");
+        }
+
+        [HttpGet]
+        [Route("GetWatchedMovies/{userID}")]
+        public IHttpActionResult GetWatchedMovies([FromUri]int userID)
+        {
+            var isValidUser = (principal.RVisitors.Find(userID) != null);
+            if (!isValidUser) return BadRequest("The given user does not exist!");
+
+            var completedReservations = principal.Reservations
+                .Where(x => x.RVisitorID == userID && x.IsCompleted == 1)
+                .Select(x => new
+                {
+                    x.ProjectionID,
+                    x.InitialDate,
+                    principal.Projections.Where(y => y.ProjectionID == x.ProjectionID).FirstOrDefault().MovieID
+                });
+
+            var uniqueSortedProjections = completedReservations
+                .DistinctBy(x => x.MovieID)
+                .OrderByDescending(x => x.InitialDate);
+
+            List<Projections> eligableProjections = new List<Projections>();
+            foreach (var projection in uniqueSortedProjections)
+                eligableProjections.Add(principal.Projections.Find(projection.ProjectionID));
+
+            var finalList = new List<Projections>();
+
+            if (eligableProjections.Count >= 10)
+                    finalList = eligableProjections.Take(10).ToList();
+                else
+                    finalList = eligableProjections;
+
+            return Ok(finalList.Select(x => new {
+                x.MovieID,
+                MovieName = x.Movies.Name,
+                MovieCover = Convert.ToBase64String(x.Movies.ImageThumb),
+                MovieRating = (principal.MovieRatings.Where(y => y.MovieID == x.MovieID && y.RVisitorID == userID).Any()) ?
+                    principal.MovieRatings.Where(y => y.MovieID == x.MovieID && y.RVisitorID == userID).FirstOrDefault().Rating : 0               
+            }));
+        }
+
+        [HttpGet]
+        [Route("GetRecommendedMovies/{RVisitorID}")]
+        public IHttpActionResult GetRecommendedMovies(int RVisitorID)
+        {
+            var moviesBestRatedByUser = principal.MovieRatings
+                .Where(x => x.RVisitorID == RVisitorID).OrderByDescending(x => x.Rating).Take(3).ToList();
+
+            if (moviesBestRatedByUser.Count == 0)
+                return Ok(new Dictionary<int, float>() { });
+
+            Dictionary<int, dynamic> moviesInfoDict = new Dictionary<int, dynamic>();
+            foreach (var item in moviesBestRatedByUser)
+            {
+                moviesInfoDict.Add(item.MovieID, new
+                {
+                    item.Movies.GenreID,
+                    item.Movies.MovieDirectorID,
+                    ActorIDs = item.Movies.MovieRoles.Select(x => x.ActorID).ToList(),
+                    MinDist = 1.0f/(item.Rating)
+                });
+            }
+
+
+           
+            var Movies = principal.Movies.Where(x => !x.IsDeleted && x.IsCurrent && !moviesInfoDict.Keys.Contains(x.MovieID)).ToList();
+
+            Dictionary<int, float> dctMoviesDistance = new Dictionary<int, float>();
+
+            Dictionary<string, float> Weights = new Dictionary<string, float>
+            {
+                { "DifferentGenre",1f},
+                { "DifferentMovieDirector",0.5f},
+                { "ActorsNotPresent",0.25f}
+            };
+
+            foreach (var moviesWatched in moviesInfoDict)
+            {
+                foreach (var moviesToWatch in Movies)
+                {
+                      
+                    var ActorIDs = principal.MovieRoles.Where(x => x.MovieID == moviesToWatch.MovieID).Select(x => x.ActorID).ToList();
+                    //var AverageRatingList = principal.MovieRatings.Where(x => x.MovieID == moviesToWatch.MovieID).ToList();
+                    //var AverageRating = 0.0;
+                   // if(AverageRatingList.Count>0)
+                    //    AverageRating = AverageRatingList.Average(x=>x.Rating);
+
+                    VectorN objVector = new VectorN(new float[] {
+                    Convert.ToInt32((moviesWatched.Value.GenreID!=moviesToWatch.GenreID)) * Weights["DifferentGenre"],
+                    Convert.ToInt32((moviesWatched.Value.MovieDirectorID!=moviesToWatch.MovieDirectorID)) * Weights["DifferentMovieDirector"],
+                    Convert.ToInt32((ActorIDs.Intersect((List<int>)moviesWatched.Value.ActorIDs).ToList().Count==0)) * Weights["ActorsNotPresent"],
+                    (float)moviesWatched.Value.MinDist+1.0f });
+
+                        var VectorDistance = objVector.GetLength();
+                        if (dctMoviesDistance.Keys.Contains(moviesToWatch.MovieID))
+                        {
+                            if (dctMoviesDistance[moviesToWatch.MovieID] > VectorDistance)
+                                dctMoviesDistance[moviesToWatch.MovieID] = VectorDistance;
+                        }
+                        else
+                            dctMoviesDistance.Add(moviesToWatch.MovieID, VectorDistance);                                   
+                }
+            }
+            var dctMoviesDistanceSorted = dctMoviesDistance.OrderBy(x => x.Value).Take(10).ToDictionary(t=>t.Key,t=>t.Value);
+            return Ok(dctMoviesDistanceSorted);
+        }
+    }
+}

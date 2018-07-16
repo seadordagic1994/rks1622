@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CondorDBXModelStoreContainer" CdmEntityContainer="CondorDBXEntities">
+    <EntitySetMapping Name="Actors">
+      <EntityTypeMapping TypeName="CondorDBXModel.Actors">
+        <MappingFragment StoreEntitySet="Actors">
+          <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Synopsis" ColumnName="Synopsis" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgeRestrictions">
+      <EntityTypeMapping TypeName="CondorDBXModel.AgeRestrictions">
+        <MappingFragment StoreEntitySet="AgeRestrictions">
+          <ScalarProperty Name="AgeRestrictionID" ColumnName="AgeRestrictionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Banks">
+      <EntityTypeMapping TypeName="CondorDBXModel.Banks">
+        <MappingFragment StoreEntitySet="Banks">
+          <ScalarProperty Name="BankID" ColumnName="BankID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CinemaCoordinates">
+      <EntityTypeMapping TypeName="CondorDBXModel.CinemaCoordinates">
+        <MappingFragment StoreEntitySet="CinemaCoordinates">
+          <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CinemaHalls">
+      <EntityTypeMapping TypeName="CondorDBXModel.CinemaHalls">
+        <MappingFragment StoreEntitySet="CinemaHalls">
+          <ScalarProperty Name="CinemaHallID" ColumnName="CinemaHallID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cinemas">
+      <EntityTypeMapping TypeName="CondorDBXModel.Cinemas">
+        <MappingFragment StoreEntitySet="Cinemas">
+          <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="CondorDBXModel.Cities">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="CondorDBXModel.Countries">
+        <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeePayments">
+      <EntityTypeMapping TypeName="CondorDBXModel.EmployeePayments">
+        <MappingFragment StoreEntitySet="EmployeePayments">
+          <ScalarProperty Name="EmployeePaymentID" ColumnName="EmployeePaymentID" />
+          <ScalarProperty Name="EmploymentID" ColumnName="EmploymentID" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeRoles">
+      <EntityTypeMapping TypeName="CondorDBXModel.EmployeeRoles">
+        <MappingFragment StoreEntitySet="EmployeeRoles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="CondorDBXModel.Employees">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CityBirthID" ColumnName="CityBirthID" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="CurriculumVitae" ColumnName="CurriculumVitae" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employments">
+      <EntityTypeMapping TypeName="CondorDBXModel.Employments">
+        <MappingFragment StoreEntitySet="Employments">
+          <ScalarProperty Name="EmploymentID" ColumnName="EmploymentID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+          <ScalarProperty Name="CurrentSalary" ColumnName="CurrentSalary" />
+          <ScalarProperty Name="EmploymentTypeID" ColumnName="EmploymentTypeID" />
+          <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+          <ScalarProperty Name="BankID" ColumnName="BankID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmploymentTypes">
+      <EntityTypeMapping TypeName="CondorDBXModel.EmploymentTypes">
+        <MappingFragment StoreEntitySet="EmploymentTypes">
+          <ScalarProperty Name="EmploymentTypeID" ColumnName="EmploymentTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="CondorDBXModel.Genres">
+        <MappingFragment StoreEntitySet="Genres">
+          <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieDirectors">
+      <EntityTypeMapping TypeName="CondorDBXModel.MovieDirectors">
+        <MappingFragment StoreEntitySet="MovieDirectors">
+          <ScalarProperty Name="MovieDirectorID" ColumnName="MovieDirectorID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Synopsis" ColumnName="Synopsis" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieRatings">
+      <EntityTypeMapping TypeName="CondorDBXModel.MovieRatings">
+        <MappingFragment StoreEntitySet="MovieRatings">
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="RVisitorID" ColumnName="RVisitorID" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MovieRoles">
+      <EntityTypeMapping TypeName="CondorDBXModel.MovieRoles">
+        <MappingFragment StoreEntitySet="MovieRoles">
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+          <ScalarProperty Name="RoleSynopsis" ColumnName="RoleSynopsis" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="CondorDBXModel.Movies">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+          <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+          <ScalarProperty Name="DurationInMinutes" ColumnName="DurationInMinutes" />
+          <ScalarProperty Name="AgeRestrictionID" ColumnName="AgeRestrictionID" />
+          <ScalarProperty Name="MovieDirectorID" ColumnName="MovieDirectorID" />
+          <ScalarProperty Name="Trailer" ColumnName="Trailer" />
+          <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+          <ScalarProperty Name="Synopsis" ColumnName="Synopsis" />
+          <ScalarProperty Name="ImageThumb" ColumnName="ImageThumb" />
+          <ScalarProperty Name="PictureBytes" ColumnName="PictureBytes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentMethods">
+      <EntityTypeMapping TypeName="CondorDBXModel.PaymentMethods">
+        <MappingFragment StoreEntitySet="PaymentMethods">
+          <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projections">
+      <EntityTypeMapping TypeName="CondorDBXModel.Projections">
+        <MappingFragment StoreEntitySet="Projections">
+          <ScalarProperty Name="ProjectionID" ColumnName="ProjectionID" />
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="CinemaHallID" ColumnName="CinemaHallID" />
+          <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+          <ScalarProperty Name="TechnologyTypeID" ColumnName="TechnologyTypeID" />
+          <ScalarProperty Name="TicketPrice" ColumnName="TicketPrice" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="CondorDBXModel.Reservations">
+        <MappingFragment StoreEntitySet="Reservations">
+          <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+          <ScalarProperty Name="InitialDate" ColumnName="InitialDate" />
+          <ScalarProperty Name="ValidUntil" ColumnName="ValidUntil" />
+          <ScalarProperty Name="PhoneNumberVis" ColumnName="PhoneNumberVis" />
+          <ScalarProperty Name="RVisitorID" ColumnName="RVisitorID" />
+          <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="CreditCardNumber" ColumnName="CreditCardNumber" />
+          <ScalarProperty Name="ProjectionID" ColumnName="ProjectionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="CondorDBXModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RootUsers">
+      <EntityTypeMapping TypeName="CondorDBXModel.RootUsers">
+        <MappingFragment StoreEntitySet="RootUsers">
+          <ScalarProperty Name="RootUserID" ColumnName="RootUserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RVisitors">
+      <EntityTypeMapping TypeName="CondorDBXModel.RVisitors">
+        <MappingFragment StoreEntitySet="RVisitors">
+          <ScalarProperty Name="RVisitorID" ColumnName="RVisitorID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="VirtualPointsTotal" ColumnName="VirtualPointsTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeatColumns">
+      <EntityTypeMapping TypeName="CondorDBXModel.SeatColumns">
+        <MappingFragment StoreEntitySet="SeatColumns">
+          <ScalarProperty Name="SeatColumnID" ColumnName="SeatColumnID" />
+          <ScalarProperty Name="SeatColumnLbl" ColumnName="SeatColumnLbl" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeatRows">
+      <EntityTypeMapping TypeName="CondorDBXModel.SeatRows">
+        <MappingFragment StoreEntitySet="SeatRows">
+          <ScalarProperty Name="SeatRowID" ColumnName="SeatRowID" />
+          <ScalarProperty Name="SeatRowLbl" ColumnName="SeatRowLbl" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seats">
+      <EntityTypeMapping TypeName="CondorDBXModel.Seats">
+        <MappingFragment StoreEntitySet="Seats">
+          <ScalarProperty Name="SeatID" ColumnName="SeatID" />
+          <ScalarProperty Name="SeatRowID" ColumnName="SeatRowID" />
+          <ScalarProperty Name="SeatColumnID" ColumnName="SeatColumnID" />
+          <ScalarProperty Name="CinemaHallID" ColumnName="CinemaHallID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TechnologyTypes">
+      <EntityTypeMapping TypeName="CondorDBXModel.TechnologyTypes">
+        <MappingFragment StoreEntitySet="TechnologyTypes">
+          <ScalarProperty Name="TechnologyTypeID" ColumnName="TechnologyTypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tickets">
+      <EntityTypeMapping TypeName="CondorDBXModel.Tickets">
+        <MappingFragment StoreEntitySet="Tickets">
+          <ScalarProperty Name="ProjectionID" ColumnName="ProjectionID" />
+          <ScalarProperty Name="SeatID" ColumnName="SeatID" />
+          <ScalarProperty Name="TicketPrice" ColumnName="TicketPrice" />
+          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+          <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionsVirtualPoints">
+      <EntityTypeMapping TypeName="CondorDBXModel.TransactionsVirtualPoints">
+        <MappingFragment StoreEntitySet="TransactionsVirtualPoints">
+          <ScalarProperty Name="TransactionVirtualPointsID" ColumnName="TransactionVirtualPointsID" />
+          <ScalarProperty Name="VirtualPointsPacketID" ColumnName="VirtualPointsPacketID" />
+          <ScalarProperty Name="RVisitorID" ColumnName="RVisitorID" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VirtualPointsPackets">
+      <EntityTypeMapping TypeName="CondorDBXModel.VirtualPointsPackets">
+        <MappingFragment StoreEntitySet="VirtualPointsPackets">
+          <ScalarProperty Name="VirtualPointsPacketID" ColumnName="VirtualPointsPacketID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Artikli">
+      <EntityTypeMapping TypeName="CondorDBXModel.Artikli">
+        <MappingFragment StoreEntitySet="Artikli">
+          <ScalarProperty Name="AritkalId" ColumnName="AritkalId" />
+          <ScalarProperty Name="GrupaId" ColumnName="GrupaId" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="JedMjere" ColumnName="JedMjere" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cjenovnik">
+      <EntityTypeMapping TypeName="CondorDBXModel.Cjenovnik">
+        <MappingFragment StoreEntitySet="Cjenovnik">
+          <ScalarProperty Name="CjenovnikId" ColumnName="CjenovnikId" />
+          <ScalarProperty Name="GrupaId" ColumnName="GrupaId" />
+          <ScalarProperty Name="ArtikalId" ColumnName="ArtikalId" />
+          <ScalarProperty Name="Koliciina" ColumnName="Koliciina" />
+          <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grupa">
+      <EntityTypeMapping TypeName="CondorDBXModel.Grupa">
+        <MappingFragment StoreEntitySet="Grupa">
+          <ScalarProperty Name="GrupaId" ColumnName="GrupaId" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stavke">
+      <EntityTypeMapping TypeName="CondorDBXModel.Stavke">
+        <MappingFragment StoreEntitySet="Stavke">
+          <ScalarProperty Name="StavkaId" ColumnName="StavkaId" />
+          <ScalarProperty Name="ZaglavljeId" ColumnName="ZaglavljeId" />
+          <ScalarProperty Name="CijenovnikId" ColumnName="CijenovnikId" />
+          <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+          <ScalarProperty Name="Rabat" ColumnName="Rabat" />
+          <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+          <ScalarProperty Name="PDV" ColumnName="PDV" />
+          <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+          <ScalarProperty Name="RezervacijaID" ColumnName="RezervacijaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zaglavlje">
+      <EntityTypeMapping TypeName="CondorDBXModel.Zaglavlje">
+        <MappingFragment StoreEntitySet="Zaglavlje">
+          <ScalarProperty Name="ZaglavljeId" ColumnName="ZaglavljeId" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Knjizen" ColumnName="Knjizen" />
+          <ScalarProperty Name="FiskalniRacun" ColumnName="FiskalniRacun" />
+          <ScalarProperty Name="ReklamiraniRacun" ColumnName="ReklamiraniRacun" />
+          <ScalarProperty Name="ZaposlenikID" ColumnName="ZaposlenikID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

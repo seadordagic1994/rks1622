@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E86BA0A2-F221-43B2-ADFE-0A4E53A0927E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CondorExtreme3_UI</RootNamespace>
+    <AssemblyName>CondorExtreme3_UI</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dynamsoft.BarcodeGenerator, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.BarcodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.BarcodeReader, Version=5.1.0.404, Culture=neutral, PublicKeyToken=ad0967c36e09320a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.BarcodeReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.Camera, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.Camera.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.Forms.Viewer, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.Forms.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.ImageCore, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.ImageCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.OCR, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.OCR.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.PDF, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.PDF.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.Twain, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.Twain.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamsoft.WPF.Viewer, Version=7.1.0.526, Culture=neutral, PublicKeyToken=298ad97013b423eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dynamsoft.DotNet.TWAIN.7.1.0\lib\net40\Dynamsoft.WPF.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="HtmlAgilityPack, Version=1.7.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.7.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenJobScheduler, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenJobScheduler.1.0.1\lib\netstandard2.0\OpenJobScheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.2\lib\net461\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.2\lib\net461\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cinemas\AddCinemaHallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cinemas\AddCinemaHallForm.Designer.cs">
+      <DependentUpon>AddCinemaHallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cinemas\CinemaHallInfo.cs" />
+    <Compile Include="Cinemas\CinemaManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cinemas\CinemaManagementForm.Designer.cs">
+      <DependentUpon>CinemaManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cinemas\EditCinemaHallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cinemas\EditCinemaHallForm.Designer.cs">
+      <DependentUpon>EditCinemaHallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cinemas\StatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cinemas\StatisticsForm.Designer.cs">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\AddEmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\AddEmployeeForm.Designer.cs">
+      <DependentUpon>AddEmployeeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\AddEmployeePaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\AddEmployeePaymentForm.Designer.cs">
+      <DependentUpon>AddEmployeePaymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\AddEmploymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\AddEmploymentForm.Designer.cs">
+      <DependentUpon>AddEmploymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EditEmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\EditEmployeeForm.Designer.cs">
+      <DependentUpon>EditEmployeeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EditEmploymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\EditEmploymentForm.Designer.cs">
+      <DependentUpon>EditEmploymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EmployeeAccountChangeInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\EmployeeAccountChangeInfoForm.Designer.cs">
+      <DependentUpon>EmployeeAccountChangeInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EmployeePaymentsShowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\EmployeePaymentsShowForm.Designer.cs">
+      <DependentUpon>EmployeePaymentsShowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\EmployeeRoles.cs" />
+    <Compile Include="Employees\Employees.cs" />
+    <Compile Include="Employees\EmployeesManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\EmployeesManagementForm.Designer.cs">
+      <DependentUpon>EmployeesManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Employments.cs" />
+    <Compile Include="Employees\Payments.cs" />
+    <Compile Include="Employees\SystemRolesAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\SystemRolesAddForm.Designer.cs">
+      <DependentUpon>SystemRolesAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\SystemRolesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\SystemRolesForm.Designer.cs">
+      <DependentUpon>SystemRolesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Algorithm.cs" />
+    <Compile Include="Helper\AuthenticationUI.cs" />
+    <Compile Include="Helper\AuthorizationUI.cs" />
+    <Compile Include="Helper\CreateFiscalBill.cs" />
+    <Compile Include="Helper\StatisticsHelper.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
+    <Compile Include="Helper\WebAPIHelper.cs" />
+    <Compile Include="Index\NavForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Index\NavForm.Designer.cs">
+      <DependentUpon>NavForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Index\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Index\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Index\InitialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Index\InitialForm.Designer.cs">
+      <DependentUpon>InitialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KasaRacuni\FromCamera.cs" />
+    <Compile Include="KasaRacuni\Kasa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KasaRacuni\Kasa.Designer.cs">
+      <DependentUpon>Kasa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KasaRacuni\Parent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KasaRacuni\Parent.designer.cs">
+      <DependentUpon>Parent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KasaRacuni\Reklamacija.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KasaRacuni\Reklamacija.designer.cs">
+      <DependentUpon>Reklamacija.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KasaRacuni\Seats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KasaRacuni\Seats.designer.cs">
+      <DependentUpon>Seats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\addProjection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\addProjection.Designer.cs">
+      <DependentUpon>addProjection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\BitmapImage.cs" />
+    <Compile Include="Projections\editMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\editMovie.Designer.cs">
+      <DependentUpon>editMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\editProjection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\editProjection.Designer.cs">
+      <DependentUpon>editProjection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\FormTracer.cs" />
+    <Compile Include="Projections\searchMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\searchMovie.Designer.cs">
+      <DependentUpon>searchMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\Seats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\Seats.Designer.cs">
+      <DependentUpon>Seats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportModels\CashRegisterDataset.cs">
+      <DependentUpon>CashRegisterDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportModels\CashRegisterDataset.designer.cs">
+      <DependentUpon>CashRegisterDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportModels\EmployeeSalary.cs" />
+    <Compile Include="ReportModels\TestXDataset.cs">
+      <DependentUpon>TestXDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportModels\TestXDataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestXDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DailyReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\DailyReportForm.designer.cs">
+      <DependentUpon>DailyReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportingForm.Designer.cs">
+      <DependentUpon>ReportingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RootUsers\CinemaInfo.cs" />
+    <Compile Include="RootUsers\RootAddCinemaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootAddCinemaForm.Designer.cs">
+      <DependentUpon>RootAddCinemaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RootUsers\RootCinemaEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootCinemaEditForm.Designer.cs">
+      <DependentUpon>RootCinemaEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RootUsers\RootCinemaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootCinemaForm.Designer.cs">
+      <DependentUpon>RootCinemaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RootUsers\RootMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootMainForm.Designer.cs">
+      <DependentUpon>RootMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Projections\addMovie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\addMovie.Designer.cs">
+      <DependentUpon>addMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\Movies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\Movies.Designer.cs">
+      <DependentUpon>Movies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Projections\ProjectionsParent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Projections\ProjectionsParent.Designer.cs">
+      <DependentUpon>ProjectionsParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RootUsers\RootShowVPacks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootShowVPacks.Designer.cs">
+      <DependentUpon>RootShowVPacks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RootUsers\RootVPAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RootUsers\RootVPAddForm.Designer.cs">
+      <DependentUpon>RootVPAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test.Designer.cs">
+      <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Cinemas\AddCinemaHallForm.resx">
+      <DependentUpon>AddCinemaHallForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cinemas\CinemaManagementForm.resx">
+      <DependentUpon>CinemaManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cinemas\EditCinemaHallForm.resx">
+      <DependentUpon>EditCinemaHallForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cinemas\StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\AddEmployeeForm.resx">
+      <DependentUpon>AddEmployeeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\AddEmployeePaymentForm.resx">
+      <DependentUpon>AddEmployeePaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\AddEmploymentForm.resx">
+      <DependentUpon>AddEmploymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\EditEmployeeForm.resx">
+      <DependentUpon>EditEmployeeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\EditEmploymentForm.resx">
+      <DependentUpon>EditEmploymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\EmployeeAccountChangeInfoForm.resx">
+      <DependentUpon>EmployeeAccountChangeInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\EmployeePaymentsShowForm.resx">
+      <DependentUpon>EmployeePaymentsShowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\EmployeesManagementForm.resx">
+      <DependentUpon>EmployeesManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\SystemRolesAddForm.resx">
+      <DependentUpon>SystemRolesAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\SystemRolesForm.resx">
+      <DependentUpon>SystemRolesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Index\NavForm.resx">
+      <DependentUpon>NavForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Index\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Index\InitialForm.resx">
+      <DependentUpon>InitialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KasaRacuni\Kasa.resx">
+      <DependentUpon>Kasa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KasaRacuni\Parent.resx">
+      <DependentUpon>Parent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KasaRacuni\Reklamacija.resx">
+      <DependentUpon>Reklamacija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KasaRacuni\Seats.resx">
+      <DependentUpon>Seats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\addProjection.resx">
+      <DependentUpon>addProjection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\editMovie.resx">
+      <DependentUpon>editMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\editProjection.resx">
+      <DependentUpon>editProjection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\searchMovie.resx">
+      <DependentUpon>searchMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\Seats.resx">
+      <DependentUpon>Seats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DailyReport.rdlc" />
+    <EmbeddedResource Include="Reports\DailyReportForm.resx">
+      <DependentUpon>DailyReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\EmployeeSalary.rdlc" />
+    <EmbeddedResource Include="Reports\ProfitByMovies.rdlc" />
+    <EmbeddedResource Include="Reports\ProfitByPaymentMethods.rdlc" />
+    <EmbeddedResource Include="Reports\ReportingForm.resx">
+      <DependentUpon>ReportingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SeatReservationFrequency.rdlc" />
+    <EmbeddedResource Include="RootUsers\RootAddCinemaForm.resx">
+      <DependentUpon>RootAddCinemaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootCinemaEditForm.resx">
+      <DependentUpon>RootCinemaEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootCinemaForm.aa.resx">
+      <DependentUpon>RootCinemaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootCinemaForm.resx">
+      <DependentUpon>RootCinemaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootMainForm.resx">
+      <DependentUpon>RootMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\addMovie.resx">
+      <DependentUpon>addMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\Movies.resx">
+      <DependentUpon>Movies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Projections\ProjectionsParent.resx">
+      <DependentUpon>ProjectionsParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootShowVPacks.resx">
+      <DependentUpon>RootShowVPacks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RootUsers\RootVPAddForm.resx">
+      <DependentUpon>RootVPAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\CondorExtreme3_UI.Reports.EmployeeTopSalaries.datasource" />
+    <None Include="Properties\DataSources\CondorExtreme3_UI.Reports.ReportingForm.datasource" />
+    <None Include="Properties\DataSources\CondorExtreme3_UI.Reports.ReportTypes.datasource" />
+    <None Include="Properties\DataSources\CondorExtreme3_UI.Reports.RParameters.datasource" />
+    <None Include="Properties\DataSources\CondorExtreme3_UI.Reports.rptDataSet.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CondorExtreme3_API\CondorExtreme3_API.csproj">
+      <Project>{b99f7f78-2a68-455d-ae0f-0f1a8cfa5a84}</Project>
+      <Name>CondorExtreme3_API</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="ReportModels\CashRegisterDataset.xsc">
+      <DependentUpon>CashRegisterDataset.xsd</DependentUpon>
+    </None>
+    <None Include="ReportModels\CashRegisterDataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CashRegisterDataset1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReportModels\CashRegisterDataset.xss">
+      <DependentUpon>CashRegisterDataset.xsd</DependentUpon>
+    </None>
+    <None Include="ReportModels\TestXDataset.xsc">
+      <DependentUpon>TestXDataset.xsd</DependentUpon>
+    </None>
+    <None Include="ReportModels\TestXDataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TestXDataset.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportModels\TestXDataset.xss">
+      <DependentUpon>TestXDataset.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\close_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="ShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\logo1.png" />
+    <None Include="Resources\logo1.png" />
+    <None Include="Resources\cash-icon.png" />
+    <None Include="Resources\edit.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
+</Project>

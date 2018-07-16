@@ -1,0 +1,91 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+using Xamarin.Forms;
+
+namespace CondorExtreme3_Xamarin
+{
+	public class LoginPage : ContentPage
+	{
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/Users");
+
+        protected override void OnAppearing()
+        {
+            if (Authentication.IsAuthenticated)
+                NavigationHelper.ChangePageTo<RVMenuPage, RVMainPage>();
+        }
+
+        public LoginPage()
+		{
+            System.Threading.Tasks.Task.Run(() => Authentication.SyncGeoLocation());
+
+            StackLayout mainStackLayout = new StackLayout();
+
+            Label labelHeader = new Label() {
+                Text = "eCinema Login",
+                FontSize = 30,
+                HorizontalTextAlignment = TextAlignment.Center,
+            };
+
+            Label labelUsername = new Label() {
+                Text = "Username",
+                FontSize = 30,
+                HorizontalTextAlignment = TextAlignment.Start
+            };
+
+            Entry entryUsername = new Entry() {
+                Placeholder = "Username"
+            };
+
+            Entry entryPassword = new Entry() {
+                Placeholder = "Password",
+                IsPassword = true
+            };
+                
+            Button buttonLogin = new Button() {
+                Text = "Login"
+            };
+
+            Button buttonRegister = new Button() {
+                Text = "Register",
+            };
+
+            buttonLogin.Clicked += async (sender, args) => {
+
+                await Authentication.Authenticate(entryUsername.Text, entryPassword.Text);
+
+                if (Authentication.IsAuthenticated)
+                    NavigationHelper.ChangePageTo<RVMenuPage, RVMainPage>();
+                else await DisplayAlert("Error", "Invalid username or password!", "Ok");
+            };
+
+            buttonRegister.Clicked +=  async (sender, args) => {
+                 await Navigation.PushAsync(new RegistrationPage());
+            };
+
+            mainStackLayout.Children.Add(labelHeader);
+            mainStackLayout.Children.Add(entryUsername);
+            mainStackLayout.Children.Add(entryPassword);
+
+            StackLayout stackButtons = new StackLayout();
+
+          
+
+            stackButtons.Children.Add(buttonLogin);
+            stackButtons.Children.Add(buttonRegister);
+            stackButtons.Orientation = StackOrientation.Horizontal;
+            stackButtons.HorizontalOptions = LayoutOptions.End;
+
+            mainStackLayout.Children.Add(stackButtons);
+            mainStackLayout.Margin = new Thickness(15, 5, 15, 5);
+
+           
+            
+            Content = mainStackLayout;
+		}
+	}
+}

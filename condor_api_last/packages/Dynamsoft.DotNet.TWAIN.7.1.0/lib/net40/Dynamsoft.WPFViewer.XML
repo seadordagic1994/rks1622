@@ -1,0 +1,1667 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dynamsoft.WPF.Viewer</name>
+    </assembly>
+    <members>
+        <member name="T:Dynamsoft.Common.ConstStringHelper">
+            <summary>
+            Summary description for ConstStringHelper.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.Common.IndexList">
+            <summary>
+            Implements the IIndexList interface using an array whose size is dynamically increased as required.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Interface.IIndexList">
+            <summary>
+            Represents a non-generic collection of objects that can be individually accessed by index.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Interface.IIndexList.Insert(System.Int32,System.Int32)">
+            <summary>
+            Inserts an element into the list at the specified index.
+            </summary>
+            <param name="index">The zero-based index at which value should be inserted.</param>
+            <param name="value">The value to be inserted.</param>
+            <returns>
+            true indicates success. false indicates failure. 
+            </returns>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.Interface.IIndexList.Add(System.Int32)">
+            <summary>
+            Adds an int value to the end of the list.
+            </summary>
+            <param name="value">
+            The value to be added to the end of the list. 
+            </param>
+            <returns>
+            The list index at which the value has been added. -1 indicates failure.
+            </returns>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.Interface.IIndexList.RemoveAt(System.Int32)">
+            <summary>
+            Removes the element at the specified index of the list.
+            </summary>
+            <param name="index">The zero-based index of the element to be removed.</param>
+            <returns>
+            true indicates success. false indicates failure. 
+            </returns>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.Interface.IIndexList.Remove(System.Int32)">
+            <summary>
+            Removes the first occurrence of a specific value from the list.
+            </summary>
+            <param name="value">The value to be removed from the list.</param>
+            <returns>
+            true indicates success. false indicates failure. 
+            </returns>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.Interface.IIndexList.GetEnumerator">
+            <summary>
+            Returns an enumerator for the entire list.
+            </summary>
+            <returns>
+            An IEnumerator for the entire list.
+            </returns>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.IIndexList.Count">
+            <summary>
+            Gets the number of elements actually contained in the list.
+            </summary>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.IIndexList.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the element to get or set.</param>
+            <exception cref="!:Dynamsoft.Form.ViewerException"> 
+            When an error occurs and IfThrowException property is true, an exception will be thrown.
+            When IfThrowException property is false, please check ErrorCode and ErrorString.
+            </exception>
+        </member>
+        <member name="T:Dynamsoft.Common.Util">
+            <summary>
+            Summary description for Util.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.Common.Util.Clone(System.Drawing.Bitmap)">
+            <summary>
+            Clone image.
+            </summary>
+            
+            <param name="source">Source image.</param>
+            
+            <returns>Return clone of the source image.</returns>
+            
+            <remarks>The original <see cref="M:System.Drawing.Bitmap.Clone(System.Drawing.Rectangle,System.Drawing.Imaging.PixelFormat)">Bitmap.Clone()</see>
+            does not produce the desired result - it does not create an actual clone (it does not create a copy
+            of the image). That is why this method was implemented to provide the functionality.</remarks> 
+            
+        </member>
+        <member name="M:Dynamsoft.Common.Util.Clone(System.Drawing.Imaging.BitmapData)">
+             <summary>
+             Clone image.
+             </summary>
+             
+             <param name="sourceData">Source image data.</param>
+            
+             <returns>Clones image from source image data. The message does not clone pallete in the
+             case if the source image has indexed pixel format.</returns>
+             
+        </member>
+        <member name="M:Dynamsoft.Common.Util.CopyUnmanagedMemory(System.IntPtr,System.IntPtr,System.Int32)">
+             <summary>
+             Copy block of unmanaged memory.
+             </summary>
+             
+             <param name="dst">Destination pointer.</param>
+             <param name="src">Source pointer.</param>
+             <param name="count">Memory block's length to copy.</param>
+             
+             <returns>Return's value of <paramref name="dst"/> - pointer to destination.</returns>
+             
+             <remarks><para>This function is required because of the fact that .NET does
+             not provide any way to copy unmanaged blocks, but provides only methods to
+             copy from unmanaged memory to managed memory and vise versa.</para></remarks>
+            
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.controller.ControllerImageWindow.NetRectangle">
+            <summary>
+            Group selection rectangle. Used for drawing.
+            http://www.google.com
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.controller.ControllerImageWindow.DrawNetRectangle">
+            <summary>
+            Flas is set to true if group selection rectangle should be drawn.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.controller.ControllerImageWindow.ActiveTool">
+            <summary>
+            Active drawing tool.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.controller.ControllerImageWindow.GraphicsList">
+            <summary>
+            List of graphics objects.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.controller.ControllerImageViewer.OneByOneMode">
+            <summary>
+            Sample
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.Model.ModelImageWindow.NetRectangle">
+            <summary>
+            Group selection rectangle. Used for drawing.
+            http://www.google.com
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.Model.ModelImageWindow.DrawNetRectangle">
+            <summary>
+            Flas is set to true if group selection rectangle should be drawn.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.Model.ModelImageWindow.ActiveTool">
+            <summary>
+            Active drawing tool.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.Model.ModelImageWindow.ZoomX">
+            <summary>
+            Don't set ZoomX and ZoomY directly usually. Instead, set them with Zoom unless they need to be set different values.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Controls.Model.ModelImageWindow.ZoomY">
+            <summary>
+            Don't set ZoomX and ZoomY directly usually. Instead, set them with Zoom unless they need to be set different values.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.DSViewer">
+            <summary>
+            Defines a class providing functions for managing image viewer.
+            </summary>
+            <summary>
+            DSViewer
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnMouseClickEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnMouseClick routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnMouseDoubleClickEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnMouseDoubleClick routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnMouseRightClickEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnMouseRightClick routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnMouseMoveEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnMouseMove routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnImageAreaSelectedEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnImageAreaSelected routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnImageAreaDeselectedEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnImageAreaDeselected routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnTopImageInTheViewChangedEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnTopImageInTheViewChanged routed event
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.DSViewer.OnViewerKeyDownEvent">
+            <summary>
+            Identifies the Dynamsoft.WPF.DynamicDotNetTwain.OnViewerKeyDown routed event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.Print">
+            <summary>
+            Shows the GUI of Image Printer with  the default printer settings.
+            </summary>
+            <returns>
+             
+            Boolean.
+            True indicates success. False indicates failure. 
+            </returns>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            Depending on the property IfShowPrintUI, the User Interface of the printer may or may not show when you invoke this method.
+            </remarks>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.Print(System.Drawing.Printing.PrinterSettings)">
+            <summary>
+            Shows the GUI of Image Printer with custom printer settings.
+            </summary>
+            
+            <param name="printerSettings">Custom printer settings</param>
+            
+            <returns>
+            Boolean.
+            True indicates success. False indicates failure. 
+            </returns>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            Depending on the property IfShowPrintUI, the User Interface of the printer may or may not show when you invoke this method.
+            </remarks>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.GetViewMode(System.Int16@,System.Int16@)">
+            <summary>
+            Gets the view mode that images are displayed in Dynamic .NET TWAIN.
+            </summary>
+            <param name="sHorizontalImageCount">the short number for the columns can be displayed in the viewer.</param>
+            <param name="sVerticalImageCount">the short number for the rows can be displayed in the viewer.</param>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            If the view mode is set to -1*-1, the returned value of sHorizontalImageCount is -1, and so is sVerticalImageCount.
+            </remarks>
+            
+            
+            
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.SetViewMode(System.Int16,System.Int16)">
+            <summary>
+            Sets the view mode that images are displayed in the viewer. You can use this method to display multiple images in the viewer.
+            </summary>
+            <param name="sHorizontalImageCount">Specifies how many columns can be displayed in the viewer.</param>
+            <param name="sVerticalImageCount">Specifies how many rows can be displayed in the viewer.</param>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>The default is 1 by 1.
+            When the view mode is set to -1 by -1, the viewer only shows the current image. No scroll bar is provided to navigate to other images.
+            </remarks>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.SetSelectionRectPosition(System.Int16,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Programmatically selects an area or resize selection rectangle. 
+            Note: To enable this function, MouseShape property should be set to false.
+            </summary>
+            <param name="sImageIndex">Specifies the index of the image in buffer.</param>
+            <param name="iLeft">The X axis of the left border.</param>
+            <param name="iTop">The Y axis of the top border.</param>
+            <param name="iRight">The X axis of the right border.</param>
+            <param name="iBottom">The Y axis of the bottom border.</param>
+            <returns>
+            Returns a boolean value that indicates whether the operation succeeds or not.
+            </returns>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.GetSelectionRect(System.Int16)">
+            <summary>
+            Gets the selected area on the specified image in buffer.
+            </summary>
+            <param name="sImageIndex">Specifies the index of the image in buffer.</param>
+            <returns>Return a Rectangle value that indicates the selected area. Rectangle.Empty means that no area is selected on the specified index image.</returns>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.ClearSelectionRect(System.Int16)">
+            <summary>
+            Clears the selected area on the specified image in buffer. 
+            </summary>
+            <param name="sImageIndex">Specifies the index of the image in buffer.</param>
+            <returns>Returns a boolean value that indicates whether the operation succeeds or not.</returns>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+        </member>
+        <member name="M:Dynamsoft.WPF.DSViewer.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.Content">
+            <summary>
+            Gets the content of a System.Windows.Controls.ContentControl.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnImageAreaDeselected">
+            <summary>
+            This event is triggered when the selected area of the specified image is deselected and the value of the property is set to false.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnImageAreaSelected">
+            <summary>
+            This event is triggered when an area of the specified image is selected and the value of the property is set to false.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnMouseClick">
+            <summary>
+            This event is triggered when the mouse clicks on an image.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnMouseDoubleClick">
+            <summary>
+            This event is triggered when the mouse double clicks on an image.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnMouseMove">
+            <summary>
+            This event is triggered when the mouse moves onto an image.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnMouseRightClick">
+            <summary>
+            This event is triggered when the mouse right clicks on an image.
+            </summary>
+        </member>
+        <member name="E:Dynamsoft.WPF.DSViewer.OnTopImageInTheViewChanged">
+            <summary>
+            This event is triggered when the current top image displayed in the viewer is changed and the view mode is NOT set to -1 by -1.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.SelectionRectAspectRatio">
+            <summary>
+            Returns or sets the selection rectangle aspect ratio. The ratio is referring to width/height (e.g. to keep width/height 3/2, you can set the ratio to 1.5). 
+            This is a runtime property.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            Please make sure the value is 0 or a positive number. 0 means no limitation on the aspect ratio. 
+            </remarks>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.MouseShape">
+            <summary>
+            Returns or sets the shape of the mouse.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            When the value of the property is set to true, the cursor is set as a hand. If the width or height of the image is bigger than the control size, scroll bars will be shown and you can drag the image to adjust the position in the control.
+            When the value of the property is set to false, the cursor is set as an arrow. You can select an area in the viewer directly and the OnImageAreaSelected event will be fired.
+            </remarks>
+            
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.VScrollBar">
+            <summary>
+            Indicates whether the vertical scroll bar is visible when the images are larger than page size.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            The default value is true. If view mode is -1 * -1, please ignore this setting.
+            </remarks>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.SelectionImageBorderColor">
+            <summary>
+            Returns or sets the border color of the selected image. It is a value specifying the 32-bit ARGB value.
+            </summary>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            The default value is Navy. The byte-ordering of the 32-bit ARGB value is AARRGGBB. The most significant byte (MSB), 
+            represented by AA, is the alpha component value. The second, third, and fourth bytes, represented by RR, GG, and BB,
+            are the color components red, green, and blue respectively.
+            </remarks>
+            
+            
+            
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.CurrentSelectedImageIndicesInBuffer">
+            <summary>
+            Returns or sets current selected image indices in buffer.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            If there is no image in buffer, the returned array count is zero.
+            </remarks>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.AllowMultiSelect">
+            <summary>
+            Returns or sets whether support multiple select. This property is invalid when the view mode is set to -1 by -1 or 1 by 1.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            The default value is false. If it is true, when a user selects multiple images, the CurrentImageIndexInBuffer is always the minimum 
+            index in the selected images.
+            </remarks>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.EnableKeyboardInteractive">
+            <summary>
+            Whether or not respond to keyboard events. Here the events mean those defined in the dll. For example, navigate to the next image
+            when the "Right" key is pressed.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.FitWindowType">
+            <summary>
+            Returns or sets whether to resize the image to fit the image to the width or height of window.To use the property,the view mode should be set to -1 by -1. 
+            </summary>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            <div class="tablediv">
+            <table>
+            <tr valign="center">
+            <th>Allowed Values</th>
+            <th>Fit Window Type</th>
+            </tr>
+            <tr valign="center">
+            <td>0(default)</td>
+            <td>Fit the image to the width and height of the window</td>
+            </tr>
+            <tr valign="center">
+            <td>1</td>
+            <td>Fit the image to the height of the window</td>
+            </tr>
+            <tr valign="center">
+            <td>2</td>
+            <td>Fit the image to the width of the window</td>
+            </tr>
+            </table>
+            </div>
+            </remarks>
+            
+            
+            
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.ImageMargin">
+            <summary>
+            Returns or sets the margin between images when multiple images are displayed in the viewer.
+            </summary>
+            
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            
+            <remarks>
+            The default value will auto judge.
+            </remarks>
+            
+            
+            
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.Zoom">
+            <summary>
+            Returns or sets zoom factor for the current image, only available when the view mode is set to -1 by -1. This is a runtime property.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            The zoom value is expressed as a percentage. The valid range is from 2 to 6500 percent (Value: 0.02 ~ 65.0); the default value is 100 percent (Value: 1.0). A zoom value can be specified before or after an image is displayed. When the zoom value is changed, the displayed image will refresh automatically.
+            </remarks>
+        </member>
+        <member name="P:Dynamsoft.WPF.DSViewer.EnableInteractiveZoom">
+            <summary>
+            Returns or sets whether the user can zoom image using hot key.
+            </summary>
+            <exception cref="T:Dynamsoft.WPF.ViewerException">
+            When an error occurs, please check ViewerException.
+            </exception>
+            <remarks>
+            If it is set to true. The user can use hot key "Ctrl + Mouse Wheel" or "Alt + Mouse Wheel" to zoom in/out the image, use "+" (numeric keypad) to zoom in the image, and use "-" (numeric keypad) to zoom out the image. 
+            The default value of this property is true.
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Dynamsoft.WPF.Controls.ImageControl" -->
+        <!-- Badly formed XML comment ignored for member "T:Dynamsoft.WPF.Controls.ImageWindow" -->
+        <!-- Badly formed XML comment ignored for member "T:Dynamsoft.WPF.Controls.ImageViewer" -->
+        <member name="T:Dynamsoft.WPF.Enums.EnumFitWindowType">
+            <summary>
+            FitWindow type.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumFitWindowType.enumFitWindow">
+            <summary>
+            Fit the image to both the width and height of the viewer.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumFitWindowType.enumFitWindowHeight">
+            <summary>
+            Fit the image to the height of the viewer.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumFitWindowType.enumFitWindowWidth">
+            <summary>
+            Fit the image to the width of the viewer.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Enums.EnumAnnotationType">
+            <summary>
+            Annotation type.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumAnnotationType.enumText">
+            <summary>
+            Text annotation.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumAnnotationType.enumLine">
+            <summary>
+            Line annotation.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumAnnotationType.enumRectangle">
+            <summary>
+            Rectangle annotation.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.EnumAnnotationType.enumEllipse">
+            <summary>
+            Ellipse annotation.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Enums.EnumTextRotate">
+            <summary>
+            Rotate text annotaion
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Enums.ErrorCode">
+            <summary>
+            DynamicDotNetTWAIN error code.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.Succeed">
+            <summary>
+            Successful.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWCC_BUMMER">
+            <summary>
+            General error.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWCC_BADVALUE">
+            <summary>
+            Data parameter out of supported range. 
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_GeneralError">
+             <summary>
+             General error.
+             </summary>
+            
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_CANCEL">
+            <summary>
+            User cancelled the operation.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_INDEX">
+            <summary>
+            Invalid index.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_VALUE">
+            <summary>
+            Invalid value.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_BADPARAMETER">
+            <summary>
+            Data parameter out of supported range. 
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_NOTSUPPORTIMAGE">
+            <summary>
+            This image format is not supported.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_INVALIDPRINTER">
+            <summary>
+            Invalid image index. Original image does't exist.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.Enums.ErrorCode.TWERR_PRINT_NO_PAGE">
+            <summary>
+            There is no page to be printed.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.ViewerException">
+            <summary>
+            DynamicDotNetTWAIN exception class definition.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.ViewerException.#ctor">
+            <summary>
+            Initializes a new instance of the ViewerException class.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.ViewerException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the ViewerException class with a specified error message.
+            </summary>
+            <param name="strError">The message that describes the error.</param>
+        </member>
+        <member name="M:Dynamsoft.WPF.ViewerException.#ctor(System.String,Dynamsoft.WPF.Enums.ErrorCode)">
+            <summary>
+            Initializes a new instance of the ViewerException class with a specified error message and error code.
+            </summary>
+            <param name="strError">The message that describes the error.</param>
+            <param name="errCode">The error code.</param>
+        </member>
+        <member name="P:Dynamsoft.WPF.ViewerException.Code">
+            <summary>
+            Gets and sets error code.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.ViewerException.Message">
+            <summary>
+            Gets a message that describes the current exception.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.ViewerException.StackTrace">
+            <summary>
+            Gets a string representation of the frames on the call stack at the time the current exception was thrown.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawRectangle">
+            <summary>
+            Rectangle graphic object
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawGDIObject">
+            <summary>
+            Summary description for DrawGDIObject.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw object
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.GetHandle(System.Int32)">
+            <summary>
+            Get handle point by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.GetHandleRectangle(System.Int32)">
+            <summary>
+            Get handle rectangle by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.DrawTracker(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw tracker for selected object
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.HitTest(System.Drawing.Point)">
+            <summary>
+            Hit test.
+            Return value: -1 - no hit
+                           0 - hit anywhere
+                           > 1 - handle number
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.PointInObject(System.Drawing.Point)">
+            <summary>
+            Test whether point is inside of the object
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.GetHandleCursor(System.Int32)">
+            <summary>
+            Get curesor for the handle
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.IntersectsWith(System.Drawing.Rectangle)">
+            <summary>
+            Test whether object intersects with rectangle
+            </summary>
+            <param name="rectangle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.Move(System.Int32,System.Int32)">
+            <summary>
+            Move object
+            </summary>
+            <param name="deltaX"></param>
+            <param name="deltaY"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.MoveHandleTo(System.Drawing.Point,System.Int32)">
+            <summary>
+            Move handle to the point
+            </summary>
+            <param name="point"></param>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.Dump">
+            <summary>
+            Dump (for debugging)
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.Normalize">
+            <summary>
+            Normalize object.
+            Call this function in the end of object resizing.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.SaveToStream(System.Runtime.Serialization.SerializationInfo,System.Int32)">
+            <summary>
+            Save object to serialization stream
+            </summary>
+            <param name="info"></param>
+            <param name="orderNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.LoadFromStream(System.Runtime.Serialization.SerializationInfo,System.Int32)">
+            <summary>
+            Load object from serialization stream
+            </summary>
+            <param name="info"></param>
+            <param name="orderNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawGDIObject.Initialize">
+            <summary>
+            Initialization
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.Selected">
+            <summary>
+            Selection flag
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.PenColor">
+            <summary>
+            Color
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.PenWidth">
+            <summary>
+            Pen width
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.FillColor">
+            <summary>
+            Annotation fill color
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.TextColor">
+            <summary>
+            Annotation Text color
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.TextFont">
+            <summary>
+            Annotation Text Font
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.HandleCount">
+            <summary>
+            Number of handles
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.LastUsedColor">
+            <summary>
+            Last used m_color
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawGDIObject.LastUsedPenWidth">
+            <summary>
+            Last used pen width
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw m_rcRectangle
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.GetHandle(System.Int32)">
+            <summary>
+            Get handle point by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.HitTest(System.Drawing.Point)">
+            <summary>
+            Hit test.
+            Return value: -1 - no hit
+                           0 - hit anywhere
+                           > 1 - handle number
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.GetHandleCursor(System.Int32)">
+            <summary>
+            Get cursor for the handle
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.MoveHandleTo(System.Drawing.Point,System.Int32)">
+            <summary>
+            Move handle to new point (resizing)
+            </summary>
+            <param name="point"></param>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.MakeSureMeetMinimumsize(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Make sure m_rcRectangle size great than minimum size
+            </summary>
+            <param name="left"></param>
+            <param name="top"></param>
+            <param name="right"></param>
+            <param name="bottom"></param>
+            <param name="dx">return delta x</param>
+            <param name="dy">return delta y</param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.Move(System.Int32,System.Int32)">
+            <summary>
+            Move object
+            </summary>
+            <param name="deltaX"></param>
+            <param name="deltaY"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.Normalize">
+            <summary>
+            Normalize m_rcRectangle
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.SaveToStream(System.Runtime.Serialization.SerializationInfo,System.Int32)">
+            <summary>
+            Save objevt to serialization stream
+            </summary>
+            <param name="info"></param>
+            <param name="orderNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangle.LoadFromStream(System.Runtime.Serialization.SerializationInfo,System.Int32)">
+            <summary>
+            LOad object from serialization stream
+            </summary>
+            <param name="info"></param>
+            <param name="orderNumber"></param>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawRectangle.HandleCount">
+            <summary>
+            Get number of handles
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawEllipseAnnotation.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw m_rcRectangle
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawImageControl">
+            <summary>
+            Summary description for DrawImageControl.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw object
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.GetHandle(System.Int32)">
+            <summary>
+            Get handle point by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.GetHandleRectangle(System.Int32)">
+            <summary>
+            Get handle rectangle by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.DrawTracker(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw tracker for selected object
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.HitTest(System.Drawing.Point)">
+            <summary>
+            Hit test.
+            Return value: -1 - no hit
+                           0 - hit anywhere
+                           > 1 - handle number
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.PointInObject(System.Drawing.Point)">
+            <summary>
+            Test whether point is inside of the object
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.GetHandleCursor(System.Int32)">
+            <summary>
+            Get curesor for the handle
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.IntersectsWith(System.Drawing.Rectangle)">
+            <summary>
+            Test whether object intersects with rectangle
+            </summary>
+            <param name="rectangle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.Move(System.Int32,System.Int32)">
+            <summary>
+            Move object
+            </summary>
+            <param name="deltaX"></param>
+            <param name="deltaY"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.MoveHandleTo(System.Drawing.Point,System.Int32)">
+            <summary>
+            Move handle to the point
+            </summary>
+            <param name="point"></param>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawImageControl.Normalize">
+            <summary>
+            Normalize object.
+            Call this function in the end of object resizing.
+            </summary>
+        </member>
+        <member name="F:Dynamsoft.WPF.GDI.DrawLineAnnotation.m_areaPath">
+            <summary>
+             Graphic objects for hit test
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawLineAnnotation.GetHandle(System.Int32)">
+            <summary>
+            Get handle point by 1-based number
+            </summary>
+            <param name="handleNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawLineAnnotation.HitTest(System.Drawing.Point)">
+            <summary>
+            Hit test.
+            Return value: -1 - no hit
+                           0 - hit anywhere
+                           > 1 - handle number
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawLineAnnotation.Invalidate">
+            <summary>
+            Invalidate object.
+            When object is invalidated, path used for hit test
+            is released and should be created again.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawLineAnnotation.CreateObjects">
+            <summary>
+            Create graphic objects used from hit test.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawRectangleAnnotation.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw m_rcRectangle
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawSelectRectangle">
+            <summary>
+            Summary description for DrawSelectRectangle.
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            first init the inner rectangle
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="minX"></param>
+            <param name="maxX"></param>
+            <param name="minY"></param>
+            <param name="maxY"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Double)">
+            <summary>
+            Jeremy
+            The new constructor for drawing the select rectangle with a certain ratio 
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="minX"></param>
+            <param name="maxX"></param>
+            <param name="minY"></param>
+            <param name="maxY"></param>
+            <param name="keepRatio"></param>
+            <param name="ratio"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.Draw(Dynamsoft.WPF.Interface.IDynamDrawContext)">
+            <summary>
+            Draw m_rcRectangle
+            </summary>
+            <param name="g"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.SetRectangle(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Jeremy
+            set the rectangle parameter with the handle number.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.HitTest(System.Drawing.Point)">
+            <summary>
+            Hit test.
+            Return value: -1 - no hit
+                           0 - hit anywhere
+                           > 1 - handle number
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.MoveHandleTo(System.Drawing.Point,System.Int32)">
+            <summary>
+            Move handle to new point (resizing)
+            </summary>
+            <param name="point"></param>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.Move(System.Int32,System.Int32)">
+            <summary>
+            Move object
+            </summary>
+            <param name="deltaX"></param>
+            <param name="deltaY"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawSelectRectangle.NormalizeRatio(System.Int32)">
+            <summary>
+            Jeremy
+            normalize the ratio when the new rectangle is to be drawed with a certain ratio
+            </summary>
+            <param name="handleNumber"></param>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawTextBox">
+            <summary>
+            Summary description for TextBoxEx.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Dynamsoft.WPF.GDI.DrawTextBox.#ctor(Dynamsoft.WPF.DynamType.TextBox,Dynamsoft.WPF.Interface.IImageWindow,System.Int32,System.Int32,System.Int32,System.Int32)" -->
+        <member name="M:Dynamsoft.WPF.GDI.DrawTextBox.GetFirstCharIndexOfLine(System.Int32)">
+            <summary>
+            Get first char index of the specified line
+            </summary>
+            <example>The following is an example of initializing a 
+            <c>DocumentationSample</c> type:
+              <code>
+                // Create the type.
+                DocumentationSample ds = new DocumentationSample();
+                
+                if ( null == ds )
+                  return;
+                  
+                return ds.MyMethod( ?someString? );
+              </code>
+            </example>
+            <param name="someValue">
+              A <see cref="T:System.String"/> type representing a value.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              if <paramref name="someValue"/> is <c><I><B>null pointer</B></I></c>.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+              if <paramref name="someValue"/> is <c>empty</c>.
+            </exception>
+            <param name="line">line index in TextBox, A <see cref="!:TwainWnd"/> type </param>
+            <returns>char index</returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawTextBox.GetLineFromCharIndex(System.Int32)">
+            <summary>
+            Get line index from the specified char index
+            </summary>
+            <param name="index">char index in TextBox</param>
+            <returns>line index</returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawTextBox.GetLineCount">
+            <summary>
+            Get total lines count
+            </summary>
+            <returns>total lines count</returns>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawTool">
+            <summary>
+            Base class for all drawing tools
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawTool.OnMouseDown(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Left nous button is pressed
+            </summary>
+            <param name="drawArea"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawTool.OnMouseMove(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Mouse is moved, left mouse button is pressed or none button is pressed
+            </summary>
+            <param name="drawArea"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawTool.OnMouseUp(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Left mouse button is released
+            </summary>
+            <param name="drawArea"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawToolObject">
+            <summary>
+            Base class for all tools which create new graphic object
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolObject.SetObject(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.GDI.DrawGDIObject)">
+            <summary>
+            Add new object to draw area.
+            Function is called when user left-clicks draw area,
+            and one of ToolObject-derived tools is active.
+            </summary>
+            <param name="drawArea"></param>
+            <param name="o"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolObject.OnMouseUp(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Left mouse is released.
+            New object is created and resized.
+            </summary>
+            <param name="drawArea"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawToolObject.Cursor">
+            <summary>
+            Tool m_cursor.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawToolObject.PenColor">
+            <summary>
+            Color
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.DrawToolObject.PenWidth">
+            <summary>
+            Pen width
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.GDI.DrawToolPointer">
+            <summary>
+            Pointer tool
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolPointer.OnMouseDown(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Left mouse button is pressed
+            </summary>
+            <param name="imgWindow"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolPointer.OnMouseMove(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Mouse is moved.
+            None button is pressed, ot left button is pressed.
+            </summary>
+            <param name="imgWindow"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolPointer.OnMouseUp(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            Right mouse button is released
+            </summary>
+            <param name="imgWindow"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.DrawToolTextBox.OnMouseDown(Dynamsoft.WPF.Interface.IImageWindow,Dynamsoft.WPF.DynamType.MouseEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="imgWindow"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.GraphicsList.Clear">
+            <summary>
+            Clear all objects in the list
+            </summary>
+            <returns>
+            true if at least one object is deleted
+            </returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.GraphicsList.DeleteSelection">
+            <summary>
+            Delete selected items
+            </summary>
+            <returns>
+            true if at least one object is deleted
+            </returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.GraphicsList.MoveSelectionToFront">
+            <summary>
+            Move selected items to front (beginning of the list)
+            </summary>
+            <returns>
+            true if at least one object is moved
+            </returns>
+        </member>
+        <member name="M:Dynamsoft.WPF.GDI.GraphicsList.MoveSelectionToBack">
+            <summary>
+            Move selected items to back (end of the list)
+            </summary>
+            <returns>
+            true if at least one object is moved
+            </returns>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.GraphicsList.Count">
+            <summary>
+            Count and this [nIndex] allow to read all graphics objects
+            from GraphicsList in the loop.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.GDI.GraphicsList.SelectionCount">
+            <summary>
+            SelectedCount and GetSelectedObject allow to read
+            selected objects in the loop
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Interface.ITwainEvent">
+            <summary>
+            Provides the base interface for firing DynamicDotNetTWAIN events.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Interface.ICancel">
+            <summary>
+            Provides the cancel interface for event OnInternetTransferPercentage.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.ICancel.Cancelled">
+            <summary>
+            If you want to cancel upload or download, please set its value as true.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Interface.IViewerException">
+            <summary>
+            DynamicDotNetTWAIN exception interface definition.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.IViewerException.Code">
+            <summary>
+            Get exception error code.
+            </summary>
+            <returns>
+            Exception error code.
+            </returns>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.IViewerException.Message">
+            <summary>
+            Get exception error string.
+            </summary>
+            <returns>
+            Exception error string.
+            </returns>
+        </member>
+        <member name="P:Dynamsoft.WPF.Interface.IViewerException.StackTrace">
+            <summary>
+            Get exception stack trace as string.
+            </summary>
+            <returns>
+            Exception stack trace.
+            </returns>
+        </member>
+        <member name="T:Dynamsoft.WPF.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.dnt_about">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.ds_logo4">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.DynamicNETTWAIN_logo">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.DynamsoftScanning">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.TWAINDSM">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Properties.Resources.watermark_greyscale">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseClickHandler">
+            <summary>
+            Occurs when the mouse clicks on an image.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex >=0. When the value of sImageIndex equals -1, it indicates that no image is clicked.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseMoveHandler">
+            <summary>
+            Occurs when the mouse moves onto an image.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex >=0. When the value of sImageIndex equals -1, it indicates that mouse is not on any image.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseRightClickHandler">
+            <summary>
+            Occurs when the mouse right clicks on an image.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex >=0. When the value of sImageIndex equals -1, it indicates that no image is right-clicked.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseDoubleClickHandler">
+            <summary>
+            Occurs when the mouse double clicks on an image.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex >=0. When the value of sImageIndex equals -1, it indicates that no image is double-clicked.
+            </remarks>    
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnTopImageInTheViewChangedHandler">
+            <summary>
+            Occurs when the current top image displayed in Dynamic .Net TWAIN is changed and the view mode is NOT set to -1 by -1.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex >=0.
+            </remarks>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnImageAreaSelectedHandler">
+            <summary>
+            Occurs when an area of the specified image is selected and the value of the <see cref="!:Dynamsoft.Form.Interface.ITwain.MouseShape"/> property is set to false.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <param name="left">The long point number for the left side of the rectangle are the mouse selects.</param>
+            <param name="top">The long point number for the top side of the rectangle are the mouse selects.</param>
+            <param name="right">The long point number for the right side of the rectangle are the mouse selects.</param>
+            <param name="bottom">The long point number for the bottom side of the rectangle are the mouse selects.</param>
+            <remarks>
+            Short sImageIndex &gt;=0. 
+            </remarks> 
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnImageAreaDeselectedHandler">
+            <summary>
+            Occurs when the selected area of the specified image is deselected and the value of the <see cref="!:Dynamsoft.Form.Interface.ITwain.MouseShape"/> property is set to false.
+            </summary>
+            <param name="sImageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+            <remarks>
+            Short sImageIndex &gt;=0.
+            </remarks>  
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnImageAreaSelected event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.#ctor">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnImageAreaSelectedEventArgs class with empty SelectedArea and negative ImageIndex
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.#ctor(System.Int16,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnImageAreaSelectedEventArgs class and set ImageIndex and
+            left position,top position,right position, bottom position of the selected area.
+            </summary>
+            <param name="imageIndex"> The index in buffer of the image that the Selected Area is on. The index is 0-based</param>
+            <param name="left">Left position of the selected area</param>
+            <param name="top">Top position of the selected area</param>
+            <param name="right">Right position of the selected area</param>
+            <param name="button">the bottom position of the selected area</param>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.ImageIndex">
+            <summary>
+            Get the index in buffer of the image that the Selected Area is on
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.Left">
+            <summary>
+            Get the left position of the selected area
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.Top">
+            <summary>
+            Get the top position of the selected area
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.Right">
+            <summary>
+            Get the right position of the selected area
+            </summary>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.OnImageAreaSelectedEventArgs.Bottom">
+            <summary>
+            Get the bottom position of the selected area
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.ImageEventArgs">
+            <summary>
+            Provide data for image-related event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.ImageEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.ImageEventArgs class
+            </summary>
+            <param name="sImageIndex">The image's index in buffer. The index is 0-based</param>
+        </member>
+        <member name="P:Dynamsoft.WPF.Delegate.ImageEventArgs.ImageIndex">
+            <summary>
+            Get the image's index in buffer. The index is 0-based
+            </summary>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnImageAreaDeselectedEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnImageAreaDeselected event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnImageAreaDeselectedEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnImageAreaDeselectedEventArgs class
+            </summary>
+            <param name="imageIndex">The image's index in buffer. The index is 0-based </param>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseClickEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnMouseClick event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnMouseClickEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnMouseClickEventArgs class
+            </summary>
+            <param name="imageIndex">the index in buffer of the image that mouse click on. The index is 0-based.</param>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseMoveEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnMouseMove event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnMouseMoveEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnMouseMoveEventArgs class
+            </summary>
+            <param name="imageIndex">The index in buffer of the image mouse move over. The index is 0-based</param>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseRightClickEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnMouseRightClick event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnMouseRightClickEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnMouseRightClickEventArgs class
+            </summary>
+            <param name="imageIndex">The index in buffer of the image that mouse right click on. The index is 0-based</param>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnMouseDoubleClickEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnMouseDoubleClick event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnMouseDoubleClickEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnMouseDoubleClickEventArgs class
+            </summary>
+            <param name="imageIndex">The index in buffer of the image that mouse double click on. The index is 0-based.</param>
+        </member>
+        <member name="T:Dynamsoft.WPF.Delegate.OnTopImageInTheViewChangedEventArgs">
+            <summary>
+            Provide data for Dynamsoft.Form.Wpf.DynamicDotNetTwain.OnTopImageInTheViewChanged event
+            </summary>
+        </member>
+        <member name="M:Dynamsoft.WPF.Delegate.OnTopImageInTheViewChangedEventArgs.#ctor(System.Int16)">
+            <summary>
+            Initialize a new instance of Dynamsoft.Form.OnTopImageInTheViewChangedEventArgs class
+            </summary>
+            <param name="imageIndex">Specifies the index of image in buffer. The index is 0-based.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Dynasmoft.WPF.Controls.ImageWindowViewport" -->
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,42 @@
+﻿using CondorExtreme3_UI.Employees;
+using CondorExtreme3_UI.Helper;
+using CondorExtreme3_UI.Index;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI
+{
+    public static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// 
+        /// </summary>
+        /// 
+       
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+
+            InitialForm initialForm = new InitialForm();
+            DialogResult dialogResult = initialForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+                Application.Run(new NavForm());
+            else if (dialogResult == DialogResult.Yes)
+                Application.Run(new RootMainForm());
+
+
+
+
+
+
+        }
+
+    }
+}

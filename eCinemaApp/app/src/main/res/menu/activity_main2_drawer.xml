@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/recomandedProjections"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="Recomanded projections" />
+        <item
+            android:id="@+id/allProjections"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="All projections" />
+        <item
+            android:id="@+id/rateProjections"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="Watched movies" />
+        <item
+            android:id="@+id/reservations"
+            android:icon="@drawable/ic_access_time_black_24dp"
+            android:title="My reservations" />
+
+
+    <item android:title="Virtual points">
+        <menu>
+            <item
+                android:id="@+id/buyVirtualPoints"
+                android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+                android:title="Buy virtual points" />
+
+        </menu>
+    </item>
+
+
+    <item android:title="Profile details">
+        <menu>
+            <item
+                android:id="@+id/profileDetails"
+                android:icon="@drawable/ic_account_circle_black_24dp"
+                android:title="Your profile" />
+
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_call_missed_outgoing_black_24dp"
+                android:title="Logout" />
+
+        </menu>
+    </item>
+    </group>
+</menu>

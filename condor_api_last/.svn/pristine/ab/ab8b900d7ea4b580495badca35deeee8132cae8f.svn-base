@@ -1,0 +1,52 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    public partial class RootVPAddForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+        public RootVPAddForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/RootAdministration");
+
+        }
+
+        private void btnSaveNewVP_Click(object sender, EventArgs e)
+        {
+            dynamic VPPacket = new
+            {
+                Amount = numAmount.Value
+            };
+
+
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(VPPacket, "PostVirtualPointsPackets");
+
+            if (httpResponseMessage.StatusCode==System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.VPAddSuccess, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else if(httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                string messageWarning = httpResponseMessage.Content.ReadAsAsync<string>().Result;
+                MessageBox.Show(messageWarning, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+            else
+                MessageBox.Show(Messages.VPAddFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        }
+    }
+}

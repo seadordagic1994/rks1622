@@ -1,0 +1,137 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Cinemas
+{
+    public partial class CinemaManagementForm : Form
+    {
+        public CinemaManagementForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CinemaManagement");
+
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            var currentCinema = AuthenticationUI.CurrentCinema;
+            this.Text = $"{currentCinema.Name} {currentCinema.City}:: Cinema Management ::{loggedEmp.FirstName} {loggedEmp.LastName}";
+
+            lblCinema.Text = $"{currentCinema.Name} { currentCinema.City}";
+            lblAddress.Text = $"{currentCinema.Address}, {currentCinema.City}";
+            lblLocation.Text = currentCinema.Country;
+            lblDirectorName.Text = $"{loggedEmp.FirstName} {loggedEmp.LastName}";
+
+            LoadCinemaHalls();
+
+        }
+
+        void LoadCinemaHalls()
+        {
+            dynamic queryObject = new
+            {
+                Name = (!String.IsNullOrWhiteSpace(txtCinemaHallName.Text)) ? txtCinemaHallName.Text : "",
+                CinemaID = AuthenticationUI.CurrentCinema.CinemaID
+            };
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(queryObject, "SearchCinemaHalls");
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                grdCinemaHalls.DataSource = httpResponseMessage.Content.ReadAsAsync<List<CinemaHallInfo>>().Result;
+                grdCinemaHalls.Columns["CinemaHallID"].Visible = false;
+                grdCinemaHalls.Columns["Name"].Width = 200;               
+                grdCinemaHalls.Columns["NumberOfProjections"].Width = 100;              
+                grdCinemaHalls.Columns["NumberOfProjections"].HeaderText = "Number of Projections";
+            }
+        }
+        public WebAPIHelper Service { get; set; }
+
+        private void btnSearchByName_Click(object sender, EventArgs e)
+        {
+            LoadCinemaHalls();
+        }
+
+        private void btnAddCinemaHall_Click(object sender, EventArgs e)
+        {
+            AddCinemaHallForm addCinemaHallForm = new AddCinemaHallForm();
+            DialogResult dialogResult = addCinemaHallForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                ClearFilters();
+                LoadCinemaHalls();
+            }
+        }
+
+        private void btnEditCinemaHall_Click(object sender, EventArgs e)
+        {
+            if(grdCinemaHalls.SelectedRows.Count==0)
+            {
+                MessageBox.Show(Messages.CinemaHallSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            CinemaHallInfo cinemaHallInfo = new CinemaHallInfo();
+            cinemaHallInfo.CinemaHallID = (int)grdCinemaHalls.SelectedRows[0].Cells["CinemaHallID"].Value;
+            cinemaHallInfo.Name = (string)grdCinemaHalls.SelectedRows[0].Cells["Name"].Value;
+
+            EditCinemaHallForm editCinemaHallForm = new EditCinemaHallForm(cinemaHallInfo);
+            DialogResult dialogResult= editCinemaHallForm.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                ClearFilters();
+                LoadCinemaHalls();
+            }              
+        }
+
+        private void btnRemoveCinemaHall_Click(object sender, EventArgs e)
+        {
+            if (grdCinemaHalls.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(Messages.CinemaHallSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult ShowDialogBoxResult = MessageBox.Show("Are you sure you want to remove this cinema hall?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (ShowDialogBoxResult == DialogResult.Yes)
+            {
+                CinemaHallInfo cinemaHallInfo = new CinemaHallInfo();
+                cinemaHallInfo.CinemaHallID = (int)grdCinemaHalls.SelectedRows[0].Cells["CinemaHallID"].Value;
+
+                HttpResponseMessage httpResponseMessage = Service.PutResponse(cinemaHallInfo, "RemoveCinemaHalls");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(Messages.CinemaHallRemoveSuccess, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadCinemaHalls();
+                }
+                else
+                    MessageBox.Show(Messages.CinemaHallRemoveFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+
+            }
+
+
+
+
+
+            ClearFilters();
+            LoadCinemaHalls();
+        }
+
+        void ClearFilters()
+        {
+            txtCinemaHallName.Text = "";
+        }
+
+    }
+
+   
+}

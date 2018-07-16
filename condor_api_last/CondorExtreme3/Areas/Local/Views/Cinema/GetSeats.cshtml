@@ -1,0 +1,186 @@
+﻿@using CondorExtreme3.ModelsLocalDB
+@{
+    int k = 0;
+}
+@model CondorExtreme3.ModelsLocalDB.SeatsVM
+<div class="row" style="padding:10px;">
+
+    @using (Ajax.BeginForm("GetProjection", "Cinema", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "myModal", LoadingElementId = "loadingMovies" }))
+    {
+        @Html.Hidden("projectionID", Model.Projections.ProjectionID);
+        @Html.Hidden("jsonDictionary", Model.MyDictionaryToJson(Model.d));
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <button type="submit" style="background-color:transparent; border:none; padding:0px; margin:0px; outline:none;">
+                <i class="fa fa-chevron-left" style="color:white;" aria-hidden="true"></i>
+            </button>
+        </div>
+    }
+
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"> Movie: <b>@Model.Projections.Movie.MovieName</b></div>
+    <div class="col-lg-3 col-md-3 col-sm-2 col-xs-3"> Cinema hall: <b>@Model.Projections.CinemaHall.Name</b></div>
+
+
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 textRight">
+        Max seats allowed: <b>4</b>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 textRight">
+        Price:<h4 style="font-family:'Quicksand'; color:darkred;display:inline; ">
+            <b>@Model.Projections.TicketPrice.ToString() €</b>
+        </h4>
+    </div>
+    <div style="padding:0;" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 textRight">
+        
+        <button type="submit" data-dismiss="modal" style="background-color:transparent; border:none; padding:0px; margin:0px; outline:none;">
+            <i class="fa fa-times" style="color:white;" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<div class="row" style="padding:10px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+
+    @foreach(SeatRow sr in Model.SeatRows)
+    {
+        if (Model.ProjectionSeat.Where(x => x.Seat.SeatRowID == sr.SeatRowID).FirstOrDefault() == null)
+        { break; }
+                
+        <div class="row" style="padding:0px 15px 0px 15px;">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="padding:5px; text-align:center; height:25px; width:4%;">@sr.SeatRowID</div>
+            @for (int j = 0; j < Model.ProjectionSeat.Where(x=> x.Seat.SeatRowID == sr.SeatRowID).Count(); j++)
+            {
+                if (Model.ProjectionSeat[j+k].IsReserved == false)
+                {
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="color:black; padding:3px; text-align:center; height:35px; width:4%;">
+                        <input type='checkbox' name='thing[]' value="@Model.ProjectionSeat[j+k].SeatID" id="@Model.ProjectionSeat[j+k].SeatID"  />
+                         <label for="@Model.ProjectionSeat[j+k].SeatID"></label>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 notReserved" style="color:black; padding:3px; text-align:center; height:35px; width:4%;">
+
+                        <input type='checkbox' name='reserved' value="@Model.ProjectionSeat[j+k].SeatID" id="@Model.ProjectionSeat[j+k].SeatID" disabled />
+                         <label for="@Model.ProjectionSeat[j+k].SeatID"></label>
+                        
+                    </div>
+                }
+            }
+            @{k = k + Model.ProjectionSeat.Where(x=> x.Seat.SeatRowID == sr.SeatRowID).Count();}
+            
+
+        </div>
+    }
+</div>
+        @using (@Html.BeginForm("Registration", "Visitor", FormMethod.Post, new { @id = "Reserve" }))
+        {
+           <input type="hidden" name="Seats[]" value="@Model.Projections.ProjectionID" />
+          <div class="row pull-right" style="padding:10px; "><button type="submit" name="makeReservation" onclick="loader()" class="btn btn-danger" style="padding:7px;">Make a reservation</button></div>
+        }
+
+<script>
+    function loader() {
+        $("#loader").show();
+    }
+
+
+    $("select[name='nubmerOfSeats']").css(
+        {
+            "color": "black",
+            "border": "1px solid white",
+            "background-color": "white",
+            "padding": "1px 4px",
+            "border-radius": "10px",
+            "width": "100%",
+            "outline": "none",
+            "z-index": "1000"
+        })
+
+    
+    var checked = 0;
+    var switched = true;
+    $("input[type='checkbox'][name='thing[]']").on('change', function () {
+        if (this.checked)
+        {
+            $("<input type=\"hidden\" name=\"Seats[]\" value=\"" + $(this).val() + "\" />").insertBefore("button[name='makeReservation']");
+            ++checked;
+        }
+
+        $("input[type = 'checkbox'][name = 'thing[]']:checked + label").css(
+                       {
+                           "position": "absolute",
+                           "width": "30px",
+                           "height": "30px",
+                           "background-size": "80%",
+                           "background-image": "url('/Pictures/seatM.png')",
+                           "background-repeat": "no-repeat"
+                       });
+        
+
+        if (checked == 4 && switched)
+        {
+            switched = false;
+            $("input[type='checkbox'][name='thing[]']:not(:checked)").each(function () {
+
+                $("input[type = 'checkbox'][name = 'thing[]']:not(:checked) + label").css(
+                        {
+                            "position": "absolute",
+                            "width": "30px",
+                            "height": "30px",
+                            "background-size": "80%",
+                            "background-image": "url('/Pictures/seatF.png')",
+                            "background-repeat": "no-repeat"
+                        });
+                $("input[type = 'checkbox'][name = 'thing[]']:checked + label").css(
+                        {
+                            "position": "absolute",
+                            "width": "30px",
+                            "height": "30px",
+                            "background-size": "80%",
+                            "background-image": "url('/Pictures/seatM.png')",
+                            "background-repeat": "no-repeat"
+                        });
+                $(this).prop("disabled", true);
+            });
+        }
+    });
+
+    $("input[type='checkbox'][name='thing[]']").on('change', function () {
+        if (!this.checked) {
+            {
+                --checked;
+                 $("input[name='Seats[]'][value=\"" + $(this).val() + "\"]").remove();               
+            }
+            switched = true;
+            $("input[type='checkbox'][name='thing[]']:not(:checked)").each(function () {
+
+                $("input[type = 'checkbox'][name = 'thing[]']:not(:checked) + label").css(
+                        {
+
+                            "position": "absolute",
+                            "width": "30px",
+                            "height": "30px",
+                            "background-size": "80%",
+                            "background-image": "url('/Pictures/seatT.png')",
+                            "background-repeat": "no-repeat"
+                        });
+                $("input[type = 'checkbox'][name = 'thing[]']:checked + label").css(
+                        {
+                            "position": "absolute",
+                            "width": "30px",
+                            "height": "30px",
+                            "background-size": "80%",
+                            "background-image": "url('/Pictures/seatM.png')",
+                            "background-repeat": "no-repeat"
+                        });
+                $(this).prop("disabled", false);
+            });
+        }
+    });
+    
+
+
+
+  
+</script>
+

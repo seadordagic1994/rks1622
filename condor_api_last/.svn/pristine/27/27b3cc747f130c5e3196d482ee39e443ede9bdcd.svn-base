@@ -1,0 +1,43 @@
+﻿@using CondorExtreme3.DAL
+@using CondorExtreme3.ModelsUser
+
+@model List<VirtualPointsPack>
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetVirtualPointPacks</title>
+</head>
+<body>
+    
+        @foreach (var pack in Model)
+        {
+            <div class="row" style="margin:0px 15px 0px 15px">
+                <div class="col-md-12 well">
+                    <div class="col-md-4">
+                        <div class="col-md-4">
+                            <span class="info-box-icon bg-blue-gradient">VP</span>
+                        </div>
+                        <div class="col-md-8">
+                            <b>Virtual Points Pack (+@pack.Amount)</b>
+                            <small>Virtual Points allow you to buy reserved tickets online. Purchased VP can be used at any given time.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @using (Html.BeginForm("BuyVirtualPointPacks","VirtualPoints",
+                            new { id = @pack.VirtualPointsPackID }, FormMethod.Post))
+                        {
+                            <button type = "submit" ><img src = "https://i.stack.imgur.com/XFEHO.png" width = "175" /></button >
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    
+</body>
+</html>

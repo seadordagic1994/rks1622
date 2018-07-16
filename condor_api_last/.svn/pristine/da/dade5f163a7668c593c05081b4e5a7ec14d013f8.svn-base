@@ -1,0 +1,99 @@
+﻿@model CondorExtreme3.Areas.Local.Models.EmployeeShowVM
+
+
+
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" style="text-align:center;"></h4>
+        </div>
+        <div class="modal-body" style="padding:0px 5px 0px 5px;">
+            
+
+            <div class="box box-solid" style="width:100%; height:100%;">
+                <div class="box-header with-border" style="background-color:#e74c3c">
+                   
+                    
+                    <h3 class="box-title" style="color:white;">User Info</h3>
+                </div>
+                
+                <div class="box-body">
+                    
+
+                    <table class="table-striped" style="width:100%; height:100%;">
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-user"></i> Full Name</strong></td>
+                            <td><p class="text-muted">@Model.FirstName @Model.LastName </p></td>
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-calendar"></i> Birth Date</strong></td>
+                            <td><p class="text-muted">@Model.BirthDate</p></td>                                                 
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-venus-mars"></i> Gender</strong></td>
+                            <td><p class="text-muted">@Model.Gender</p></td>
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-map-marker margin-r-5"></i>  Location</strong></td>
+                            <td><p class="text-muted">@Model.Location</p></td>
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-at"></i> Email Address</strong></td>
+                            <td><p class="text-muted">@Model.EmailAddress</p></td>
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-phone"></i> Phone Number</strong></td>
+                            <td><p class="text-muted">@Model.PhoneNumber</p></td>
+
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-user-plus"></i> Username</strong></td>
+                            <td><p class="text-muted">@Model.Username</p></td>
+
+                        </tr>
+                        <tr>
+                            <td><strong><i class="fa fa-fw fa-suitcase"></i> Roles</strong></td>
+                            <td><p>
+                                    @foreach (var iter in Model.ERoles)
+                                    {
+                                        switch (iter)
+                                        {
+                                            case "Director":<span class="label label-info">Director</span> ; break;
+                                            case "ProjectionManager":<span class="label label-success">Projection Manager</span> ; break;
+                                            case "Employee":<span class="label label-warning">Employee</span> ; break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" style="width:70px;">Close</button>          
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(function () {
+
+        $(".modal").on("hidden.bs.modal", function () {
+
+            $("#ModalN").html("");
+
+        });
+
+    });
+
+</script>

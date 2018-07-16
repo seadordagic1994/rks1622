@@ -1,0 +1,453 @@
+﻿namespace CondorExtreme3_UI.Projections
+{
+    partial class editProjection
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(editProjection));
+            this.movieImage = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.movieNamelbl = new System.Windows.Forms.Label();
+            this.movieDetails = new System.Windows.Forms.GroupBox();
+            this.synopsisBox = new System.Windows.Forms.RichTextBox();
+            this.Synopsis = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.yearlbl = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.agelbl = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.durationlbl = new System.Windows.Forms.Label();
+            this.setProjectionGroup = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.endTimeLbl = new System.Windows.Forms.Label();
+            this.endTime = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.startTime = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.setProjectionGroup1 = new System.Windows.Forms.GroupBox();
+            this.priceBox = new System.Windows.Forms.TextBox();
+            this.addProjectionBtn = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.techCombo = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cinemaHallcombo = new System.Windows.Forms.ComboBox();
+            this.errors = new System.Windows.Forms.ErrorProvider(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.selectedMovielbl = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.movieImage)).BeginInit();
+            this.movieDetails.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.setProjectionGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.setProjectionGroup1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // movieImage
+            // 
+            this.movieImage.Location = new System.Drawing.Point(6, 44);
+            this.movieImage.Name = "movieImage";
+            this.movieImage.Size = new System.Drawing.Size(410, 216);
+            this.movieImage.TabIndex = 0;
+            this.movieImage.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 15);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Selected movie:";
+            // 
+            // movieNamelbl
+            // 
+            this.movieNamelbl.AutoSize = true;
+            this.movieNamelbl.Location = new System.Drawing.Point(3, 25);
+            this.movieNamelbl.Name = "movieNamelbl";
+            this.movieNamelbl.Size = new System.Drawing.Size(79, 15);
+            this.movieNamelbl.TabIndex = 3;
+            this.movieNamelbl.Text = "Movie name: ";
+            // 
+            // movieDetails
+            // 
+            this.movieDetails.Controls.Add(this.synopsisBox);
+            this.movieDetails.Controls.Add(this.Synopsis);
+            this.movieDetails.Controls.Add(this.groupBox4);
+            this.movieDetails.Controls.Add(this.groupBox3);
+            this.movieDetails.Controls.Add(this.groupBox2);
+            this.movieDetails.Controls.Add(this.movieImage);
+            this.movieDetails.Controls.Add(this.movieNamelbl);
+            this.movieDetails.Location = new System.Drawing.Point(12, 57);
+            this.movieDetails.Name = "movieDetails";
+            this.movieDetails.Size = new System.Drawing.Size(422, 445);
+            this.movieDetails.TabIndex = 4;
+            this.movieDetails.TabStop = false;
+            this.movieDetails.Text = "Movie details:";
+            // 
+            // synopsisBox
+            // 
+            this.synopsisBox.BackColor = System.Drawing.SystemColors.Control;
+            this.synopsisBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.synopsisBox.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.synopsisBox.ForeColor = System.Drawing.Color.Firebrick;
+            this.synopsisBox.Location = new System.Drawing.Point(12, 362);
+            this.synopsisBox.Name = "synopsisBox";
+            this.synopsisBox.Size = new System.Drawing.Size(398, 71);
+            this.synopsisBox.TabIndex = 5;
+            this.synopsisBox.Text = "";
+            // 
+            // Synopsis
+            // 
+            this.Synopsis.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Synopsis.Location = new System.Drawing.Point(6, 340);
+            this.Synopsis.Name = "Synopsis";
+            this.Synopsis.Size = new System.Drawing.Size(410, 99);
+            this.Synopsis.TabIndex = 6;
+            this.Synopsis.TabStop = false;
+            this.Synopsis.Text = "Synopsis";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox4.Controls.Add(this.yearlbl);
+            this.groupBox4.Location = new System.Drawing.Point(292, 279);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(124, 47);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Release year";
+            // 
+            // yearlbl
+            // 
+            this.yearlbl.AutoSize = true;
+            this.yearlbl.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.yearlbl.ForeColor = System.Drawing.Color.Firebrick;
+            this.yearlbl.Location = new System.Drawing.Point(7, 21);
+            this.yearlbl.Name = "yearlbl";
+            this.yearlbl.Size = new System.Drawing.Size(83, 15);
+            this.yearlbl.TabIndex = 11;
+            this.yearlbl.Text = "Movie name: ";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox3.Controls.Add(this.agelbl);
+            this.groupBox3.Location = new System.Drawing.Point(148, 279);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(125, 47);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Age restriction";
+            // 
+            // agelbl
+            // 
+            this.agelbl.AutoSize = true;
+            this.agelbl.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.agelbl.ForeColor = System.Drawing.Color.Firebrick;
+            this.agelbl.Location = new System.Drawing.Point(6, 21);
+            this.agelbl.Name = "agelbl";
+            this.agelbl.Size = new System.Drawing.Size(83, 15);
+            this.agelbl.TabIndex = 9;
+            this.agelbl.Text = "Movie name: ";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox2.Controls.Add(this.durationlbl);
+            this.groupBox2.Location = new System.Drawing.Point(6, 279);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(124, 47);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Duration";
+            // 
+            // durationlbl
+            // 
+            this.durationlbl.AutoSize = true;
+            this.durationlbl.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.durationlbl.ForeColor = System.Drawing.Color.Firebrick;
+            this.durationlbl.Location = new System.Drawing.Point(6, 21);
+            this.durationlbl.Name = "durationlbl";
+            this.durationlbl.Size = new System.Drawing.Size(83, 15);
+            this.durationlbl.TabIndex = 8;
+            this.durationlbl.Text = "Movie name: ";
+            // 
+            // setProjectionGroup
+            // 
+            this.setProjectionGroup.Controls.Add(this.pictureBox2);
+            this.setProjectionGroup.Controls.Add(this.endTimeLbl);
+            this.setProjectionGroup.Controls.Add(this.endTime);
+            this.setProjectionGroup.Controls.Add(this.label3);
+            this.setProjectionGroup.Controls.Add(this.startTime);
+            this.setProjectionGroup.Location = new System.Drawing.Point(451, 23);
+            this.setProjectionGroup.Name = "setProjectionGroup";
+            this.setProjectionGroup.Size = new System.Drawing.Size(275, 479);
+            this.setProjectionGroup.TabIndex = 5;
+            this.setProjectionGroup.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(9, 389);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(260, 78);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 10;
+            this.pictureBox2.TabStop = false;
+            // 
+            // endTimeLbl
+            // 
+            this.endTimeLbl.AutoSize = true;
+            this.endTimeLbl.Location = new System.Drawing.Point(6, 73);
+            this.endTimeLbl.Name = "endTimeLbl";
+            this.endTimeLbl.Size = new System.Drawing.Size(59, 15);
+            this.endTimeLbl.TabIndex = 9;
+            this.endTimeLbl.Text = "End time:";
+            // 
+            // endTime
+            // 
+            this.endTime.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.endTime.Location = new System.Drawing.Point(6, 97);
+            this.endTime.Name = "endTime";
+            this.endTime.ShowUpDown = true;
+            this.endTime.Size = new System.Drawing.Size(263, 23);
+            this.endTime.TabIndex = 8;
+            this.endTime.Leave += new System.EventHandler(this.endTime_Leave);
+            this.endTime.Validating += new System.ComponentModel.CancelEventHandler(this.endTime_Validating);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 15);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Start time:";
+            // 
+            // startTime
+            // 
+            this.startTime.CustomFormat = "dd/MM/yyy, hh:mm";
+            this.startTime.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startTime.Location = new System.Drawing.Point(6, 40);
+            this.startTime.Name = "startTime";
+            this.startTime.ShowUpDown = true;
+            this.startTime.Size = new System.Drawing.Size(263, 23);
+            this.startTime.TabIndex = 0;
+            this.startTime.ValueChanged += new System.EventHandler(this.startTime_ValueChanged_1);
+            this.startTime.Leave += new System.EventHandler(this.startTime_Leave);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(448, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(234, 15);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Create a projection for the selected movie:";
+            // 
+            // setProjectionGroup1
+            // 
+            this.setProjectionGroup1.Controls.Add(this.priceBox);
+            this.setProjectionGroup1.Controls.Add(this.addProjectionBtn);
+            this.setProjectionGroup1.Controls.Add(this.label7);
+            this.setProjectionGroup1.Controls.Add(this.label6);
+            this.setProjectionGroup1.Controls.Add(this.techCombo);
+            this.setProjectionGroup1.Controls.Add(this.label5);
+            this.setProjectionGroup1.Controls.Add(this.cinemaHallcombo);
+            this.setProjectionGroup1.Location = new System.Drawing.Point(451, 165);
+            this.setProjectionGroup1.Name = "setProjectionGroup1";
+            this.setProjectionGroup1.Size = new System.Drawing.Size(275, 142);
+            this.setProjectionGroup1.TabIndex = 10;
+            this.setProjectionGroup1.TabStop = false;
+            this.setProjectionGroup1.Text = "Set projection";
+            // 
+            // priceBox
+            // 
+            this.priceBox.Location = new System.Drawing.Point(117, 22);
+            this.priceBox.Name = "priceBox";
+            this.priceBox.Size = new System.Drawing.Size(152, 23);
+            this.priceBox.TabIndex = 16;
+            this.priceBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceBox_KeyPress);
+            this.priceBox.Validating += new System.ComponentModel.CancelEventHandler(this.priceBox_Validating);
+            // 
+            // addProjectionBtn
+            // 
+            this.addProjectionBtn.Location = new System.Drawing.Point(9, 112);
+            this.addProjectionBtn.Name = "addProjectionBtn";
+            this.addProjectionBtn.Size = new System.Drawing.Size(260, 23);
+            this.addProjectionBtn.TabIndex = 15;
+            this.addProjectionBtn.Text = "Edit projection";
+            this.addProjectionBtn.UseVisualStyleBackColor = true;
+            this.addProjectionBtn.Click += new System.EventHandler(this.addProjectionBtn_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(38, 54);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 15);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Cinema hall:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 84);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(99, 15);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Technology type:";
+            // 
+            // techCombo
+            // 
+            this.techCombo.FormattingEnabled = true;
+            this.techCombo.Location = new System.Drawing.Point(117, 81);
+            this.techCombo.Name = "techCombo";
+            this.techCombo.Size = new System.Drawing.Size(152, 23);
+            this.techCombo.TabIndex = 11;
+            this.techCombo.Validating += new System.ComponentModel.CancelEventHandler(this.techCombo_Validating);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(75, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(36, 15);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Price:";
+            // 
+            // cinemaHallcombo
+            // 
+            this.cinemaHallcombo.FormattingEnabled = true;
+            this.cinemaHallcombo.Location = new System.Drawing.Point(117, 51);
+            this.cinemaHallcombo.Name = "cinemaHallcombo";
+            this.cinemaHallcombo.Size = new System.Drawing.Size(152, 23);
+            this.cinemaHallcombo.TabIndex = 12;
+            this.cinemaHallcombo.Validating += new System.ComponentModel.CancelEventHandler(this.cinemaHallcombo_Validating);
+            // 
+            // errors
+            // 
+            this.errors.ContainerControl = this;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(422, 24);
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
+            // selectedMovielbl
+            // 
+            this.selectedMovielbl.AutoSize = true;
+            this.selectedMovielbl.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.selectedMovielbl.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.selectedMovielbl.Location = new System.Drawing.Point(16, 31);
+            this.selectedMovielbl.Name = "selectedMovielbl";
+            this.selectedMovielbl.Size = new System.Drawing.Size(98, 15);
+            this.selectedMovielbl.TabIndex = 12;
+            this.selectedMovielbl.Text = "Selected movie:";
+            // 
+            // editProjection
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(738, 514);
+            this.Controls.Add(this.selectedMovielbl);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.setProjectionGroup1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.setProjectionGroup);
+            this.Controls.Add(this.movieDetails);
+            this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Corbel", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Name = "editProjection";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Edit projection";
+            ((System.ComponentModel.ISupportInitialize)(this.movieImage)).EndInit();
+            this.movieDetails.ResumeLayout(false);
+            this.movieDetails.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.setProjectionGroup.ResumeLayout(false);
+            this.setProjectionGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.setProjectionGroup1.ResumeLayout(false);
+            this.setProjectionGroup1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.PictureBox movieImage;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label movieNamelbl;
+        private System.Windows.Forms.GroupBox movieDetails;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox Synopsis;
+        private System.Windows.Forms.Label yearlbl;
+        private System.Windows.Forms.Label agelbl;
+        private System.Windows.Forms.Label durationlbl;
+        private System.Windows.Forms.RichTextBox synopsisBox;
+        private System.Windows.Forms.GroupBox setProjectionGroup;
+        private System.Windows.Forms.Label endTimeLbl;
+        private System.Windows.Forms.DateTimePicker endTime;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DateTimePicker startTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox setProjectionGroup1;
+        private System.Windows.Forms.Button addProjectionBtn;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cinemaHallcombo;
+        private System.Windows.Forms.ComboBox techCombo;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox priceBox;
+        private System.Windows.Forms.ErrorProvider errors;
+        private System.Windows.Forms.Label selectedMovielbl;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+    }
+}

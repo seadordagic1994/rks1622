@@ -1,0 +1,254 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class Seats : Form
+    {
+        public WebAPIHelper Service;
+        Dictionary<int, List<int>> seats { get; set; }
+        public Seats()
+        {
+            InitializeComponent();
+            this.cinemaHallsCombo.SelectedIndexChanged -= new System.EventHandler(this.cinemaHallsCombo_SelectedIndexChanged);
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            this.AutoValidate = AutoValidate.Disable;
+
+            HttpResponseMessage m = Service.GetResponse("GetCinemaHallsSingle", int.Parse(AuthenticationUI.CurrentCinema.CinemaID.ToString()));
+
+            if (m.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                cinemaHallsCombo.DataSource = m.Content.ReadAsAsync<List<Object>>().Result;
+                cinemaHallsCombo.ValueMember = "Id";
+                cinemaHallsCombo.DisplayMember = "Name";
+                cinemaHallsCombo.SelectedItem = null;
+
+                this.cinemaHallsCombo.SelectedIndexChanged += new System.EventHandler(this.cinemaHallsCombo_SelectedIndexChanged);
+
+                for (int i = 1; i < 16; i++)
+                {
+                    char c = (char)(65 + i - 1);
+                    Label letter = new Label();
+                    letter.Text = c.ToString();
+                    letter.AutoSize = false;
+                    letter.Height = 28;
+                    letter.Font = new Font(letter.Font, FontStyle.Bold);
+                    rowsFlow.Controls.Add(letter);
+
+                    Label letter1 = new Label();
+                    letter1.Text = i.ToString();
+                    letter1.AutoSize = false;
+                    letter1.Width = 22;
+                    letter1.Font = new Font(letter1.Font, FontStyle.Bold);
+                    columnFlow.Controls.Add(letter1);
+                }
+                columnFlow.Visible = false;
+                rowsFlow.Visible = false;
+            }
+            else if (m.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show("We can not find any cinema halls!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void cinemaHallsCombo_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+                for (int ix = 0; ix < cinemaHallsCombo.Items.Count; ++ix)
+                    if (ix != e.Index) cinemaHallsCombo.SetItemChecked(ix, false);           
+        }
+
+        private void cinemaHallsCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            if(cinemaHallsCombo.SelectedValue != null)
+            {
+
+                HttpResponseMessage seatsResponse = Service.GetResponse("GetSeats",int.Parse(cinemaHallsCombo.SelectedValue.ToString()));
+
+                if (seatsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    MessageBox.Show("We can not find any seats for the choosen cinema hall!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                    if (seatsResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    dynamic projection = seatsResponse.Content.ReadAsAsync<Object>().Result;
+                    string message = "You can not change seats beacuse projection: " + projection.movieName.ToString() + " is starting on " + projection.start.ToString();
+
+                    MessageBox.Show(message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (seatsResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    cleanScreen();
+                    SeatsGrpBox.Text = "Edit seats for \"" + cinemaHallsCombo.Text + "\" cinema hall";
+                    columnFlow.Visible = true; ;
+                    rowsFlow.Visible = true;
+
+                    dynamic seatsObj = seatsResponse.Content.ReadAsAsync<dynamic>().Result;
+                    seats = JsonConvert.DeserializeObject<Dictionary<int, List<int>>>(seatsObj.SeatDict.ToString());
+
+                    foreach(KeyValuePair<int, List<int>> i in seats)
+                    { 
+                        FlowLayoutPanel seatRows = new FlowLayoutPanel();
+                        seatRows.Width = MainSeatsFlow.Width;
+                        seatRows.Height = 22;
+                        foreach (int cols in i.Value)
+                        {
+                            SeatImages p = new SeatImages();
+                            seatRows.Controls.Add(p);
+                        }
+
+
+
+
+                        NumericUpDown nud = new NumericUpDown();
+                        nud.Width = 80;
+                        nud.Minimum = 0;
+                        nud.Maximum = 15;
+                        nud.Name = "r_" + i.Key + "_" + i.Value.Count;
+                        nud.Value = i.Value.Count();
+                        nud.Margin = new Padding(0, 0, 0, 5);
+                        nud.ReadOnly = true;
+                        nud.ValueChanged += new EventHandler(this.AddSeatToRow);
+                        rowNumberFlow.Controls.Add(nud);
+
+                        MainSeatsFlow.Controls.Add(seatRows);
+                    }
+                }
+
+            }
+
+        }
+
+        private void AddSeatToRow(object sender, EventArgs e)
+        {
+            NumericUpDown n = sender as NumericUpDown;
+            string rn = n.Name;
+            int row  = int.Parse(rn.Split('_')[1]);
+            int columns = int.Parse(rn.Split('_')[2]);
+
+            if (n.Value > columns)
+            { seats[row].Add(seats[row].Count+1); columns++; }
+            else
+            { seats[row].RemoveAt(seats[row].Count-1); columns--; }
+
+            n.Name = "r_" + row + "_" + columns;
+
+            List<Control> listControls = MainSeatsFlow.Controls.Cast<Control>().ToList();
+
+            foreach (Control control in listControls)
+            {
+                MainSeatsFlow.Controls.Remove(control);
+                control.Dispose();
+            }
+
+            foreach (KeyValuePair<int, List<int>> i in seats)
+            {
+                FlowLayoutPanel seatRows = new FlowLayoutPanel();
+                seatRows.Width = MainSeatsFlow.Width;
+                seatRows.Height = 22;
+                foreach (int cols in i.Value)
+                {
+                    SeatImages p = new SeatImages();
+                    seatRows.Controls.Add(p);
+                }
+                MainSeatsFlow.Controls.Add(seatRows);
+            }
+
+            
+
+
+        }
+
+        private void cleanScreen()
+        {
+            List<Control> listControls = MainSeatsFlow.Controls.Cast<Control>().ToList();
+
+            foreach (Control control in listControls)
+            {
+                MainSeatsFlow.Controls.Remove(control);
+                control.Dispose();
+            }
+
+            List<Control> listControls1 = rowNumberFlow.Controls.Cast<Control>().ToList();
+
+            foreach (Control control in listControls1)
+            {
+                rowNumberFlow.Controls.Remove(control);
+                control.Dispose();
+            }
+
+
+        }
+
+        private void confirmSeatsBtn_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+            dynamic seatsHall = new { cinemaHallId = cinemaHallsCombo.SelectedValue.ToString(), curSeats = seats };
+
+            HttpResponseMessage seatResponse = Service.PutResponse(seatsHall, "AddSeats");
+
+            if (seatResponse.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show("Seats changed successfuly! ", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
+            }
+            if (seatResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                MessageBox.Show("Seats can not be applied! ", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
+            }
+            if (seatResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show("Seats are not sent to server! ", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
+            }
+
+        }
+    }
+
+    public partial class SeatImages : PictureBox
+    {
+        Bitmap up = Properties.Resources.seatT;
+        Bitmap down = Properties.Resources.seatM;
+
+        public SeatImages() : base()
+        {
+            this.Image = up;
+            this.Size = new Size(20, 20);
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Margin = new Padding(2,0,6,0);
+            //this.Padding = new Padding(0,0,2, 0);
+            this.Click += new EventHandler(this.PictureClick);
+            this.MouseHover += new EventHandler(this.PictureHover);
+        }
+
+        private void PictureHover(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+
+        private void PictureClick(object sender, EventArgs e)
+        {
+
+            if (this.Image == up)
+                this.Image = down;
+            else
+                this.Image = up;
+        }
+    }
+}

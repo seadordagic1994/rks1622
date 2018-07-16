@@ -1,0 +1,131 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.KasaRacuni
+{
+    public partial class Seats : Form
+    {
+        public WebAPIHelper Service;
+        public int ProjectionId { get; set; }
+      
+        public Seats(int ProjectionId)
+        {
+            InitializeComponent();
+            this.ProjectionId = ProjectionId;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CashRegister");
+
+            HttpResponseMessage Response = Service.GetResponse("GetSeatsForProjection", ProjectionId);
+
+            dynamic dySeats = Response.Content.ReadAsAsync<dynamic>().Result;
+            CinemaHalllbl.Text = dySeats.cinemaHall.ToString();
+
+            Dictionary<int, Dictionary<string, bool>> Seats = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, bool>>>(dySeats.pSeats.ToString());
+
+            for (int i = 1; i < 16; i++)
+            {
+                char c = (char)(65 + i - 1);
+                Label letter = new Label();
+                letter.Text = c.ToString();
+                letter.AutoSize = false;
+                letter.Height = 28;
+                letter.Font = new Font(letter.Font, FontStyle.Bold);
+                rowsFlow.Controls.Add(letter);
+
+                Label letter1 = new Label();
+                letter1.Text = i.ToString();
+                letter1.AutoSize = false;
+                letter1.Width = 22;
+                letter1.Font = new Font(letter1.Font, FontStyle.Bold);
+                columnFlow.Controls.Add(letter1);
+            }
+
+            foreach (KeyValuePair<int, Dictionary<string, bool>> i in Seats)
+            {
+                FlowLayoutPanel seatRows = new FlowLayoutPanel();
+                seatRows.Width = MainSeatsFlow.Width;
+                seatRows.Height = 22;
+                foreach (KeyValuePair<string, bool> cols in i.Value)
+                {
+                    SeatImages p = new SeatImages(cols.Value);
+                    p.Name = cols.Key;
+                    seatRows.Controls.Add(p);
+                    MainSeatsFlow.Controls.Add(seatRows);
+                }
+            }
+
+            }
+
+        private void makeTicketsBtn_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            HttpResponseMessage Response = Service.GetResponse("PenddingSeats", this.ProjectionId);
+            SelectedSeats.BillItem = Response.Content.ReadAsAsync<dynamic>().Result;
+
+            Close();
+        }
+    }
+
+    public static class SelectedSeats
+    {
+        public static List<int> Seats { get; set; } = new List<int>();
+        public static dynamic BillItem { get; set; }
+
+    }
+
+    public partial class SeatImages : PictureBox
+    {
+        Bitmap up = Properties.Resources.seatT;
+        Bitmap down = Properties.Resources.seatM;
+        Bitmap taken = Properties.Resources.seatF;
+        
+        public SeatImages(bool reserved) : base()
+        {
+            if (!reserved)
+                this.Image = up;
+            else
+                this.Image = this.taken;
+            this.Size = new Size(20, 20);
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Margin = new Padding(2, 0, 6, 0);
+            //this.Padding = new Padding(0,0,2, 0);
+            if(!reserved)
+            { 
+            this.Click += new EventHandler(this.PictureClick);
+            this.MouseHover += new EventHandler(this.PictureHover);
+            }
+        }
+
+        private void PictureHover(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.Hand;
+        }
+
+        private void PictureClick(object sender, EventArgs e)
+        {
+            SeatImages selected = sender as SeatImages;
+            string seatId = Regex.Match(selected.Name, @"\d+").Value;
+
+            if (this.Image == up)
+            {
+                this.Image = down;
+                SelectedSeats.Seats.Add(int.Parse(seatId));
+            }
+            else
+            {
+                SelectedSeats.Seats.Remove(int.Parse(seatId));
+                this.Image = up;
+            }
+        }
+    }
+}

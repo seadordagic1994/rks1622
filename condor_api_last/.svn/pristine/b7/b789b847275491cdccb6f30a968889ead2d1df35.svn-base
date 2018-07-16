@@ -1,0 +1,43 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+// Layout = null;
+}
+@model CondorExtreme3.ModelsLocalDB.ProjectionVM
+
+@foreach (Projection p in Model.Projections)
+{
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+        @if (Model.didUMean)
+        {
+            <h5 style="font-size:12px; font-family:'Montserrat';  padding:4px;  color:white; margin:0; font-style:italic;">Did you mean:</h5>
+        }
+
+        <div class="hovereffect" style="box-shadow:0px 0px 3px #000000"> 
+            <h5 style="font-size:12px; font-family:'Montserrat'; margin-top:-1px; font-weight:300;  padding:7px; background-color:rgba(0,0,0,0.7); color:white; margin-bottom:0; ">@p.Movie.MovieName</h5>
+            <img class="img-responsive" src="@p.Movie.Picture" alt="" style="width:350px; height:220px; filter:brightness(70%)">
+            <div class="overlay">
+                <p>
+                    @using (Ajax.BeginForm("GetProjection", "Cinema", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "myModal", LoadingElementId = "loadingMovies" }))
+                    {
+                        @Html.Hidden("jsonDictionary", Model.MyDictionaryToJson(Model.d));
+                        @Html.Hidden("projectionID", p.ProjectionID);
+
+                        <input type="submit" class="Moviebutton" style="width:100%" value="MORE INFORMATION" data-toggle="modal" data-target="#myModal" />
+
+                    }
+                </p>
+            </div>
+        </div>
+        <p></p>
+    </div>
+    @*@for (int i = 0; i < Model.d[p.MovieID].Count(); i++)
+        {
+            if (i == 4) { break; }
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 backProjection">@Model.d[p.MovieID][i][0].ToString()<br />
+        @Model.d[p.MovieID][i][1].ToString():@Model.d[p.MovieID][i][2].ToString()</div>
+        }*@
+
+}
+

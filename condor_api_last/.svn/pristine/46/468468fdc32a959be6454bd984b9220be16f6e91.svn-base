@@ -1,0 +1,191 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class EditEmployeeForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public Employees EmployeeEdit { get; set; }
+
+
+        public EditEmployeeForm(Employees employee)
+        {
+            InitializeComponent();
+            EmployeeEdit = employee;
+
+            txtFirstName.Text = employee.FirstName;
+            txtLastName.Text = employee.LastName;
+            dtpBirthDate.Value = employee.BirthDate;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Info");
+            HttpResponseMessage Response = Service.GetResponse("GetCities");
+            List<dynamic> cities = Response.Content.ReadAsAsync<List<dynamic>>().Result;
+
+            var CitiesTransform = cities.Select(x => new
+            {
+                CityID = x.CityID.ToString(),
+                Name = x.Name,
+            }).ToList();
+
+
+            cmbCities.DataSource = CitiesTransform;
+            cmbCities.DisplayMember = "Name";
+            cmbCities.ValueMember = "CityID";
+            cmbCities.SelectedValue = employee.CityBirthID.ToString();
+
+
+
+            var genders = new List<dynamic>
+            {
+                new { GenderID="1", Name="Male"},
+                new { GenderID="2", Name="Female"}
+            };
+
+           
+
+            cmbGender.DataSource = genders;
+            cmbGender.ValueMember = "GenderID";
+            cmbGender.DisplayMember = "Name";
+            
+            cmbGender.SelectedValue = (!employee.Gender) ? "1" : "2";
+
+
+
+
+
+            txtEmail.Text = employee.Email;
+            txtPhoneNumber.Text = employee.PhoneNumber;
+            txtCurriculumVitae.Text = employee.CurriculumVitae;
+
+        }
+
+        private void btnSubmitChangesEmployee_Click(object sender, EventArgs e)
+        {
+
+            if (this.ValidateChildren())
+            {
+                Service.Route = "api/Employees";
+
+            
+                EmployeeEdit.FirstName = txtFirstName.Text;
+                EmployeeEdit.LastName = txtLastName.Text;
+                EmployeeEdit.CityBirthID = Int32.Parse(cmbCities.SelectedValue.ToString());
+                EmployeeEdit.BirthDate = dtpBirthDate.Value;
+                EmployeeEdit.Gender = (cmbGender.Text == "Male") ? false : true;
+                EmployeeEdit.CurriculumVitae = txtCurriculumVitae.Text;
+                EmployeeEdit.Email = txtEmail.Text;
+                EmployeeEdit.PhoneNumber = txtPhoneNumber.Text;
+                EmployeeEdit.IsDeleted = false;
+                EmployeeEdit.CinemaID = AuthenticationUI.CurrentCinema.CinemaID;
+      
+                HttpResponseMessage Response = Service.PutResponse(EmployeeEdit, "PutEmployees");
+
+                if (Response.StatusCode== System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.EmployeeEditSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if(Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = Response.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show(Messages.EmployeeEditFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void txtFirstName_TextChanged(object sender, EventArgs e)
+        { 
+            txtFirstName_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtLastName_TextChanged(object sender, EventArgs e)
+        {
+            txtLastName_Validating(sender, new CancelEventArgs { });
+
+        }
+
+        private void txtPhoneNumber_TextChanged(object sender, EventArgs e)
+        {
+            txtPhoneNumber_Validating(sender, new CancelEventArgs { });
+
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            txtEmail_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtEmail, Messages.EmailRequired);
+            }
+            else
+            {
+                try
+                {
+                    MailAddress mailAddress = new MailAddress(txtEmail.Text);
+                }
+                catch (Exception)
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(txtEmail, Messages.EmailWrongFormat);
+                }
+                if (!e.Cancel)
+                    errorProvider.SetError(txtEmail, null);
+            }
+        }
+
+        private void txtPhoneNumber_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtPhoneNumber.MaskCompleted)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtPhoneNumber, Messages.PhoneNumberRequired);
+            }
+            else
+                errorProvider.SetError(txtPhoneNumber, null);
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtLastName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtLastName, Messages.LastNameRequired);
+            }
+            else
+                errorProvider.SetError(txtLastName, null);
+        }
+    
+
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtFirstName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtFirstName, Messages.FirstNameRequired);
+            }
+            else
+                errorProvider.SetError(txtFirstName, null);
+        }
+    }
+}

@@ -1,0 +1,142 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+
+<div class="col-xs-12" style="margin-bottom:12px; padding-left:1px; padding-right:1px;">
+    <div class="container">
+        <iframe src="@Model.Projection.Movie.Trailler"
+                frameborder="0" allowfullscreen class="video"></iframe>
+    </div>
+</div>
+
+<div class="col-md-12" style="margin-bottom:8px; padding-left:1px; padding-right:1px;">
+    <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Movie name:</div>
+    <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.MovieName</b></div>
+</div>
+
+<div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+    <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Original movie name:</div>
+    <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.OriginalName</b></div>
+</div>
+
+
+<div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+    <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Actors:</div>
+    <div class="col-md-6 pull-right" style=" padding-left:0px; padding-right:0px;">
+        <b>
+            @foreach (Actor a in Model.Projection.Movie.MovieRoles.Select(x=> x.Actor).ToList())
+            {  <b>@a.FirstName @a.LastName, </b> }
+        </b>
+    </div>
+</div>
+
+<div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+    <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Director/s:</div>
+    <div class="col-md-6 pull-right" style=" padding-left:0px; padding-right:0px;">
+        <b>
+            @foreach (MovieDirection md in Model.Projection.Movie.MovieDirections.ToList())
+            { <b>@md.Director.FirstName.ToString() @md.Director.LastName.ToString(), </b> }
+        </b>
+    </div>
+</div>
+
+<div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+    <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Movie synopsis:</div>
+    <div class="col-md-6 pull-right" style=" padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.Synopsis</b></div>
+</div>
+
+    <div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+        <div class="col-md-6" style="padding-left:0px; padding-right:0px;">Is this movie current:</div>
+        <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.IsCurrent</b></div>
+    </div>
+
+    <div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+        <div class="col-md-6" style=" padding-left:0px; padding-right:0px;">Movie genre:</div>
+        <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.Genre.GenreName</b></div>
+    </div>
+
+    <div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+        <div class="col-md-6" style="padding-left:0px; padding-right:0px;">Duration:</div>
+        <div class="col-md-6 pull-right" style=" padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.DurationInMinutes min.</b></div>
+    </div>
+
+    <div class="col-md-12" style="margin-bottom:8px; padding-left:0px; padding-right:0px;">
+        <div class="col-md-6" style="padding-left:0px; padding-right:0px;">Age restriction:</div>
+        <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.AgeRestriction</b></div>
+    </div>
+
+
+<div class="col-md-12" style="padding-bottom:12px; padding-left:0px; padding-right:0px; border-bottom:1px solid darkgray;">
+    <div class="col-md-6" style="padding-left:0px; padding-right:0px;">Release year:</div>
+    <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px;"><b>@Model.Projection.Movie.ReleaseYear.</b></div>
+</div>
+
+
+
+
+    <div class="col-md-12" style="margin-top:12px; margin-bottom:8px; padding-left:0px; padding-right:0px;">
+        
+       
+        <input type="hidden" value="@Model.Projection.Movie.DurationInMinutes"  id="duration"/>
+        <input type="hidden" value="@Model.Projection.Movie.MovieID" id="ProjectionMovieID"  />
+        <input type="hidden" value="@Model.MovieID" id="MovieID" />
+
+        
+
+
+
+        <div class="col-md-6" style="padding-left:0px; padding-right:0px; width:48%;">
+            @Html.Label("Projection start time:", new { @class = "fontSize" })
+            @Html.TextBoxFor(x=> x.Projection.DateTimeStart, new { @class = "form-control inputTransp fontSize", @type="datetime-local", Name = "start", id = "start" })
+        </div>
+
+        <div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px; ">
+            @Html.Label("Projection end time:", new { @class = "fontSize" })
+            @Html.TextBoxFor(x => x.Projection.DateTimeEnd, new { @class = "form-control inputTransp fontSize", @type = "datetime-local", Name = "end",id ="end" })
+        </div>
+
+        <div id="getCinemaHalls">
+            Insert the projection date start/end
+        </div>
+
+          
+    </div>
+
+<script type="text/javascript">           
+    
+   
+    $("#end").on("input", function () {
+        var dateStart = moment($("#start").val()).add($("#duration").val(), 'm');
+        var isAfter = moment($(this).val()).isAfter(dateStart);
+        if (!isAfter) {
+            $(this).css({ "border": "1px solid red" });
+            $("#addProjection").prop("disabled", true);
+            $("#getCinemaHalls").empty();
+        }
+        else
+        {
+            $(this).css({ "border": "1px solid green" });
+            $("#addProjection").prop("disabled", false);
+
+            var data = { "dateStart": $("#start").val(), "dateEnd": $(this).val(), "ProjectionMovieID": $("#ProjectionMovieID").val(), "MovieID" : $("#MovieID").val() }
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(data),
+                url: "GetCinemaHallsForProjection",
+                contentType: "application/json"
+            }).done(function (res) {
+                $("#getCinemaHalls").html(res);
+            });
+        }
+    });
+    
+
+    
+
+    
+    
+</script>

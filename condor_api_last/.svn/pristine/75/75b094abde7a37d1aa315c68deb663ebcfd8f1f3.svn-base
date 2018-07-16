@@ -1,0 +1,40 @@
+﻿using CondorExtreme3_UI.Helper;
+using CondorExtreme3_UI.RootUsers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Index
+{
+    public partial class RootMainForm : Form
+    {
+        public RootMainForm()
+        {
+            InitializeComponent();
+            Text = AuthenticationUI.LoggedRootUser.Username;
+      
+        }
+      
+        private void cinemasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RootCinemaForm.GetForm.ShowDialog();
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void vPPacketsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RootShowVPacks.GetForm.ShowDialog();
+
+        }
+    }
+}

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public class Payments
+    {
+        public int EmployeePaymentID { get; set; }
+        public int EmploymentID { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public decimal Amount { get; set; }
+    }
+}

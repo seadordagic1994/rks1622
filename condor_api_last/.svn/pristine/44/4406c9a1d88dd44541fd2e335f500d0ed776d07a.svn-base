@@ -1,0 +1,133 @@
+﻿@model List<CondorExtreme3.Areas.Local.Models.EmployeeShowVM>
+
+@{
+    ViewBag.Title = "EmployeeManagement";
+    Layout = "~/Areas/Local/Views/Shared/_LayoutDirector.cshtml";
+}
+<style>
+   
+
+    .info-box {
+        display: block;
+        min-height: 90px;
+        background: #dde3fc;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+       
+    }
+    body {
+    font-family: font96003, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+    }
+    .btn-app {
+      border-radius: 3px;
+      position: relative;
+      padding: 5px 15px 5px 15px;
+      margin: 0 0 10px 0px;
+      width:33.3333%;
+      
+      text-align: center;
+      color: #666;
+      border: 1px solid #ddd;
+      font-size: 12px;
+    }
+  
+    .divContainerEmp{
+
+    }
+
+</style>
+
+
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        
+        @using (Ajax.BeginForm("CreateEmployee", "Director", new AjaxOptions { UpdateTargetId = "ModalN" }))
+        {
+            <button type="submit" class="btn bg-red-gradient" style="width:70px; margin-top:5px;" data-toggle="modal" data-target="#ModalN">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        }
+
+
+     
+        
+      
+    </div>
+
+    
+</div>
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6 col-xs-12" >
+            <div class="info-box">
+                <span class="info-box-icon bg-light-blue-gradient"><i class="fa fa-fw fa-user" aria-hidden="true"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><b style="font-size:16px;">@item.FirstName @item.LastName</b></span>
+                    
+                    <span class="info-box-text"><small style="font-size:10px;">Hire Date:</small> <b style="font-size:12px">@item.HireDate</b></span>
+                    <span class="info-box-text"><small style="font-size:10px">Salary:</small> <b style="font-size:12px">@item.Salary</b></span>
+                  
+                </div>
+
+               
+            </div>
+
+            <div class="divContainerEmp">
+              
+               
+              @if (!item.ERoles.Contains("Director"))
+              {
+                  using (Ajax.BeginForm("DeleteEmployee", "Director",new { EmployeeID=item.EmployeeID },new AjaxOptions { UpdateTargetId= "ModalN" }))
+                  {
+                    <a class="btn btn-app pull-right modalAnchor" href="#" data-toggle="modal" data-target="#ModalN" onclick="$(this).closest('form').submit()">
+                        <i class="fa fa-trash"></i> Delete
+                    </a>
+                  }
+
+
+              }
+                @using (Ajax.BeginForm("EditEmployee", "Director", new { EmployeeID = item.EmployeeID }, new AjaxOptions { UpdateTargetId = "ModalN" }))
+                {
+                    <a class="btn btn-app pull-right modalAnchor" href="#" data-toggle="modal" data-target="#ModalN" onclick="$(this).closest('form').submit()">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                }
+
+
+                @using (Ajax.BeginForm("DetailsEmployee", "Director", new { EmployeeID = item.EmployeeID }, new AjaxOptions { UpdateTargetId = "ModalN" }))
+                {
+                    <a class="btn btn-app pull-right modalAnchor" href="#" data-toggle="modal" data-target="#ModalN" onclick="$(this).closest('form').submit()">
+                        <i class="fa fa-info"></i> Details
+                    </a>
+                }
+
+            </div>
+            
+        </div>
+    }
+</div>
+
+
+<div class="modal" id="ModalN">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

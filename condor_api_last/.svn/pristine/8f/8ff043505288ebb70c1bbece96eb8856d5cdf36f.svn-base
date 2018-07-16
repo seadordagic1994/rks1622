@@ -1,0 +1,55 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class EmployeePaymentsShowForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public Employments employment { get; set; }
+
+        public EmployeePaymentsShowForm(Employments employment)
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+            this.employment = employment;
+
+            lblBankAccountNumber.Text = employment.BankAccountNumber;
+            lblBank.Text = employment.BankName;
+
+            LoadEmployeePayments();
+
+        }
+
+        void LoadEmployeePayments()
+        {
+            HttpResponseMessage Response = Service.GetResponse("GetEmployeePayments", employment.EmploymentID);
+            if (Response.IsSuccessStatusCode)
+            {
+                grdEmployeePayments.DataSource = Response.Content.ReadAsAsync<List<object>>().Result;
+                grdEmployeePayments.Columns["EmployeePaymentID"].Visible = false;
+                grdEmployeePayments.Columns["EmploymentID"].Visible = false;
+                grdEmployeePayments.Columns["TransactionDate"].HeaderText = "Transaction Date";
+                grdEmployeePayments.Columns["TransactionDate"].Width = 200;
+            }
+        }
+
+        private void btnAddEmployeePayment_Click(object sender, EventArgs e)
+        {
+            AddEmployeePaymentForm addEmployeePaymentForm = new AddEmployeePaymentForm(this.employment);
+            DialogResult dialogResult = addEmployeePaymentForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)   
+                LoadEmployeePayments();           
+        }
+    }
+}

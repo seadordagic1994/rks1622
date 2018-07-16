@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>VirtualPointPacks</title>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm("SubmitVirtualPointPacks", "VirtualPoints"))
+        {
+            @Html.TextBox("Amount");
+            <input type="submit" value="Add Pack" />
+        }
+    </div>
+</body>
+</html>

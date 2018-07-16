@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CondorDBXModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Actors">
+    <Key>
+      <PropertyRef Name="ActorID" />
+    </Key>
+    <Property Name="ActorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Synopsis" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AgeRestrictions">
+    <Key>
+      <PropertyRef Name="AgeRestrictionID" />
+    </Key>
+    <Property Name="AgeRestrictionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Banks">
+    <Key>
+      <PropertyRef Name="BankID" />
+    </Key>
+    <Property Name="BankID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CinemaCoordinates">
+    <Key>
+      <PropertyRef Name="CinemaID" />
+    </Key>
+    <Property Name="CinemaID" Type="int" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CinemaHalls">
+    <Key>
+      <PropertyRef Name="CinemaHallID" />
+    </Key>
+    <Property Name="CinemaHallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CinemaID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinemas">
+    <Key>
+      <PropertyRef Name="CinemaID" />
+    </Key>
+    <Property Name="CinemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Countries">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeePayments">
+    <Key>
+      <PropertyRef Name="EmployeePaymentID" />
+    </Key>
+    <Property Name="EmployeePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmploymentID" Type="int" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeRoles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="CityBirthID" Type="int" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="CurriculumVitae" Type="nvarchar" MaxLength="1000" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Username" Type="nvarchar" MaxLength="100" />
+    <Property Name="PasswordSalt" Type="nvarchar(max)" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CinemaID" Type="int" />
+  </EntityType>
+  <EntityType Name="Employments">
+    <Key>
+      <PropertyRef Name="EmploymentID" />
+    </Key>
+    <Property Name="EmploymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="HireDate" Type="datetime" Nullable="false" />
+    <Property Name="CurrentSalary" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="EmploymentTypeID" Type="int" Nullable="false" />
+    <Property Name="BankAccountNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="BankID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmploymentTypes">
+    <Key>
+      <PropertyRef Name="EmploymentTypeID" />
+    </Key>
+    <Property Name="EmploymentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Genres">
+    <Key>
+      <PropertyRef Name="GenreID" />
+    </Key>
+    <Property Name="GenreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieDirectors">
+    <Key>
+      <PropertyRef Name="MovieDirectorID" />
+    </Key>
+    <Property Name="MovieDirectorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Synopsis" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieRatings">
+    <Key>
+      <PropertyRef Name="MovieID" />
+      <PropertyRef Name="RVisitorID" />
+    </Key>
+    <Property Name="MovieID" Type="int" Nullable="false" />
+    <Property Name="RVisitorID" Type="int" Nullable="false" />
+    <Property Name="Rating" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieRoles">
+    <Key>
+      <PropertyRef Name="MovieID" />
+      <PropertyRef Name="ActorID" />
+    </Key>
+    <Property Name="MovieID" Type="int" Nullable="false" />
+    <Property Name="ActorID" Type="int" Nullable="false" />
+    <Property Name="RoleSynopsis" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="MovieID" />
+    </Key>
+    <Property Name="MovieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="OriginalName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="GenreID" Type="int" Nullable="false" />
+    <Property Name="DurationInMinutes" Type="int" Nullable="false" />
+    <Property Name="AgeRestrictionID" Type="int" />
+    <Property Name="MovieDirectorID" Type="int" Nullable="false" />
+    <Property Name="Trailer" Type="nvarchar" MaxLength="80" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ReleaseYear" Type="int" Nullable="false" />
+    <Property Name="Synopsis" Type="nvarchar(max)" />
+    <Property Name="ImageThumb" Type="varbinary(max)" />
+    <Property Name="PictureBytes" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="PaymentMethods">
+    <Key>
+      <PropertyRef Name="PaymentMethodID" />
+    </Key>
+    <Property Name="PaymentMethodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projections">
+    <Key>
+      <PropertyRef Name="ProjectionID" />
+    </Key>
+    <Property Name="ProjectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MovieID" Type="int" Nullable="false" />
+    <Property Name="CinemaHallID" Type="int" Nullable="false" />
+    <Property Name="DateTimeStart" Type="datetime" Nullable="false" />
+    <Property Name="TechnologyTypeID" Type="int" Nullable="false" />
+    <Property Name="TicketPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reservations">
+    <Key>
+      <PropertyRef Name="ReservationID" />
+    </Key>
+    <Property Name="ReservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InitialDate" Type="datetime" Nullable="false" />
+    <Property Name="ValidUntil" Type="datetime" />
+    <Property Name="PhoneNumberVis" Type="nvarchar" MaxLength="30" />
+    <Property Name="RVisitorID" Type="int" />
+    <Property Name="PaymentMethodID" Type="int" />
+    <Property Name="IsCompleted" Type="int" Nullable="false" />
+    <Property Name="CreditCardNumber" Type="int" />
+    <Property Name="ProjectionID" Type="int" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RootUsers">
+    <Key>
+      <PropertyRef Name="RootUserID" />
+    </Key>
+    <Property Name="RootUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RVisitors">
+    <Key>
+      <PropertyRef Name="RVisitorID" />
+    </Key>
+    <Property Name="RVisitorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="Email" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="VirtualPointsTotal" Type="int" />
+  </EntityType>
+  <EntityType Name="SeatColumns">
+    <Key>
+      <PropertyRef Name="SeatColumnID" />
+    </Key>
+    <Property Name="SeatColumnID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SeatColumnLbl" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SeatRows">
+    <Key>
+      <PropertyRef Name="SeatRowID" />
+    </Key>
+    <Property Name="SeatRowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SeatRowLbl" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Seats">
+    <Key>
+      <PropertyRef Name="SeatID" />
+    </Key>
+    <Property Name="SeatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SeatRowID" Type="int" Nullable="false" />
+    <Property Name="SeatColumnID" Type="int" Nullable="false" />
+    <Property Name="CinemaHallID" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TechnologyTypes">
+    <Key>
+      <PropertyRef Name="TechnologyTypeID" />
+    </Key>
+    <Property Name="TechnologyTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="ProjectionID" />
+      <PropertyRef Name="SeatID" />
+    </Key>
+    <Property Name="ProjectionID" Type="int" Nullable="false" />
+    <Property Name="SeatID" Type="int" Nullable="false" />
+    <Property Name="TicketPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TicketNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReservationID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionsVirtualPoints">
+    <Key>
+      <PropertyRef Name="TransactionVirtualPointsID" />
+    </Key>
+    <Property Name="TransactionVirtualPointsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VirtualPointsPacketID" Type="int" Nullable="false" />
+    <Property Name="RVisitorID" Type="int" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VirtualPointsPackets">
+    <Key>
+      <PropertyRef Name="VirtualPointsPacketID" />
+    </Key>
+    <Property Name="VirtualPointsPacketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Artikli">
+    <Key>
+      <PropertyRef Name="AritkalId" />
+      <PropertyRef Name="GrupaId" />
+    </Key>
+    <Property Name="AritkalId" Type="int" Nullable="false" />
+    <Property Name="GrupaId" Type="int" Nullable="false" />
+    <Property Name="Naziv" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="JedMjere" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Barcode" Type="nchar" MaxLength="13" />
+    <Property Name="Image" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Cjenovnik">
+    <Key>
+      <PropertyRef Name="CjenovnikId" />
+    </Key>
+    <Property Name="CjenovnikId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GrupaId" Type="int" Nullable="false" />
+    <Property Name="ArtikalId" Type="int" Nullable="false" />
+    <Property Name="Koliciina" Type="int" Nullable="false" />
+    <Property Name="Cijena" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Grupa">
+    <Key>
+      <PropertyRef Name="GrupaId" />
+    </Key>
+    <Property Name="GrupaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stavke">
+    <Key>
+      <PropertyRef Name="StavkaId" />
+    </Key>
+    <Property Name="StavkaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZaglavljeId" Type="int" />
+    <Property Name="CijenovnikId" Type="int" />
+    <Property Name="Kolicina" Type="int" Nullable="false" />
+    <Property Name="Rabat" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Cijena" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="PDV" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Iznos" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="RezervacijaID" Type="int" />
+  </EntityType>
+  <EntityType Name="Zaglavlje">
+    <Key>
+      <PropertyRef Name="ZaglavljeId" />
+    </Key>
+    <Property Name="ZaglavljeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Datum" Type="date" Nullable="false" />
+    <Property Name="Knjizen" Type="bit" />
+    <Property Name="FiskalniRacun" Type="int" />
+    <Property Name="ReklamiraniRacun" Type="int" />
+    <Property Name="ZaposlenikID" Type="int" />
+  </EntityType>
+  <Association Name="FK__CinemaCoo__Cinem__23F3538A">
+    <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="1" />
+    <End Role="CinemaCoordinates" Type="Self.CinemaCoordinates" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Cinemas">
+        <PropertyRef Name="CinemaID" />
+      </Principal>
+      <Dependent Role="CinemaCoordinates">
+        <PropertyRef Name="CinemaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CinemaHal__Cinem__3E52440B">
+    <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="1" />
+    <End Role="CinemaHalls" Type="Self.CinemaHalls" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinemas">
+        <PropertyRef Name="CinemaID" />
+      </Principal>
+      <Dependent Role="CinemaHalls">
+        <PropertyRef Name="CinemaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cinemas__CityID__3B75D760">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Cinemas">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__CountryI__38996AB5">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+    <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeP__Emplo__08B54D69">
+    <End Role="Employments" Type="Self.Employments" Multiplicity="1" />
+    <End Role="EmployeePayments" Type="Self.EmployeePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employments">
+        <PropertyRef Name="EmploymentID" />
+      </Principal>
+      <Dependent Role="EmployeePayments">
+        <PropertyRef Name="EmploymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeR__Emplo__18EBB532">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="EmployeeRoles" Type="Self.EmployeeRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="EmployeeRoles">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeR__RoleI__17F790F9">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="EmployeeRoles" Type="Self.EmployeeRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="EmployeeRoles">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__Cinem__0697FACD">
+    <End Role="Cinemas" Type="Self.Cinemas" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinemas">
+        <PropertyRef Name="CinemaID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="CinemaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__CityB__00200768">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="CityBirthID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__BankI__6166761E">
+    <End Role="Banks" Type="Self.Banks" Multiplicity="1" />
+    <End Role="Employments" Type="Self.Employments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Banks">
+        <PropertyRef Name="BankID" />
+      </Principal>
+      <Dependent Role="Employments">
+        <PropertyRef Name="BankID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__Emplo__03F0984C">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="Employments" Type="Self.Employments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Employments">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__Emplo__51300E55">
+    <End Role="EmploymentTypes" Type="Self.EmploymentTypes" Multiplicity="1" />
+    <End Role="Employments" Type="Self.Employments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmploymentTypes">
+        <PropertyRef Name="EmploymentTypeID" />
+      </Principal>
+      <Dependent Role="Employments">
+        <PropertyRef Name="EmploymentTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MovieRati__Movie__2180FB33">
+    <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+    <End Role="MovieRatings" Type="Self.MovieRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="MovieID" />
+      </Principal>
+      <Dependent Role="MovieRatings">
+        <PropertyRef Name="MovieID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MovieRati__RVisi__22751F6C">
+    <End Role="RVisitors" Type="Self.RVisitors" Multiplicity="1" />
+    <End Role="MovieRatings" Type="Self.MovieRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RVisitors">
+        <PropertyRef Name="RVisitorID" />
+      </Principal>
+      <Dependent Role="MovieRatings">
+        <PropertyRef Name="RVisitorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MovieRole__Actor__5BE2A6F2">
+    <End Role="Actors" Type="Self.Actors" Multiplicity="1" />
+    <End Role="MovieRoles" Type="Self.MovieRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actors">
+        <PropertyRef Name="ActorID" />
+      </Principal>
+      <Dependent Role="MovieRoles">
+        <PropertyRef Name="ActorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MovieRole__Movie__5AEE82B9">
+    <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+    <End Role="MovieRoles" Type="Self.MovieRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="MovieID" />
+      </Principal>
+      <Dependent Role="MovieRoles">
+        <PropertyRef Name="MovieID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Movies__AgeRestr__52593CB8">
+    <End Role="AgeRestrictions" Type="Self.AgeRestrictions" Multiplicity="0..1" />
+    <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgeRestrictions">
+        <PropertyRef Name="AgeRestrictionID" />
+      </Principal>
+      <Dependent Role="Movies">
+        <PropertyRef Name="AgeRestrictionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Movies__GenreID__5165187F">
+    <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+    <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genres">
+        <PropertyRef Name="GenreID" />
+      </Principal>
+      <Dependent Role="Movies">
+        <PropertyRef Name="GenreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Movies__MovieDir__534D60F1">
+    <End Role="MovieDirectors" Type="Self.MovieDirectors" Multiplicity="1" />
+    <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MovieDirectors">
+        <PropertyRef Name="MovieDirectorID" />
+      </Principal>
+      <Dependent Role="Movies">
+        <PropertyRef Name="MovieDirectorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Projectio__Cinem__619B8048">
+    <End Role="CinemaHalls" Type="Self.CinemaHalls" Multiplicity="1" />
+    <End Role="Projections" Type="Self.Projections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CinemaHalls">
+        <PropertyRef Name="CinemaHallID" />
+      </Principal>
+      <Dependent Role="Projections">
+        <PropertyRef Name="CinemaHallID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Projectio__Movie__60A75C0F">
+    <End Role="Movies" Type="Self.Movies" Multiplicity="1" />
+    <End Role="Projections" Type="Self.Projections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="MovieID" />
+      </Principal>
+      <Dependent Role="Projections">
+        <PropertyRef Name="MovieID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Projectio__Techn__628FA481">
+    <End Role="TechnologyTypes" Type="Self.TechnologyTypes" Multiplicity="1" />
+    <End Role="Projections" Type="Self.Projections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TechnologyTypes">
+        <PropertyRef Name="TechnologyTypeID" />
+      </Principal>
+      <Dependent Role="Projections">
+        <PropertyRef Name="TechnologyTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reservati__Payme__0E6E26BF">
+    <End Role="PaymentMethods" Type="Self.PaymentMethods" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentMethods">
+        <PropertyRef Name="PaymentMethodID" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="PaymentMethodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reservati__RVisi__0D7A0286">
+    <End Role="RVisitors" Type="Self.RVisitors" Multiplicity="0..1" />
+    <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RVisitors">
+        <PropertyRef Name="RVisitorID" />
+      </Principal>
+      <Dependent Role="Reservations">
+        <PropertyRef Name="RVisitorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RVisitors__CityI__7D439ABD">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="RVisitors" Type="Self.RVisitors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="RVisitors">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Seats__CinemaHal__6FE99F9F">
+    <End Role="CinemaHalls" Type="Self.CinemaHalls" Multiplicity="1" />
+    <End Role="Seats" Type="Self.Seats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CinemaHalls">
+        <PropertyRef Name="CinemaHallID" />
+      </Principal>
+      <Dependent Role="Seats">
+        <PropertyRef Name="CinemaHallID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Seats__SeatColum__6EF57B66">
+    <End Role="SeatColumns" Type="Self.SeatColumns" Multiplicity="1" />
+    <End Role="Seats" Type="Self.Seats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SeatColumns">
+        <PropertyRef Name="SeatColumnID" />
+      </Principal>
+      <Dependent Role="Seats">
+        <PropertyRef Name="SeatColumnID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Seats__SeatRowID__6E01572D">
+    <End Role="SeatRows" Type="Self.SeatRows" Multiplicity="1" />
+    <End Role="Seats" Type="Self.Seats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SeatRows">
+        <PropertyRef Name="SeatRowID" />
+      </Principal>
+      <Dependent Role="Seats">
+        <PropertyRef Name="SeatRowID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Stavke__Rezervac__3335971A">
+    <End Role="Reservations" Type="Self.Reservations" Multiplicity="0..1" />
+    <End Role="Stavke" Type="Self.Stavke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reservations">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="Stavke">
+        <PropertyRef Name="RezervacijaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__Project__114A936A">
+    <End Role="Projections" Type="Self.Projections" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projections">
+        <PropertyRef Name="ProjectionID" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="ProjectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__Reserva__1332DBDC">
+    <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reservations">
+        <PropertyRef Name="ReservationID" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="ReservationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__SeatID__123EB7A3">
+    <End Role="Seats" Type="Self.Seats" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Seats">
+        <PropertyRef Name="SeatID" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="SeatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__RVisi__1C873BEC">
+    <End Role="RVisitors" Type="Self.RVisitors" Multiplicity="1" />
+    <End Role="TransactionsVirtualPoints" Type="Self.TransactionsVirtualPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RVisitors">
+        <PropertyRef Name="RVisitorID" />
+      </Principal>
+      <Dependent Role="TransactionsVirtualPoints">
+        <PropertyRef Name="RVisitorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Virtu__1B9317B3">
+    <End Role="VirtualPointsPackets" Type="Self.VirtualPointsPackets" Multiplicity="1" />
+    <End Role="TransactionsVirtualPoints" Type="Self.TransactionsVirtualPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VirtualPointsPackets">
+        <PropertyRef Name="VirtualPointsPacketID" />
+      </Principal>
+      <Dependent Role="TransactionsVirtualPoints">
+        <PropertyRef Name="VirtualPointsPacketID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Zaglavlje__Zapos__324172E1">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="Zaglavlje" Type="Self.Zaglavlje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Zaglavlje">
+        <PropertyRef Name="ZaposlenikID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Artikli_Grupa">
+    <End Role="Grupa" Type="Self.Grupa" Multiplicity="1" />
+    <End Role="Artikli" Type="Self.Artikli" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grupa">
+        <PropertyRef Name="GrupaId" />
+      </Principal>
+      <Dependent Role="Artikli">
+        <PropertyRef Name="GrupaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cijenovnik_Arikal">
+    <End Role="Artikli" Type="Self.Artikli" Multiplicity="1" />
+    <End Role="Cjenovnik" Type="Self.Cjenovnik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artikli">
+        <PropertyRef Name="AritkalId" />
+        <PropertyRef Name="GrupaId" />
+      </Principal>
+      <Dependent Role="Cjenovnik">
+        <PropertyRef Name="ArtikalId" />
+        <PropertyRef Name="GrupaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stavke_Cjenovnik">
+    <End Role="Cjenovnik" Type="Self.Cjenovnik" Multiplicity="0..1" />
+    <End Role="Stavke" Type="Self.Stavke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cjenovnik">
+        <PropertyRef Name="CjenovnikId" />
+      </Principal>
+      <Dependent Role="Stavke">
+        <PropertyRef Name="CijenovnikId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stavke_Zaglavlje">
+    <End Role="Zaglavlje" Type="Self.Zaglavlje" Multiplicity="0..1" />
+    <End Role="Stavke" Type="Self.Stavke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zaglavlje">
+        <PropertyRef Name="ZaglavljeId" />
+      </Principal>
+      <Dependent Role="Stavke">
+        <PropertyRef Name="ZaglavljeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CondorDBXModelStoreContainer">
+    <EntitySet Name="Actors" EntityType="Self.Actors" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="AgeRestrictions" EntityType="Self.AgeRestrictions" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Banks" EntityType="Self.Banks" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="CinemaCoordinates" EntityType="Self.CinemaCoordinates" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="CinemaHalls" EntityType="Self.CinemaHalls" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Cinemas" EntityType="Self.Cinemas" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Cities" EntityType="Self.Cities" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Countries" EntityType="Self.Countries" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="EmployeePayments" EntityType="Self.EmployeePayments" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="EmployeeRoles" EntityType="Self.EmployeeRoles" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Employments" EntityType="Self.Employments" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="EmploymentTypes" EntityType="Self.EmploymentTypes" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Genres" EntityType="Self.Genres" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="MovieDirectors" EntityType="Self.MovieDirectors" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="MovieRatings" EntityType="Self.MovieRatings" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="MovieRoles" EntityType="Self.MovieRoles" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Movies" EntityType="Self.Movies" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethods" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Projections" EntityType="Self.Projections" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="RootUsers" EntityType="Self.RootUsers" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="RVisitors" EntityType="Self.RVisitors" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="SeatColumns" EntityType="Self.SeatColumns" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="SeatRows" EntityType="Self.SeatRows" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Seats" EntityType="Self.Seats" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="TechnologyTypes" EntityType="Self.TechnologyTypes" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="TransactionsVirtualPoints" EntityType="Self.TransactionsVirtualPoints" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="VirtualPointsPackets" EntityType="Self.VirtualPointsPackets" Schema="CondorDBXUser" store:Type="Tables" />
+    <EntitySet Name="Artikli" EntityType="Self.Artikli" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cjenovnik" EntityType="Self.Cjenovnik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grupa" EntityType="Self.Grupa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stavke" EntityType="Self.Stavke" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zaglavlje" EntityType="Self.Zaglavlje" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CinemaCoo__Cinem__23F3538A" Association="Self.FK__CinemaCoo__Cinem__23F3538A">
+      <End Role="Cinemas" EntitySet="Cinemas" />
+      <End Role="CinemaCoordinates" EntitySet="CinemaCoordinates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CinemaHal__Cinem__3E52440B" Association="Self.FK__CinemaHal__Cinem__3E52440B">
+      <End Role="Cinemas" EntitySet="Cinemas" />
+      <End Role="CinemaHalls" EntitySet="CinemaHalls" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cinemas__CityID__3B75D760" Association="Self.FK__Cinemas__CityID__3B75D760">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Cinemas" EntitySet="Cinemas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__CountryI__38996AB5" Association="Self.FK__Cities__CountryI__38996AB5">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeP__Emplo__08B54D69" Association="Self.FK__EmployeeP__Emplo__08B54D69">
+      <End Role="Employments" EntitySet="Employments" />
+      <End Role="EmployeePayments" EntitySet="EmployeePayments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeR__Emplo__18EBB532" Association="Self.FK__EmployeeR__Emplo__18EBB532">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="EmployeeRoles" EntitySet="EmployeeRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeR__RoleI__17F790F9" Association="Self.FK__EmployeeR__RoleI__17F790F9">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="EmployeeRoles" EntitySet="EmployeeRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__Cinem__0697FACD" Association="Self.FK__Employees__Cinem__0697FACD">
+      <End Role="Cinemas" EntitySet="Cinemas" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__CityB__00200768" Association="Self.FK__Employees__CityB__00200768">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__BankI__6166761E" Association="Self.FK__Employmen__BankI__6166761E">
+      <End Role="Banks" EntitySet="Banks" />
+      <End Role="Employments" EntitySet="Employments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__Emplo__03F0984C" Association="Self.FK__Employmen__Emplo__03F0984C">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Employments" EntitySet="Employments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__Emplo__51300E55" Association="Self.FK__Employmen__Emplo__51300E55">
+      <End Role="EmploymentTypes" EntitySet="EmploymentTypes" />
+      <End Role="Employments" EntitySet="Employments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MovieRati__Movie__2180FB33" Association="Self.FK__MovieRati__Movie__2180FB33">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="MovieRatings" EntitySet="MovieRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MovieRati__RVisi__22751F6C" Association="Self.FK__MovieRati__RVisi__22751F6C">
+      <End Role="RVisitors" EntitySet="RVisitors" />
+      <End Role="MovieRatings" EntitySet="MovieRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MovieRole__Actor__5BE2A6F2" Association="Self.FK__MovieRole__Actor__5BE2A6F2">
+      <End Role="Actors" EntitySet="Actors" />
+      <End Role="MovieRoles" EntitySet="MovieRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MovieRole__Movie__5AEE82B9" Association="Self.FK__MovieRole__Movie__5AEE82B9">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="MovieRoles" EntitySet="MovieRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Movies__AgeRestr__52593CB8" Association="Self.FK__Movies__AgeRestr__52593CB8">
+      <End Role="AgeRestrictions" EntitySet="AgeRestrictions" />
+      <End Role="Movies" EntitySet="Movies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Movies__GenreID__5165187F" Association="Self.FK__Movies__GenreID__5165187F">
+      <End Role="Genres" EntitySet="Genres" />
+      <End Role="Movies" EntitySet="Movies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Movies__MovieDir__534D60F1" Association="Self.FK__Movies__MovieDir__534D60F1">
+      <End Role="MovieDirectors" EntitySet="MovieDirectors" />
+      <End Role="Movies" EntitySet="Movies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Projectio__Cinem__619B8048" Association="Self.FK__Projectio__Cinem__619B8048">
+      <End Role="CinemaHalls" EntitySet="CinemaHalls" />
+      <End Role="Projections" EntitySet="Projections" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Projectio__Movie__60A75C0F" Association="Self.FK__Projectio__Movie__60A75C0F">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="Projections" EntitySet="Projections" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Projectio__Techn__628FA481" Association="Self.FK__Projectio__Techn__628FA481">
+      <End Role="TechnologyTypes" EntitySet="TechnologyTypes" />
+      <End Role="Projections" EntitySet="Projections" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reservati__Payme__0E6E26BF" Association="Self.FK__Reservati__Payme__0E6E26BF">
+      <End Role="PaymentMethods" EntitySet="PaymentMethods" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reservati__RVisi__0D7A0286" Association="Self.FK__Reservati__RVisi__0D7A0286">
+      <End Role="RVisitors" EntitySet="RVisitors" />
+      <End Role="Reservations" EntitySet="Reservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RVisitors__CityI__7D439ABD" Association="Self.FK__RVisitors__CityI__7D439ABD">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="RVisitors" EntitySet="RVisitors" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Seats__CinemaHal__6FE99F9F" Association="Self.FK__Seats__CinemaHal__6FE99F9F">
+      <End Role="CinemaHalls" EntitySet="CinemaHalls" />
+      <End Role="Seats" EntitySet="Seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Seats__SeatColum__6EF57B66" Association="Self.FK__Seats__SeatColum__6EF57B66">
+      <End Role="SeatColumns" EntitySet="SeatColumns" />
+      <End Role="Seats" EntitySet="Seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Seats__SeatRowID__6E01572D" Association="Self.FK__Seats__SeatRowID__6E01572D">
+      <End Role="SeatRows" EntitySet="SeatRows" />
+      <End Role="Seats" EntitySet="Seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Stavke__Rezervac__3335971A" Association="Self.FK__Stavke__Rezervac__3335971A">
+      <End Role="Reservations" EntitySet="Reservations" />
+      <End Role="Stavke" EntitySet="Stavke" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__Project__114A936A" Association="Self.FK__Tickets__Project__114A936A">
+      <End Role="Projections" EntitySet="Projections" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__Reserva__1332DBDC" Association="Self.FK__Tickets__Reserva__1332DBDC">
+      <End Role="Reservations" EntitySet="Reservations" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__SeatID__123EB7A3" Association="Self.FK__Tickets__SeatID__123EB7A3">
+      <End Role="Seats" EntitySet="Seats" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__RVisi__1C873BEC" Association="Self.FK__Transacti__RVisi__1C873BEC">
+      <End Role="RVisitors" EntitySet="RVisitors" />
+      <End Role="TransactionsVirtualPoints" EntitySet="TransactionsVirtualPoints" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Virtu__1B9317B3" Association="Self.FK__Transacti__Virtu__1B9317B3">
+      <End Role="VirtualPointsPackets" EntitySet="VirtualPointsPackets" />
+      <End Role="TransactionsVirtualPoints" EntitySet="TransactionsVirtualPoints" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Zaglavlje__Zapos__324172E1" Association="Self.FK__Zaglavlje__Zapos__324172E1">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Zaglavlje" EntitySet="Zaglavlje" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Artikli_Grupa" Association="Self.FK_Artikli_Grupa">
+      <End Role="Grupa" EntitySet="Grupa" />
+      <End Role="Artikli" EntitySet="Artikli" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cijenovnik_Arikal" Association="Self.FK_Cijenovnik_Arikal">
+      <End Role="Artikli" EntitySet="Artikli" />
+      <End Role="Cjenovnik" EntitySet="Cjenovnik" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stavke_Cjenovnik" Association="Self.FK_Stavke_Cjenovnik">
+      <End Role="Cjenovnik" EntitySet="Cjenovnik" />
+      <End Role="Stavke" EntitySet="Stavke" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stavke_Zaglavlje" Association="Self.FK_Stavke_Zaglavlje">
+      <End Role="Zaglavlje" EntitySet="Zaglavlje" />
+      <End Role="Stavke" EntitySet="Stavke" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

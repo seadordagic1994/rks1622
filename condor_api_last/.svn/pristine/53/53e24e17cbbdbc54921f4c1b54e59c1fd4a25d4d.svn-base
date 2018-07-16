@@ -1,0 +1,182 @@
+﻿using CondorExtreme3_UI.Cinemas;
+using CondorExtreme3_UI.Employees;
+using CondorExtreme3_UI.Index;
+using CondorExtreme3_UI.Reports;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Helper
+{
+    public static class AuthorizationUI
+    {
+        public enum Roles
+        {
+            Director,
+            ProjectionManager,
+            Cashier
+        }
+        public static Dictionary<Button, Roles> dctMapButtonsToRoles {
+            get{
+                return new Dictionary<Button, Roles>
+                {
+                    {
+                        new Button{
+                            Name ="btnStatistics",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Cinema Statistics"                             
+                        },
+                        Roles.Director
+                    },
+                    {
+                        new Button{
+                            Name ="btnCinemaManagement",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Cinema Management"
+                        },
+                        Roles.Director
+                    },
+                    {
+                        new Button{
+                            Name ="btnEmployeesManagement",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Employee Management"                
+                        },
+                        Roles.Director },
+                    {
+                        new Button{
+                            Name ="btnProjectionsManagement",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Projections"                        
+                        },
+                        Roles.ProjectionManager },
+                    {
+                        new Button{
+                            Name ="btnReservations",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Reservations"                          
+                        },
+                        Roles.Cashier
+                    },
+                     {
+                        new Button{
+                            Name ="btnReporting",
+                            Size =new System.Drawing.Size{Height=36, Width=226},
+                            Text ="Reporting"
+                        },
+                        Roles.Director
+                    }
+
+                };
+            }
+        }
+
+        public static Dictionary<string,EventHandler> dctMapButtonsToEventHandlers { get
+            {
+                return new Dictionary<string, EventHandler>
+                {
+                   {
+                        "btnStatistics",
+                        new EventHandler(startCinemaStatistics) 
+                   },
+                   {
+                        "btnCinemaManagement",
+                        new EventHandler(startCinemaManagement)
+                   },
+                   {
+                        "btnProjectionsManagement",
+                        new EventHandler(ProjectionsManagement) 
+                   },
+                   {
+                        "btnReservations",
+                        new EventHandler(CashRegister) //Ovdje ce doci naziv metode koju poziva button btnReservations
+                   },
+                   {
+                        "btnEmployeesManagement",
+                        new EventHandler(startEmployeesManagement)
+                   },
+                   {
+                        "btnReporting",
+                        new EventHandler(startReporting)
+                   }
+                };
+            }
+        }
+
+        public static void Test(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hi");
+        }
+
+      
+
+
+
+
+
+        public static List<Button> AuthorizeEmployee()
+        {
+            var LoggedEmployee = AuthenticationUI.LoggedEmployee;
+            var EmployeeRoles = AuthenticationUI.Roles;
+            var Buttons = new List<Button>();
+
+
+            foreach (var role in EmployeeRoles)
+            {
+                List<Button>buttons=dctMapButtonsToRoles.Where(x => x.Value.ToString() == role.RoleName.ToString()).Select(x => x.Key).ToList();
+              
+                Buttons.AddRange(buttons);
+            }
+
+            foreach (var button in Buttons)
+            {          
+                button.Click += dctMapButtonsToEventHandlers.Where(x => x.Key == button.Name).Select(x => x.Value).FirstOrDefault();         
+            }
+
+            return Buttons;
+        }
+
+
+
+
+        //-List of methods
+
+        public static void ProjectionsManagement(object sender, EventArgs e)
+        {
+            Projections.ProjectionsParent pp = new Projections.ProjectionsParent();
+            pp.ShowDialog();
+        }
+
+        public static void CashRegister(object sender, EventArgs e)
+        {
+            KasaRacuni.Parent pp = new KasaRacuni.Parent();
+            pp.ShowDialog();
+        }
+
+        public static void startCinemaStatistics(object sender, EventArgs e)
+        {
+            StatisticsForm statisticsForm = new StatisticsForm();
+            statisticsForm.ShowDialog();
+        }
+
+        public static void startCinemaManagement(object sender, EventArgs e)
+        {
+            CinemaManagementForm cinemaManagementForm = new CinemaManagementForm();
+            cinemaManagementForm.ShowDialog();
+        }
+        public static void startEmployeesManagement(object sender, EventArgs e)
+        {
+            EmployeesManagementForm employeesManagementForm = new EmployeesManagementForm();
+            employeesManagementForm.ShowDialog();
+        }
+        public static void startReporting(object sender, EventArgs e)
+        {
+            ReportingForm reportingForm = new ReportingForm();
+            reportingForm.ShowDialog();
+        }
+    }
+}

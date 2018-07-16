@@ -1,0 +1,57 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI
+{
+    public partial class Test : Form
+    {
+        public WebAPIHelper Service { get; set; }
+        public Test()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper("http://localhost:61732/", "api/CinemaStatistics");
+
+        }
+
+        private void Test_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            
+
+            StatisticsParameters statisticsParameters = new StatisticsParameters
+            {
+                CinemaID = 2,
+                MovieID = 0,
+                TechTypeID = 0,
+                DateTimeFrom = DateTime.Now.AddMonths(-1).AddDays(-13),
+                DateTimeTo = DateTime.Now.AddDays(-13)
+
+            };
+
+            Service.Route += "/TotalProfit";
+            HttpResponseMessage Response = Service.PostResponse(statisticsParameters);
+
+            //string profit = Response.Content.ReadAsStringAsync().Result;
+
+
+        }
+    }
+
+    public class StatisticsParameters
+    {
+        public int CinemaID { get; set; }
+        public int? MovieID { get; set; }
+        public int? TechTypeID { get; set; }
+        public DateTime DateTimeFrom { get; set; }
+        public DateTime DateTimeTo { get; set; }
+
+    }
+}

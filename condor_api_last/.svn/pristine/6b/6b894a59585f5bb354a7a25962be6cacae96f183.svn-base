@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.KasaRacuni
+{
+    public partial class Parent : Form
+    {
+        public Parent()
+        {
+            InitializeComponent();
+        }
+
+        private void cashRegisterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+
+                Kasa kasaForm = new Kasa();
+                kasaForm.MdiParent = this;
+                kasaForm.Show();
+            }
+            catch (Exception ex)
+            {
+                var temp = 34;
+                MessageBox.Show(ex.Message);
+            }
+
+           
+        }
+
+        private void dailyReportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+            Reports.DailyReportForm reportForm = new Reports.DailyReportForm();
+            reportForm.MdiParent = this;
+            reportForm.Show();
+        }
+    }
+}

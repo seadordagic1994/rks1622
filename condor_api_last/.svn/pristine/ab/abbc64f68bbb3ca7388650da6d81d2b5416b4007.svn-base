@@ -1,0 +1,102 @@
+﻿/*
+/* Created by Filipe Pina
+ * Specific styles of signin, register, component
+ */
+/*
+ * General styles
+ */
+
+body, html{
+ 	background-repeat: no-repeat;
+
+    background: #485563; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #485563 , #29323c); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #485563 , #29323c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+ 	font-family: 'Oxygen', sans-serif;
+}
+
+h1.title { 
+	font-size: 50px;
+	font-family: 'Passion One', cursive; 
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.form-group{
+	margin-bottom: 15px;
+}
+
+
+label{
+	margin-bottom: 15px;
+}
+
+input,
+input::-webkit-input-placeholder {
+    font-size: 11px;
+    padding-top: 3px;
+}
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.main-center{
+ 	margin-top: 10px;
+ 	margin: 0 auto;
+ 	max-width: 320px;
+    padding: 10px 40px;
+
+}
+
+.subtitle{
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align:center;
+    margin-bottom:10px;
+    padding-top:5px;
+    background-color: red;
+    margin: -10px -40px 15px -40px;
+    height:34px;
+    background-color: #CB5C5C;
+    color:#faf0f0;
+    font-weight:900;
+}
+
+.login-button{
+	margin-top: 5px;
+}
+
+.login-register{
+	font-size: 11px;
+	text-align: center;
+}
+
+input.input-validation-error,
+textarea.input-validation-error,
+select.input-validation-error
+{
+    background: #FEF1EC;
+    border: 1px solid #CD0A0A;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    width: 190px;
+}
+.field-validation-error
+{
+    color: red;
+    float:right;
+    padding-top:7px;
+    font-family: Calibri;
+    font-size:14px;
+}

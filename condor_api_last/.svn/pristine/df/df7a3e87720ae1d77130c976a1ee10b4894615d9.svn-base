@@ -1,0 +1,94 @@
+﻿namespace CondorExtreme3_UI.RootUsers
+{
+    partial class RootShowVPacks
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.grdVirtualPointsPackets = new System.Windows.Forms.DataGridView();
+            this.btnAddVP = new System.Windows.Forms.Button();
+            this.btnRemoveVP = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.grdVirtualPointsPackets)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // grdVirtualPointsPackets
+            // 
+            this.grdVirtualPointsPackets.AllowUserToAddRows = false;
+            this.grdVirtualPointsPackets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdVirtualPointsPackets.Location = new System.Drawing.Point(12, 24);
+            this.grdVirtualPointsPackets.MultiSelect = false;
+            this.grdVirtualPointsPackets.Name = "grdVirtualPointsPackets";
+            this.grdVirtualPointsPackets.ReadOnly = true;
+            this.grdVirtualPointsPackets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdVirtualPointsPackets.Size = new System.Drawing.Size(236, 256);
+            this.grdVirtualPointsPackets.TabIndex = 0;
+            // 
+            // btnAddVP
+            // 
+            this.btnAddVP.Location = new System.Drawing.Point(12, 286);
+            this.btnAddVP.Name = "btnAddVP";
+            this.btnAddVP.Size = new System.Drawing.Size(115, 49);
+            this.btnAddVP.TabIndex = 1;
+            this.btnAddVP.Text = "Add New";
+            this.btnAddVP.UseVisualStyleBackColor = true;
+            this.btnAddVP.Click += new System.EventHandler(this.btnAddVP_Click);
+            // 
+            // btnRemoveVP
+            // 
+            this.btnRemoveVP.Location = new System.Drawing.Point(133, 286);
+            this.btnRemoveVP.Name = "btnRemoveVP";
+            this.btnRemoveVP.Size = new System.Drawing.Size(115, 49);
+            this.btnRemoveVP.TabIndex = 2;
+            this.btnRemoveVP.Text = "Remove";
+            this.btnRemoveVP.UseVisualStyleBackColor = true;
+            this.btnRemoveVP.Click += new System.EventHandler(this.btnRemoveVP_Click);
+            // 
+            // RootShowVPacks
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(261, 351);
+            this.Controls.Add(this.btnRemoveVP);
+            this.Controls.Add(this.btnAddVP);
+            this.Controls.Add(this.grdVirtualPointsPackets);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "RootShowVPacks";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Virtual Points Packs";
+            ((System.ComponentModel.ISupportInitialize)(this.grdVirtualPointsPackets)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.DataGridView grdVirtualPointsPackets;
+        private System.Windows.Forms.Button btnAddVP;
+        private System.Windows.Forms.Button btnRemoveVP;
+    }
+}

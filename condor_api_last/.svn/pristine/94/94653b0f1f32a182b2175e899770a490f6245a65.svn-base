@@ -1,0 +1,80 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Plugin.Geolocator;
+
+namespace CondorExtreme3_Xamarin
+{
+    public static class Authentication
+    {
+        private static WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/Users");
+
+        private static User _CurrentUser { get; set; } = null;
+        public static User CurrentUser { get => _CurrentUser; private set { } }
+        public static bool IsAuthenticated { get => (CurrentUser != null); private set { } }
+        public static void TerminateSession() { _CurrentUser = null; }
+        public static dynamic GeoLocator = null;
+        public static dynamic GeoPosition = null;
+
+        public static async Task SyncGeoLocation()
+        {
+            while (true)
+            {
+                try
+                {
+                    GeoLocator = CrossGeolocator.Current;
+                    GeoPosition = await GeoLocator.GetPositionAsync(TimeSpan.FromSeconds(2));
+                }
+                catch (Exception ex)
+                {
+                    GeoLocator = null;
+                    GeoPosition = null;
+                }
+                System.Threading.Thread.Sleep(5000);
+            }
+        }
+
+        public static async Task RefreshUserInfo()
+        {
+            if (IsAuthenticated)
+            {
+                string jsonUser = await service.GetResponse("GetUsers", CurrentUser.UserID).Content.ReadAsStringAsync();
+                JObject jsonUserObj = JObject.Parse(jsonUser);
+
+                _CurrentUser.FirstName = jsonUserObj["FirstName"].ToString();
+                _CurrentUser.LastName = jsonUserObj["LastName"].ToString();
+                _CurrentUser.Email = jsonUserObj["Email"].ToString();
+                _CurrentUser.PhoneNumber = jsonUserObj["PhoneNumber"].ToString();
+                _CurrentUser.VirtualPoints = int.Parse(jsonUserObj["VirtualPointsTotal"].ToString());
+            }
+        }
+
+        public static async Task Authenticate(string username, string password)
+        {
+            JObject RVisitor = new JObject()
+            {
+                { "Username", username },
+                { "PasswordHash", password }
+            };
+
+            var response = service.PostResponse(RVisitor.ToString(), "PostUsersLogin");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var jObjectUser = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+                _CurrentUser = new User()
+                {
+                    UserID = int.Parse(jObjectUser["UserID"].ToString()),
+                    FirstName = jObjectUser["FirstName"].ToString(),
+                    LastName = jObjectUser["LastName"].ToString(),
+                    Email = jObjectUser["Email"].ToString(),
+                    VirtualPoints = int.Parse(jObjectUser["VirtualPoints"].ToString()),
+                    PhoneNumber = jObjectUser["PhoneNumber"].ToString()
+                };
+            }
+        }
+    }
+}

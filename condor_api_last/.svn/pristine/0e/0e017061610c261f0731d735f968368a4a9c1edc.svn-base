@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TestXDataset" targetNamespace="http://tempuri.org/TestXDataset.xsd" xmlns:mstns="http://tempuri.org/TestXDataset.xsd" xmlns="http://tempuri.org/TestXDataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TestXDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TestXDataset" msprop:Generator_UserDSName="TestXDataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="EmployeeSalary" msprop:Generator_TableClassName="EmployeeSalaryDataTable" msprop:Generator_TableVarName="tableEmployeeSalary" msprop:Generator_TablePropName="EmployeeSalary" msprop:Generator_RowDeletingName="EmployeeSalaryRowDeleting" msprop:Generator_RowChangingName="EmployeeSalaryRowChanging" msprop:Generator_RowEvHandlerName="EmployeeSalaryRowChangeEventHandler" msprop:Generator_RowDeletedName="EmployeeSalaryRowDeleted" msprop:Generator_UserTableName="EmployeeSalary" msprop:Generator_RowChangedName="EmployeeSalaryRowChanged" msprop:Generator_RowEvArgName="EmployeeSalaryRowChangeEvent" msprop:Generator_RowClassName="EmployeeSalaryRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmployeeID" msprop:Generator_ColumnVarNameInTable="columnEmployeeID" msprop:Generator_ColumnPropNameInRow="EmployeeID" msprop:Generator_ColumnPropNameInTable="EmployeeIDColumn" msprop:Generator_UserColumnName="EmployeeID" type="xs:string" minOccurs="0" />
+              <xs:element name="FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" type="xs:string" minOccurs="0" />
+              <xs:element name="Gender" msprop:Generator_ColumnVarNameInTable="columnGender" msprop:Generator_ColumnPropNameInRow="Gender" msprop:Generator_ColumnPropNameInTable="GenderColumn" msprop:Generator_UserColumnName="Gender" type="xs:string" minOccurs="0" />
+              <xs:element name="EmploymentType" msprop:Generator_ColumnVarNameInTable="columnEmploymentType" msprop:Generator_ColumnPropNameInRow="EmploymentType" msprop:Generator_ColumnPropNameInTable="EmploymentTypeColumn" msprop:Generator_UserColumnName="EmploymentType" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrentSalary" msprop:Generator_ColumnVarNameInTable="columnCurrentSalary" msprop:Generator_ColumnPropNameInRow="CurrentSalary" msprop:Generator_ColumnPropNameInTable="CurrentSalaryColumn" msprop:Generator_UserColumnName="CurrentSalary" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProfitByMovies" msprop:Generator_TableClassName="ProfitByMoviesDataTable" msprop:Generator_TableVarName="tableProfitByMovies" msprop:Generator_RowChangedName="ProfitByMoviesRowChanged" msprop:Generator_TablePropName="ProfitByMovies" msprop:Generator_RowDeletingName="ProfitByMoviesRowDeleting" msprop:Generator_RowChangingName="ProfitByMoviesRowChanging" msprop:Generator_RowEvHandlerName="ProfitByMoviesRowChangeEventHandler" msprop:Generator_RowDeletedName="ProfitByMoviesRowDeleted" msprop:Generator_RowClassName="ProfitByMoviesRow" msprop:Generator_UserTableName="ProfitByMovies" msprop:Generator_RowEvArgName="ProfitByMoviesRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MovieID" msprop:Generator_ColumnVarNameInTable="columnMovieID" msprop:Generator_ColumnPropNameInRow="MovieID" msprop:Generator_ColumnPropNameInTable="MovieIDColumn" msprop:Generator_UserColumnName="MovieID" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Genre" msprop:Generator_ColumnVarNameInTable="columnGenre" msprop:Generator_ColumnPropNameInRow="Genre" msprop:Generator_ColumnPropNameInTable="GenreColumn" msprop:Generator_UserColumnName="Genre" type="xs:string" minOccurs="0" />
+              <xs:element name="Director" msprop:Generator_ColumnVarNameInTable="columnDirector" msprop:Generator_ColumnPropNameInRow="Director" msprop:Generator_ColumnPropNameInTable="DirectorColumn" msprop:Generator_UserColumnName="Director" type="xs:string" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProfitByPaymentMethods" msprop:Generator_TableClassName="ProfitByPaymentMethodsDataTable" msprop:Generator_TableVarName="tableProfitByPaymentMethods" msprop:Generator_TablePropName="ProfitByPaymentMethods" msprop:Generator_RowDeletingName="ProfitByPaymentMethodsRowDeleting" msprop:Generator_RowChangingName="ProfitByPaymentMethodsRowChanging" msprop:Generator_RowEvHandlerName="ProfitByPaymentMethodsRowChangeEventHandler" msprop:Generator_RowDeletedName="ProfitByPaymentMethodsRowDeleted" msprop:Generator_UserTableName="ProfitByPaymentMethods" msprop:Generator_RowChangedName="ProfitByPaymentMethodsRowChanged" msprop:Generator_RowEvArgName="ProfitByPaymentMethodsRowChangeEvent" msprop:Generator_RowClassName="ProfitByPaymentMethodsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:string" minOccurs="0" />
+              <xs:element name="DateDayMonth" msprop:Generator_ColumnVarNameInTable="columnDateDayMonth" msprop:Generator_ColumnPropNameInRow="DateDayMonth" msprop:Generator_ColumnPropNameInTable="DateDayMonthColumn" msprop:Generator_UserColumnName="DateDayMonth" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SeatReservationFrequency" msprop:Generator_TableClassName="SeatReservationFrequencyDataTable" msprop:Generator_TableVarName="tableSeatReservationFrequency" msprop:Generator_RowChangedName="SeatReservationFrequencyRowChanged" msprop:Generator_TablePropName="SeatReservationFrequency" msprop:Generator_RowDeletingName="SeatReservationFrequencyRowDeleting" msprop:Generator_RowChangingName="SeatReservationFrequencyRowChanging" msprop:Generator_RowEvHandlerName="SeatReservationFrequencyRowChangeEventHandler" msprop:Generator_RowDeletedName="SeatReservationFrequencyRowDeleted" msprop:Generator_RowClassName="SeatReservationFrequencyRow" msprop:Generator_UserTableName="SeatReservationFrequency" msprop:Generator_RowEvArgName="SeatReservationFrequencyRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SeatLabel" msprop:Generator_ColumnVarNameInTable="columnSeatLabel" msprop:Generator_ColumnPropNameInRow="SeatLabel" msprop:Generator_ColumnPropNameInTable="SeatLabelColumn" msprop:Generator_UserColumnName="SeatLabel" type="xs:string" minOccurs="0" />
+              <xs:element name="CinemaHall" msprop:Generator_ColumnVarNameInTable="columnCinemaHall" msprop:Generator_ColumnPropNameInRow="CinemaHall" msprop:Generator_ColumnPropNameInTable="CinemaHallColumn" msprop:Generator_UserColumnName="CinemaHall" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalFrequency" msprop:Generator_ColumnVarNameInTable="columnTotalFrequency" msprop:Generator_ColumnPropNameInRow="TotalFrequency" msprop:Generator_ColumnPropNameInTable="TotalFrequencyColumn" msprop:Generator_UserColumnName="TotalFrequency" type="xs:string" minOccurs="0" />
+              <xs:element name="SeatID" msprop:Generator_ColumnVarNameInTable="columnSeatID" msprop:Generator_ColumnPropNameInRow="SeatID" msprop:Generator_ColumnPropNameInTable="SeatIDColumn" msprop:Generator_UserColumnName="SeatID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="E:\condor_api_last\CondorExtreme3_API\obj\Debug\Package\PackageTmp" />
+  <setAcl path="E:\condor_api_last\CondorExtreme3_API\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="E:\condor_api_last\CondorExtreme3_API\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

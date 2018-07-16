@@ -1,0 +1,55 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class AddEmployeePaymentForm : Form
+    {
+        public WebAPIHelper Service{ get; set; }
+
+        public Employments employment { get; set; }
+
+        public AddEmployeePaymentForm(Employments employment)
+        {
+            InitializeComponent();
+            this.employment = employment;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+
+            lblEmployeeName.Text = $"{employment.FirstName} {employment.LastName}";
+            lblEmploymentType.Text = employment.EmploymentTypeName;
+            lblBankAccountNumber.Text = employment.BankAccountNumber;
+            lblBank.Text = employment.BankName;
+            numAmount.Value = employment.CurrentSalary;
+        }
+
+        private void btnCommitTransaction_Click(object sender, EventArgs e)
+        {
+            var Payment = new Payments();
+            Payment.EmploymentID = employment.EmploymentID;
+            Payment.TransactionDate = dtTransactionDate.Value;
+            Payment.Amount = numAmount.Value;
+
+            HttpResponseMessage Response = Service.PostResponse(Payment, "PostEmployeePayments");
+
+            if (Response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(Messages.EmployeePaymentAddSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(Messages.EmployeePaymentAddFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+    }
+}

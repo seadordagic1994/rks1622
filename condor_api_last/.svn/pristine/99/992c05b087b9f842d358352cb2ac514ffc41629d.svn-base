@@ -1,0 +1,163 @@
+﻿namespace CondorExtreme3_UI.KasaRacuni
+{
+    partial class Reklamacija
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.TodayLbl = new System.Windows.Forms.Label();
+            this.GotovinaLbl = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.FNumberTxt = new System.Windows.Forms.TextBox();
+            this.ReklamirajBtn = new System.Windows.Forms.Button();
+            this.StatusLbl = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.errors = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // TodayLbl
+            // 
+            this.TodayLbl.AutoSize = true;
+            this.TodayLbl.Location = new System.Drawing.Point(12, 13);
+            this.TodayLbl.Name = "TodayLbl";
+            this.TodayLbl.Size = new System.Drawing.Size(42, 15);
+            this.TodayLbl.TabIndex = 0;
+            this.TodayLbl.Text = "label1";
+            // 
+            // GotovinaLbl
+            // 
+            this.GotovinaLbl.AutoSize = true;
+            this.GotovinaLbl.Location = new System.Drawing.Point(12, 40);
+            this.GotovinaLbl.Name = "GotovinaLbl";
+            this.GotovinaLbl.Size = new System.Drawing.Size(113, 15);
+            this.GotovinaLbl.TabIndex = 1;
+            this.GotovinaLbl.Text = "Payment type: Cash";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(92, 15);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Fiscal bill date:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(232, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 15);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Fiscal bill number:";
+            // 
+            // FNumberTxt
+            // 
+            this.FNumberTxt.Location = new System.Drawing.Point(235, 37);
+            this.FNumberTxt.Name = "FNumberTxt";
+            this.FNumberTxt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.FNumberTxt.Size = new System.Drawing.Size(153, 23);
+            this.FNumberTxt.TabIndex = 4;
+            this.FNumberTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FNumberTxt_KeyPress);
+            this.FNumberTxt.Validating += new System.ComponentModel.CancelEventHandler(this.FNumberTxt_Validating);
+            // 
+            // ReklamirajBtn
+            // 
+            this.ReklamirajBtn.Location = new System.Drawing.Point(304, 64);
+            this.ReklamirajBtn.Name = "ReklamirajBtn";
+            this.ReklamirajBtn.Size = new System.Drawing.Size(84, 23);
+            this.ReklamirajBtn.TabIndex = 5;
+            this.ReklamirajBtn.Text = "Reclamation";
+            this.ReklamirajBtn.UseVisualStyleBackColor = true;
+            this.ReklamirajBtn.Click += new System.EventHandler(this.ReklamirajBtn_Click);
+            // 
+            // StatusLbl
+            // 
+            this.StatusLbl.AutoSize = true;
+            this.StatusLbl.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.StatusLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.StatusLbl.Location = new System.Drawing.Point(99, 70);
+            this.StatusLbl.Name = "StatusLbl";
+            this.StatusLbl.Size = new System.Drawing.Size(51, 13);
+            this.StatusLbl.TabIndex = 6;
+            this.StatusLbl.Text = "Pendding";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pictureBox1.Location = new System.Drawing.Point(189, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1, 71);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // errors
+            // 
+            this.errors.ContainerControl = this;
+            // 
+            // Reklamacija
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(400, 98);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.StatusLbl);
+            this.Controls.Add(this.ReklamirajBtn);
+            this.Controls.Add(this.FNumberTxt);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.GotovinaLbl);
+            this.Controls.Add(this.TodayLbl);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "Reklamacija";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Bill reclamation";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label TodayLbl;
+        private System.Windows.Forms.Label GotovinaLbl;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox FNumberTxt;
+        private System.Windows.Forms.Button ReklamirajBtn;
+        private System.Windows.Forms.Label StatusLbl;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ErrorProvider errors;
+    }
+}

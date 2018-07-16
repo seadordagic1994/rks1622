@@ -1,0 +1,18 @@
+﻿namespace CondorExtreme3_UI.ReportModels
+{
+}
+
+namespace CondorExtreme3_UI.ReportModels
+{
+
+
+    public partial class TestXDataset
+    {
+    }
+}
+namespace CondorExtreme3_UI.ReportModels {
+    
+    
+    public partial class TestXDataset {
+    }
+}

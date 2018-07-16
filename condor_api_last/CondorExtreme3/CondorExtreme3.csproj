@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{35002DED-939E-417B-BFF1-C2EB7E9F4350}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CondorExtreme3</RootNamespace>
+    <AssemblyName>CondorExtreme3</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6-ext.6.0.3.1\lib\net45\EntityFramework.BulkInsert.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.1.0.9, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.1.0.9\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.2.0\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.7.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.7.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.5.2.1\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.2.1\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.2.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.2.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.2.1\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Twilio, Version=5.9.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.9.8\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\AdminLTEHybrid.css" />
+    <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\blue%402x.png" />
+    <Content Include="Content\blue.png" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-timepicker.css" />
+    <Content Include="Content\bootstrap-timepicker.min.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapHybrid.css" />
+    <Content Include="Content\bootstrapHybrid.min.css" />
+    <Content Include="Content\custombox.css" />
+    <Content Include="Content\datepicker3.css" />
+    <Content Include="Content\daterangepicker.css" />
+    <Content Include="Content\flipclock.css" />
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\loader.gif" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Registration.css" />
+    <Content Include="Content\AdminLTE.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\jquery-jvectormap-1.2.2.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\cubeLoader.css" />
+    <Content Include="Content\SiteHybrid.css" />
+    <Content Include="Content\skin-black-light.css" />
+    <Content Include="Content\skin-black-light.min.css" />
+    <Content Include="Content\skin-black.css" />
+    <Content Include="Content\skin-black.min.css" />
+    <Content Include="Content\skin-blueHybrid.css" />
+    <Content Include="Content\skin-blue-light.css" />
+    <Content Include="Content\skin-blue-light.min.css" />
+    <Content Include="Content\skin-blue.css" />
+    <Content Include="Content\skin-blue.min.css" />
+    <Content Include="Content\skin-green-light.css" />
+    <Content Include="Content\skin-green-light.min.css" />
+    <Content Include="Content\skin-green.css" />
+    <Content Include="Content\skin-green.min.css" />
+    <Content Include="Content\skin-purple-light.css" />
+    <Content Include="Content\skin-purple-light.min.css" />
+    <Content Include="Content\skin-purple.css" />
+    <Content Include="Content\skin-purple.min.css" />
+    <Content Include="Content\skin-red-light.css" />
+    <Content Include="Content\skin-red-light.min.css" />
+    <Content Include="Content\skin-red.css" />
+    <Content Include="Content\skin-red.min.css" />
+    <Content Include="Content\skin-yellow-light.css" />
+    <Content Include="Content\skin-yellow-light.min.css" />
+    <Content Include="Content\skin-yellow.css" />
+    <Content Include="Content\skin-yellow.min.css" />
+    <Content Include="Content\VStyle.css" />
+    <Content Include="Content\_all-skins.css" />
+    <Content Include="Content\_all-skins.min.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Pictures\1.jpg" />
+    <Content Include="Pictures\10.jpg" />
+    <Content Include="Pictures\11.jpg" />
+    <Content Include="Pictures\12.jpg" />
+    <Content Include="Pictures\13.jpg" />
+    <Content Include="Pictures\14.jpg" />
+    <Content Include="Pictures\15.jpg" />
+    <Content Include="Pictures\16.jpg" />
+    <Content Include="Pictures\17.jpg" />
+    <Content Include="Pictures\18.jpg" />
+    <Content Include="Pictures\19.jpg" />
+    <Content Include="Pictures\2.jpg" />
+    <Content Include="Pictures\20.jpg" />
+    <Content Include="Pictures\4.jpg" />
+    <Content Include="Pictures\5.jpg" />
+    <Content Include="Pictures\6.jpg" />
+    <Content Include="Pictures\7.jpg" />
+    <Content Include="Pictures\8.jpg" />
+    <Content Include="Pictures\9.jpg" />
+    <Content Include="Pictures\background1.jpg" />
+    <Content Include="Pictures\backgroundVideo.mp4" />
+    <Content Include="Pictures\coming-soon.png" />
+    <Content Include="Pictures\empl.jpg" />
+    <Content Include="Pictures\ilhan.jpg" />
+    <Content Include="Pictures\kemal.jpg" />
+    <Content Include="Pictures\loader.svg" />
+    <Content Include="Pictures\logo1.png" />
+    <Content Include="Pictures\movie-reels.jpeg" />
+    <Content Include="Pictures\pattern.png" />
+    <Content Include="Pictures\sead.jpg" />
+    <Content Include="Pictures\seatF.png" />
+    <Content Include="Pictures\seatM.png" />
+    <Content Include="Pictures\seatT.png" />
+    <Content Include="Pictures\wallActual.jpg" />
+    <Content Include="Pictures\wallFrom.jpg" />
+    <Content Include="scripts\ai.0.15.0-build58334.js" />
+    <Content Include="scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="scripts\cookie.js" />
+    <Content Include="scripts\bootstrap-datepicker.js" />
+    <Content Include="scripts\bootstrap-datetimepicker.js" />
+    <Content Include="scripts\daterangepicker.js" />
+    <Content Include="scripts\Heartbeat.js" />
+    <Content Include="scripts\flipclock.min.js" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="scripts\moment.min.js" />
+    <Content Include="scripts\wizard.js" />
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\app.min.js" />
+    <Content Include="scripts\bootstrap-slider.js" />
+    <Content Include="scripts\bootstrap-timepicker.css" />
+    <Content Include="scripts\bootstrap-timepicker.js" />
+    <Content Include="scripts\bootstrap-timepicker.min.css" />
+    <Content Include="scripts\bootstrap-timepicker.min.js" />
+    <Content Include="Areas\Administrators\Views\web.config" />
+    <Content Include="Content\jquery-1.10.2.min.map" />
+    <Content Include="Areas\Local\Views\web.config" />
+    <Content Include="Areas\Local\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Local\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Local\Views\Cinema\Index.cshtml" />
+    <Content Include="Areas\Local\Views\Shared\_LayoutProjectionManager.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\AddCinemaHall.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetCinemaHall.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetCinemas.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\Index.cshtml" />
+    <Content Include="Areas\Local\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Local\Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\AddTechType.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetSeats.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetSeatsDictionary.cshtml" />
+    <Content Include="Areas\Local\Views\RegisteredVisitor\Index.cshtml" />
+    <Content Include="Areas\Local\Views\RegisteredVisitor\Registration.cshtml" />
+    <Content Include="Areas\Local\Views\Visitor\Registration.cshtml" />
+    <Content Include="Areas\Local\Views\Visitor\RegistrationActivation.cshtml" />
+    <Content Include="Areas\Local\Views\Shared\_LayoutUsers.cshtml" />
+    <Content Include="Areas\Local\Views\RegisteredVisitor\Login.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetProjections.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\AddProjection.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\ShowTrailler.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\SetProjection.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\ShowMovie.cshtml" />
+    <Content Include="Areas\Local\Views\VirtualPoints\SetVirtualPointPacks.cshtml" />
+    <Content Include="Areas\Local\Views\VirtualPoints\GetVirtualPointPacks.cshtml" />
+    <Content Include="Areas\Local\Views\ProjectionManager\GetCinemaHallsForProjection.cshtml" />
+    <Content Include="Areas\Local\Views\Cinema\GetProjections.cshtml" />
+    <Content Include="Areas\Local\Views\Cinema\GetProjection.cshtml" />
+    <Content Include="Areas\Local\Views\Cinema\GetSeats.cshtml" />
+    <Content Include="Areas\Local\Views\Shared\_LayoutDirector.cshtml" />
+    <Content Include="Areas\Local\Views\Director\Index.cshtml" />
+    <Content Include="Areas\Local\Views\Director\AreaChartPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\LineChartPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\DonutChartPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\BarChartPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\BarChartFlotPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\DonutChartFlotPView.cshtml" />
+    <Content Include="Areas\Local\Views\Director\BarChartMorrisPView.cshtml" />
+    <Content Include="Content\flipclock.scss" />
+    <Content Include="Areas\Local\Views\Cinema\MakeReservation.cshtml" />
+    <Content Include="Areas\Local\Views\Director\EmployeeManagement.cshtml" />
+    <Content Include="Areas\Local\Views\Director\DetailsEmployee.cshtml" />
+    <Content Include="Areas\Local\Views\Director\EditEmployee.cshtml" />
+    <Content Include="Areas\Local\Views\Director\EditEmployeeTEMP.cshtml" />
+    <Content Include="Areas\Local\Views\Director\DeleteEmployee.cshtml" />
+    <Content Include="Areas\Local\Views\Director\CreateEmployee.cshtml" />
+    <Content Include="Areas\Local\Views\Director\CinemaHallManagement.cshtml" />
+    <Content Include="Areas\Local\Views\Director\EditCinemaHall.cshtml" />
+    <Content Include="Areas\Local\Views\Director\DeleteCinemaHall.cshtml" />
+    <Content Include="Areas\Local\Views\Director\CreateCinemaHall.cshtml" />
+    <Content Include="Areas\Local\Views\Reservation\GetReservations.cshtml" />
+    <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\bootstrap3-wysihtml5.all.js" />
+    <Content Include="scripts\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="scripts\bootstrap3-wysihtml5.css" />
+    <Content Include="scripts\bootstrap3-wysihtml5.min.css" />
+    <Content Include="scripts\Chart.js" />
+    <Content Include="scripts\Chart.min.js" />
+    <Content Include="scripts\custombox.js" />
+    <Content Include="scripts\dashboard.js" />
+    <Content Include="scripts\dashboard2.js" />
+    <Content Include="scripts\dataTables.bootstrap.js" />
+    <Content Include="scripts\dataTables.bootstrap.min.js" />
+    <Content Include="scripts\demo.js" />
+    <Content Include="scripts\excanvas.js" />
+    <Content Include="scripts\excanvas.min.js" />
+    <Content Include="scripts\fastclick.js" />
+    <Content Include="scripts\fastclick.min.js" />
+    <Content Include="scripts\fullcalendar.css" />
+    <Content Include="scripts\fullcalendar.js" />
+    <Content Include="scripts\fullcalendar.min.css" />
+    <Content Include="scripts\fullcalendar.min.js" />
+    <Content Include="scripts\fullcalendar.print.css" />
+    <Content Include="scripts\icheck.js" />
+    <Content Include="scripts\icheck.min.js" />
+    <Content Include="scripts\ion.rangeSlider.css" />
+    <Content Include="scripts\ion.rangeSlider.min.js" />
+    <Content Include="scripts\ion.rangeSlider.skinFlat.css" />
+    <Content Include="scripts\ion.rangeSlider.skinNice.css" />
+    <Content Include="scripts\jquery-1.10.2.js" />
+    <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\jquery-2.2.3.min.js" />
+    <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="scripts\jquery-jvectormap-1.2.2.css" />
+    <Content Include="scripts\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="scripts\jquery-jvectormap-usa-en.js" />
+    <Content Include="scripts\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="scripts\jquery-ui.js" />
+    <Content Include="scripts\jquery-ui.min.js" />
+    <Content Include="scripts\jquery.colorhelpers.js" />
+    <Content Include="scripts\jquery.colorhelpers.min.js" />
+    <Content Include="scripts\jquery.dataTables.js" />
+    <Content Include="scripts\jquery.dataTables.min.js" />
+    <Content Include="scripts\jquery.flot.canvas.js" />
+    <Content Include="scripts\jquery.flot.canvas.min.js" />
+    <Content Include="scripts\jquery.flot.categories.js" />
+    <Content Include="scripts\jquery.flot.categories.min.js" />
+    <Content Include="scripts\jquery.flot.crosshair.js" />
+    <Content Include="scripts\jquery.flot.crosshair.min.js" />
+    <Content Include="scripts\jquery.flot.errorbars.js" />
+    <Content Include="scripts\jquery.flot.errorbars.min.js" />
+    <Content Include="scripts\jquery.flot.fillbetween.js" />
+    <Content Include="scripts\jquery.flot.fillbetween.min.js" />
+    <Content Include="scripts\jquery.flot.image.js" />
+    <Content Include="scripts\jquery.flot.image.min.js" />
+    <Content Include="scripts\jquery.flot.js" />
+    <Content Include="scripts\jquery.flot.min.js" />
+    <Content Include="scripts\jquery.flot.navigate.js" />
+    <Content Include="scripts\jquery.flot.navigate.min.js" />
+    <Content Include="scripts\jquery.flot.pie.js" />
+    <Content Include="scripts\jquery.flot.pie.min.js" />
+    <Content Include="scripts\jquery.flot.resize.js" />
+    <Content Include="scripts\jquery.flot.resize.min.js" />
+    <Content Include="scripts\jquery.flot.selection.js" />
+    <Content Include="scripts\jquery.flot.selection.min.js" />
+    <Content Include="scripts\jquery.flot.stack.js" />
+    <Content Include="scripts\jquery.flot.stack.min.js" />
+    <Content Include="scripts\jquery.flot.symbol.js" />
+    <Content Include="scripts\jquery.flot.symbol.min.js" />
+    <Content Include="scripts\jquery.flot.threshold.js" />
+    <Content Include="scripts\jquery.flot.threshold.min.js" />
+    <Content Include="scripts\jquery.flot.time.js" />
+    <Content Include="scripts\jquery.flot.time.min.js" />
+    <Content Include="scripts\jquery.inputmask.date.extensions.js" />
+    <Content Include="scripts\jquery.inputmask.extensions.js" />
+    <Content Include="scripts\jquery.inputmask.js" />
+    <Content Include="scripts\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="scripts\jquery.inputmask.phone.extensions.js" />
+    <Content Include="scripts\jquery.inputmask.regex.extensions.js" />
+    <Content Include="scripts\jquery.knob.js" />
+    <Content Include="scripts\jquery.session.js" />
+    <Content Include="scripts\jquery.slimscroll.js" />
+    <Content Include="scripts\jquery.slimscroll.min.js" />
+    <Content Include="scripts\jquery.sparkline.js" />
+    <Content Include="scripts\jquery.sparkline.min.js" />
+    <Content Include="scripts\modernizr-2.6.2.js" />
+    <Content Include="scripts\modernizr-2.8.3.js" />
+    <Content Include="scripts\morris.css" />
+    <Content Include="scripts\morris.js" />
+    <Content Include="scripts\morris.min.js" />
+    <Content Include="scripts\pace.css" />
+    <Content Include="scripts\pace.js" />
+    <Content Include="scripts\pace.min.css" />
+    <Content Include="scripts\pace.min.js" />
+    <Content Include="scripts\Registration.js" />
+    <Content Include="scripts\select2.css" />
+    <Content Include="scripts\select2.full.js" />
+    <Content Include="scripts\select2.full.min.js" />
+    <Content Include="scripts\select2.js" />
+    <Content Include="scripts\select2.min.css" />
+    <Content Include="scripts\select2.min.js" />
+    <Content Include="scripts\slider.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Login\EmployeeLoginView.cshtml" />
+    <Content Include="Views\Login\Success.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\GetCityOverCountry.cshtml" />
+    <Content Include="Views\Home\GetCinemaOverCity.cshtml" />
+    <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Administrators\AdministratorsAreaRegistration.cs" />
+    <Compile Include="Areas\Local\Controllers\CinemaController.cs" />
+    <Compile Include="Areas\Local\Controllers\DirectorController.cs" />
+    <Compile Include="Areas\Local\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Local\Controllers\ProjectionManagerController.cs" />
+    <Compile Include="Areas\Local\Controllers\RegisteredVisitorController.cs" />
+    <Compile Include="Areas\Local\Controllers\ReservationController.cs" />
+    <Compile Include="Areas\Local\Controllers\VirtualPointsController.cs" />
+    <Compile Include="Areas\Local\Controllers\VisitorController.cs" />
+    <Compile Include="Areas\Local\LocalAreaRegistration.cs" />
+    <Compile Include="Areas\Local\Models\AddCinemaHallVM.cs" />
+    <Compile Include="Areas\Local\Models\AddCinemaVM.cs" />
+    <Compile Include="Areas\Local\Models\AddProjectionVM.cs" />
+    <Compile Include="Areas\Local\Models\AreaLineBarGraphData.cs" />
+    <Compile Include="Areas\Local\Models\CinemaHallShowVM.cs" />
+    <Compile Include="Areas\Local\Models\CinemaVM.cs" />
+    <Compile Include="Areas\Local\Models\EditCinemaHallVM.cs" />
+    <Compile Include="Areas\Local\Models\EditEmployeeVM.cs" />
+    <Compile Include="Areas\Local\Models\EmployeeShowVM.cs" />
+    <Compile Include="Areas\Local\Models\GraphDataVM.cs" />
+    <Compile Include="Areas\Local\Models\LoginVM.cs" />
+    <Compile Include="Areas\Local\Models\MapAnalysisToFilter.cs" />
+    <Compile Include="Areas\Local\Models\ModelIndexDirectorVM.cs" />
+    <Compile Include="Areas\Local\Models\PieGraphData.cs" />
+    <Compile Include="Areas\Local\Models\PMSeatsVM.cs" />
+    <Compile Include="Areas\Local\Models\QueryResult.cs" />
+    <Compile Include="Areas\Local\Models\RegisteredVisitorVM.cs" />
+    <Compile Include="Areas\Local\Models\ReservationVM.cs" />
+    <Compile Include="Areas\Local\Models\StatIndexPageVM.cs" />
+    <Compile Include="Areas\Local\Models\VisitorVM.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="DAL\CondorDBContextChild.cs" />
+    <Compile Include="DAL\CondorDBContext.cs" />
+    <Compile Include="DAL\CondorDBUsers.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Authentication.cs" />
+    <Compile Include="Helper\Autorization.cs" />
+    <Compile Include="Helper\MultipleButtonAttribute.cs" />
+    <Compile Include="Helper\RedirectToCinema.cs" />
+    <Compile Include="Migrations\CondorDBContextChild\201712301729174_Initial.cs" />
+    <Compile Include="Migrations\CondorDBContextChild\201712301729174_Initial.Designer.cs">
+      <DependentUpon>201712301729174_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CondorDBContextChild\201801081541398_UpdateReservationsModelsLocalDb.cs" />
+    <Compile Include="Migrations\CondorDBContextChild\201801081541398_UpdateReservationsModelsLocalDb.Designer.cs">
+      <DependentUpon>201801081541398_UpdateReservationsModelsLocalDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CondorDBContextChild\Configuration.cs" />
+    <Compile Include="Migrations\CondorDBContext\Configuration.cs" />
+    <Compile Include="Migrations\CondorDBUsers\201712301713565_Initial.cs" />
+    <Compile Include="Migrations\CondorDBUsers\201712301713565_Initial.Designer.cs">
+      <DependentUpon>201712301713565_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CondorDBUsers\201801071521577_ReservationsAdded.cs" />
+    <Compile Include="Migrations\CondorDBUsers\201801071521577_ReservationsAdded.Designer.cs">
+      <DependentUpon>201801071521577_ReservationsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CondorDBUsers\201801081537596_UpdateReservationsCnUsers.cs" />
+    <Compile Include="Migrations\CondorDBUsers\201801081537596_UpdateReservationsCnUsers.Designer.cs">
+      <DependentUpon>201801081537596_UpdateReservationsCnUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CondorDBUsers\Configuration.cs" />
+    <Compile Include="ModelsLocalDB\Actor.cs" />
+    <Compile Include="ModelsLocalDB\Address.cs" />
+    <Compile Include="ModelsLocalDB\Cinema.cs" />
+    <Compile Include="ModelsLocalDB\CinemaHall.cs" />
+    <Compile Include="ModelsLocalDB\CinemaHallTechnologyType.cs" />
+    <Compile Include="ModelsLocalDB\City.cs" />
+    <Compile Include="ModelsLocalDB\Country.cs" />
+    <Compile Include="ModelsLocalDB\DefinedDateTime.cs" />
+    <Compile Include="ModelsLocalDB\Director.cs" />
+    <Compile Include="ModelsLocalDB\Discount.cs" />
+    <Compile Include="ModelsLocalDB\DiscountType.cs" />
+    <Compile Include="ModelsLocalDB\Employee.cs" />
+    <Compile Include="ModelsLocalDB\EmployeeRole.cs" />
+    <Compile Include="ModelsLocalDB\Genre.cs" />
+    <Compile Include="ModelsLocalDB\IndexVM.cs" />
+    <Compile Include="ModelsLocalDB\Movie.cs" />
+    <Compile Include="ModelsLocalDB\MovieDirection.cs" />
+    <Compile Include="ModelsLocalDB\MovieRole.cs" />
+    <Compile Include="ModelsLocalDB\ParentModelIndex.cs" />
+    <Compile Include="ModelsLocalDB\PaymentMethod.cs" />
+    <Compile Include="ModelsLocalDB\Projection.cs" />
+    <Compile Include="ModelsLocalDB\ProjectionSeat.cs" />
+    <Compile Include="ModelsLocalDB\ProjectionTimesVM.cs" />
+    <Compile Include="ModelsLocalDB\ProjectionVM.cs" />
+    <Compile Include="ModelsLocalDB\RegisteredVisitor.cs" />
+    <Compile Include="ModelsLocalDB\Reservation.cs" />
+    <Compile Include="ModelsLocalDB\Role.cs" />
+    <Compile Include="ModelsLocalDB\Seat.cs" />
+    <Compile Include="ModelsLocalDB\SeatColumn.cs" />
+    <Compile Include="ModelsLocalDB\SeatRow.cs" />
+    <Compile Include="ModelsLocalDB\SeatsVM.cs" />
+    <Compile Include="ModelsLocalDB\SeatType.cs" />
+    <Compile Include="ModelsLocalDB\TechnologyType.cs" />
+    <Compile Include="ModelsLocalDB\Ticket.cs" />
+    <Compile Include="ModelsLocalDB\Visitor.cs" />
+    <Compile Include="ModelsUser\City.cs" />
+    <Compile Include="ModelsUser\Country.cs" />
+    <Compile Include="ModelsUser\RegisteredVisitor.cs" />
+    <Compile Include="ModelsUser\Reservation.cs" />
+    <Compile Include="ModelsUser\SalesOrderVirtualPoints.cs" />
+    <Compile Include="ModelsUser\VirtualPointsPacks.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Cinema.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\HomeIndexVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Algorithm.cs" />
+    <Compile Include="Tools\Twilio.cs" />
+    <Compile Include="Tools\Unique.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administrators\Controllers\" />
+    <Folder Include="Areas\Administrators\Models\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="scripts\esm\" />
+    <Folder Include="scripts\i18n\" />
+    <Folder Include="scripts\img\" />
+    <Folder Include="scripts\phone-codes\" />
+    <Folder Include="scripts\umd\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\CondorDBContextChild\201712301729174_Initial.resx">
+      <DependentUpon>201712301729174_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CondorDBContextChild\201801081541398_UpdateReservationsModelsLocalDb.resx">
+      <DependentUpon>201801081541398_UpdateReservationsModelsLocalDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CondorDBUsers\201712301713565_Initial.resx">
+      <DependentUpon>201712301713565_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CondorDBUsers\201801071521577_ReservationsAdded.resx">
+      <DependentUpon>201801071521577_ReservationsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CondorDBUsers\201801081537596_UpdateReservationsCnUsers.resx">
+      <DependentUpon>201801081537596_UpdateReservationsCnUsers.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>65513</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:65513/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.7.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,33 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+
+@using (Ajax.BeginForm("ShowMovie", "ProjectionManager", null, new AjaxOptions
+{
+    HttpMethod = "post",
+    UpdateTargetId = "ShowMovie",
+    LoadingElementId = "loading2"
+}, new { id = "AddNewProjection" }))
+{
+    <div class="form-group col-md-12" style="padding-left:0px; padding-right:0px;">
+        @Html.Label("Select movie to make projection for:", new { @class = "fontSize" })
+        @Html.DropDownListFor(x => x.MovieID, Model.Movies, new { @onchange = "$(this.form).submit()", @class = "form-control select2 select2-hidden-accessible inputTransp fontSize", @data_placeholder = "", Style = "width: 100%; background-color: rgba(255,255,255,0); font-size:12px;", tabindex = "-1", @aria_hidden = "true" })
+    </div>  
+}
+<div id="ShowMovie" style="color: #161616;">
+    @{ if (Model.Projection.Movie.MovieID != 0) { Html.RenderPartial("ShowMovie", Model); } }
+    <img id="loading2" style="z-index:1234; display:none; width:30px; text-align:center; margin-top:30px;" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader" />
+</div>
+<script>
+    $(".select2").select2();
+    $("#SetProjection input").prop("disabled", true).css("color", "lightgrey");
+    $("#SetProjection textarea").prop("disabled", true).css("color", "lightgrey");
+    $("#SetProjection select").prop("disabled", true).css("color", "lightgrey");
+    $("#SetProjection button").prop("disabled", true).css("color", "lightgrey");
+    $("#SetProjection").css("color", "lightgrey")
+    $(".fileUpload span").css("color", "lightgrey")
+    
+</script>

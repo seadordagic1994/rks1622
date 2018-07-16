@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public class EmployeeRoles
+    {
+        public int EmployeeID { get; set; }
+        public int RoleID { get; set; }
+        public string RoleName { get; set; }
+        public string Priority { get; set; }   
+    }
+
+}

@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_Xamarin
+{
+    public class RatingControl : Grid
+    {
+        private List<Star> _Stars = new List<Star>();
+        private bool _IsReadOnly;
+        private int _MovieID;
+
+        public int Rating {
+            get { return _Stars.Where(x => x.StarType == Star.StarTypes.Full).Count(); } set { }
+        }
+
+        public RatingControl(int movieID, int movieRating, bool isReadOnly = false)
+        {
+            this._IsReadOnly = isReadOnly;
+            this._MovieID = movieID;
+            this.HorizontalOptions = LayoutOptions.Center;
+
+            this.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+            this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+            this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+            this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+            this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+            this.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+
+            for (int i = 0; i < 5; i++)
+            {
+                _Stars.Add(new Star(i, movieID, ref this._Stars, isReadOnly));
+                this.Children.Add(_Stars[i], i, 0);
+            }
+
+            for (int i = 0; i < movieRating; i++)
+                _Stars[i].StarType = Star.StarTypes.Full;
+        }
+    }
+}

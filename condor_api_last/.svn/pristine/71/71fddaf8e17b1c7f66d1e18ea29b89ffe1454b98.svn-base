@@ -1,0 +1,156 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class EmployeeAccountChangeInfoForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+        public EmployeeAccountChangeInfoForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+            
+            txtUsername.Text = AuthenticationUI.LoggedEmployee.Username;
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSaveAccountInfo_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren())
+            {
+                if (txtPassword.Text != txtRetypePassword.Text)
+                {
+                    MessageBox.Show(Messages.PasswordRetypedIncorrectly, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                string PasswordHash=String.Empty, PasswordSalt= String.Empty;
+                bool changePassword = false;
+
+
+                if (txtPassword.Text != String.Empty)
+                {
+                    string Salt = UIHelper.GenerateSalt();
+                    PasswordHash = UIHelper.GenerateHash(txtPassword.Text, Salt);
+                    PasswordSalt = Salt;
+                    changePassword = true;
+                }
+                                            
+                var employeeAccountUserInfo = new
+                {
+                    EmployeeID=AuthenticationUI.LoggedEmployee.EmployeeID,
+                    Username = txtUsername.Text,
+                    PasswordHash = PasswordHash,
+                    PasswordSalt = PasswordSalt,
+                    changePassword=changePassword
+                };
+
+                HttpResponseMessage httpResponseMessage = Service.PutResponse(employeeAccountUserInfo, "ChangeAccountInfo");
+
+                if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.EmployeeAccountUpdateSuccess, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
+                }
+                else if(httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = httpResponseMessage.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show(Messages.EmployeeAccountUpdateFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                  
+                }
+
+
+            }
+
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+            txtUsername_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtUsername_Validating(object sender, CancelEventArgs e)
+        {
+            string pattern = @"^[a-zA-Z0-9]*$";
+            Regex regex = new Regex(pattern);
+
+            if (String.IsNullOrWhiteSpace(txtUsername.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, Messages.UsernameRequired);
+            }
+            else if (!regex.IsMatch(txtUsername.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, Messages.UsernameInvalidFormat);
+            }
+            else
+                errorProvider.SetError(txtUsername, null);
+
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            txtPassword_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtPassword_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                if(txtPassword.Text.Length<6 || txtPassword.Text.Length > 15)
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(txtPassword, Messages.PasswordLengthViolation);
+                }
+                else
+                    errorProvider.SetError(txtPassword, null);
+
+            }
+            else
+                errorProvider.SetError(txtPassword, null);
+
+        }
+
+        private void txtRetypePassword_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(txtRetypePassword.Text))
+            {
+                if (txtRetypePassword.Text.Length < 6 || txtRetypePassword.Text.Length > 15)
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(txtRetypePassword, Messages.PasswordLengthViolation);
+                }
+                else
+                    errorProvider.SetError(txtRetypePassword, null);
+            }
+            else
+                errorProvider.SetError(txtRetypePassword, null);
+        }
+
+        private void txtRetypePassword_TextChanged(object sender, EventArgs e)
+        {
+            txtRetypePassword_Validating(sender, new CancelEventArgs { });
+
+        }
+    }
+}

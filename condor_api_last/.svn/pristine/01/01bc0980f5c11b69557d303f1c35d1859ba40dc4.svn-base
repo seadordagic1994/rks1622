@@ -1,0 +1,256 @@
+﻿namespace CondorExtreme3_UI.Cinemas
+{
+    partial class CinemaManagementForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.groupBoxCinemaInfo = new System.Windows.Forms.GroupBox();
+            this.lblDirectorName = new System.Windows.Forms.Label();
+            this.lblLocation = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblCinema = new System.Windows.Forms.Label();
+            this.grdCinemaHalls = new System.Windows.Forms.DataGridView();
+            this.txtCinemaHallName = new System.Windows.Forms.TextBox();
+            this.btnAddCinemaHall = new System.Windows.Forms.Button();
+            this.btnSearchByName = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnEditCinemaHall = new System.Windows.Forms.Button();
+            this.btnRemoveCinemaHall = new System.Windows.Forms.Button();
+            this.groupBoxCinemaInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdCinemaHalls)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // groupBoxCinemaInfo
+            // 
+            this.groupBoxCinemaInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBoxCinemaInfo.Controls.Add(this.lblDirectorName);
+            this.groupBoxCinemaInfo.Controls.Add(this.lblLocation);
+            this.groupBoxCinemaInfo.Controls.Add(this.label2);
+            this.groupBoxCinemaInfo.Controls.Add(this.label1);
+            this.groupBoxCinemaInfo.Controls.Add(this.lblAddress);
+            this.groupBoxCinemaInfo.Controls.Add(this.label4);
+            this.groupBoxCinemaInfo.Location = new System.Drawing.Point(13, 75);
+            this.groupBoxCinemaInfo.Name = "groupBoxCinemaInfo";
+            this.groupBoxCinemaInfo.Size = new System.Drawing.Size(601, 108);
+            this.groupBoxCinemaInfo.TabIndex = 5;
+            this.groupBoxCinemaInfo.TabStop = false;
+            this.groupBoxCinemaInfo.Text = "Cinema Info";
+            // 
+            // lblDirectorName
+            // 
+            this.lblDirectorName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblDirectorName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirectorName.Location = new System.Drawing.Point(281, 76);
+            this.lblDirectorName.Name = "lblDirectorName";
+            this.lblDirectorName.Size = new System.Drawing.Size(314, 25);
+            this.lblDirectorName.TabIndex = 10;
+            this.lblDirectorName.Text = "DirectorXY";
+            this.lblDirectorName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblLocation
+            // 
+            this.lblLocation.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocation.Location = new System.Drawing.Point(281, 45);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(314, 25);
+            this.lblLocation.TabIndex = 5;
+            this.lblLocation.Text = "Country";
+            this.lblLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(159, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 25);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Country:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(159, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 25);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Address:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(281, 16);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(314, 25);
+            this.lblAddress.TabIndex = 4;
+            this.lblAddress.Text = "Address";
+            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(159, 76);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(142, 25);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Director:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblCinema
+            // 
+            this.lblCinema.Font = new System.Drawing.Font("Arial Narrow", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCinema.Location = new System.Drawing.Point(80, 5);
+            this.lblCinema.Name = "lblCinema";
+            this.lblCinema.Size = new System.Drawing.Size(489, 51);
+            this.lblCinema.TabIndex = 6;
+            this.lblCinema.Text = "Cinema Name";
+            // 
+            // grdCinemaHalls
+            // 
+            this.grdCinemaHalls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdCinemaHalls.Location = new System.Drawing.Point(12, 240);
+            this.grdCinemaHalls.MultiSelect = false;
+            this.grdCinemaHalls.Name = "grdCinemaHalls";
+            this.grdCinemaHalls.ReadOnly = true;
+            this.grdCinemaHalls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdCinemaHalls.Size = new System.Drawing.Size(602, 164);
+            this.grdCinemaHalls.TabIndex = 12;
+            // 
+            // txtCinemaHallName
+            // 
+            this.txtCinemaHallName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCinemaHallName.Location = new System.Drawing.Point(66, 207);
+            this.txtCinemaHallName.Name = "txtCinemaHallName";
+            this.txtCinemaHallName.Size = new System.Drawing.Size(218, 26);
+            this.txtCinemaHallName.TabIndex = 13;
+            // 
+            // btnAddCinemaHall
+            // 
+            this.btnAddCinemaHall.Location = new System.Drawing.Point(12, 418);
+            this.btnAddCinemaHall.Name = "btnAddCinemaHall";
+            this.btnAddCinemaHall.Size = new System.Drawing.Size(195, 40);
+            this.btnAddCinemaHall.TabIndex = 14;
+            this.btnAddCinemaHall.Text = "Add Cinema Hall";
+            this.btnAddCinemaHall.UseVisualStyleBackColor = true;
+            this.btnAddCinemaHall.Click += new System.EventHandler(this.btnAddCinemaHall_Click);
+            // 
+            // btnSearchByName
+            // 
+            this.btnSearchByName.Location = new System.Drawing.Point(290, 203);
+            this.btnSearchByName.Name = "btnSearchByName";
+            this.btnSearchByName.Size = new System.Drawing.Size(133, 31);
+            this.btnSearchByName.TabIndex = 18;
+            this.btnSearchByName.Text = "Search";
+            this.btnSearchByName.UseVisualStyleBackColor = true;
+            this.btnSearchByName.Click += new System.EventHandler(this.btnSearchByName_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(8, 210);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 20);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Name";
+            // 
+            // btnEditCinemaHall
+            // 
+            this.btnEditCinemaHall.Location = new System.Drawing.Point(213, 418);
+            this.btnEditCinemaHall.Name = "btnEditCinemaHall";
+            this.btnEditCinemaHall.Size = new System.Drawing.Size(195, 40);
+            this.btnEditCinemaHall.TabIndex = 23;
+            this.btnEditCinemaHall.Text = "Edit Cinema Hall";
+            this.btnEditCinemaHall.UseVisualStyleBackColor = true;
+            this.btnEditCinemaHall.Click += new System.EventHandler(this.btnEditCinemaHall_Click);
+            // 
+            // btnRemoveCinemaHall
+            // 
+            this.btnRemoveCinemaHall.Location = new System.Drawing.Point(414, 418);
+            this.btnRemoveCinemaHall.Name = "btnRemoveCinemaHall";
+            this.btnRemoveCinemaHall.Size = new System.Drawing.Size(200, 40);
+            this.btnRemoveCinemaHall.TabIndex = 24;
+            this.btnRemoveCinemaHall.Text = "Remove Cinema Hall";
+            this.btnRemoveCinemaHall.UseVisualStyleBackColor = true;
+            this.btnRemoveCinemaHall.Click += new System.EventHandler(this.btnRemoveCinemaHall_Click);
+            // 
+            // CinemaManagementForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(632, 474);
+            this.Controls.Add(this.btnRemoveCinemaHall);
+            this.Controls.Add(this.btnEditCinemaHall);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnSearchByName);
+            this.Controls.Add(this.btnAddCinemaHall);
+            this.Controls.Add(this.txtCinemaHallName);
+            this.Controls.Add(this.grdCinemaHalls);
+            this.Controls.Add(this.lblCinema);
+            this.Controls.Add(this.groupBoxCinemaInfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "CinemaManagementForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Cinema Management";
+            this.groupBoxCinemaInfo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdCinemaHalls)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox groupBoxCinemaInfo;
+        private System.Windows.Forms.Label lblDirectorName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblLocation;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCinema;
+        private System.Windows.Forms.DataGridView grdCinemaHalls;
+        private System.Windows.Forms.TextBox txtCinemaHallName;
+        private System.Windows.Forms.Button btnAddCinemaHall;
+        private System.Windows.Forms.Button btnSearchByName;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnEditCinemaHall;
+        private System.Windows.Forms.Button btnRemoveCinemaHall;
+    }
+}

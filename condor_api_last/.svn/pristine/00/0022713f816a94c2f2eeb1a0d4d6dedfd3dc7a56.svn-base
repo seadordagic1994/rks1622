@@ -1,0 +1,74 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Xamarin.Forms;
+
+namespace CondorExtreme3_Xamarin
+{
+	public class ReservationProjectionModalPage : ContentPage
+	{
+        public ReservationProjectionModalPage(JArray projections)
+        {
+            var mainScrollView = new ScrollView() { HorizontalOptions = LayoutOptions.FillAndExpand };
+            var mainStackLayout = new StackLayout() { Padding = 35 };
+
+            var btnBack = new Button()
+            {
+                Text = "Go Back",
+                HorizontalOptions = LayoutOptions.Start,
+                WidthRequest = 75,
+                HeightRequest = 40
+            };
+
+            btnBack.Clicked += async (sender, args) => {
+                await Navigation.PopModalAsync();
+            };
+
+
+            mainStackLayout.Children.Add(btnBack);
+            mainStackLayout.Children.Add(new BoxView()
+            {
+                HeightRequest = 1,
+                BackgroundColor = Color.FromHex("#AAA")
+            });
+
+            foreach (var projection in projections)
+            {
+                mainStackLayout.Children.Add(new Label() {
+                    FontSize = 18,
+                    Text = $"Ticket Price: { projection["TicketPrice"].ToString() }\n" +
+                           $"Projection Type: { projection["Name"].ToString() }\n" +
+                           $"Time: { projection["DateTimeStart"].ToString() }\n" +
+                           $"Cinema:  { projection["CinemaName"].ToString() }\n" +
+                           $"Hall: { projection["CinemaHallName"] }\n"
+                });
+
+                var btnBuy = new Button() {
+                    Text = "Buy Tickets",
+                    TextColor = Color.White,
+                    BackgroundColor = Color.FromHex("#CB5C5C")
+                };
+
+                btnBuy.Clicked += async (sender, args) => {
+                    await Content.Navigation.PushModalAsync(new ReservationModalPage(
+                    int.Parse(projection["ProjectionID"].ToString())), false);
+
+                };
+
+                mainStackLayout.Children.Add(btnBuy);
+                mainStackLayout.Children.Add(new BoxView() {
+                    HeightRequest = 1,
+                    BackgroundColor = Color.FromHex("#AAA")
+                });
+
+            }
+
+            mainScrollView.Content = mainStackLayout;
+
+            Content = mainScrollView;
+		}
+	}
+}

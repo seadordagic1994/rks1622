@@ -1,0 +1,78 @@
+﻿@{ Layout = null;
+    string s ="";
+    }
+
+@model CondorExtreme3.Areas.Local.Models.VisitorVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+    <!-- Website CSS style -->
+    <link rel="stylesheet" type="text/css" href="~/Content/Registration.css">
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <title>Registration</title>
+</head>
+<body>
+    <input type="hidden" id="refresh" value="no">
+    <div class="container">
+        <div class="row main">
+            <div class="panel-heading">
+                <div class="panel-title text-center">
+                    <img class="no-resize" src="https://rs1122.app.fit.ba/Pictures/logo1.png" />
+                </div>
+            </div>
+            <div class="main-login main-center">
+                <div class="subtitle">Make Reservation</div>
+                @using (@Html.BeginForm("SubmitVisitors", "Visitor", FormMethod.Post))
+                {                   
+                    @Html.HiddenFor(x => x.ProjectionId);
+                    for (int i = 0; i < Model.Seats.Count; i++)
+                    {
+                        s += Model.Seats[i] + ",";
+                    }
+                    <input type="hidden" name="Seats" value="@s" />
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="PhoneNumber" class="cols-sm-2 control-label">Phone Number</label>
+                            <span class="field-validation-error">@Model.ErrorMessage</span>
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "38762555444", @name = "PhoneNumber" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Submit</button>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+    <script src="~/scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/scripts/bootstrap.js"></script>
+    <script src="~/scripts/jquery.session.js"></script>
+</body>
+</html>
+
+<script>
+    $(document).ready(function (e) {
+       // var $input = $('#refresh');
+
+        //$input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+        var dict = $.session.get('ReservationSeats');
+
+        alert(dict["Seat2"]);
+    });
+
+
+</script>

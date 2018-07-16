@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace CondorExtreme3_UI.Helper
+{
+    public static class StatisticsHelper
+    {
+        public static List<AnalysisType> GetAnalysisTypes()
+        {
+            return new List<AnalysisType>
+            {
+                new AnalysisType{ AnalysisTypeID=1, Name="Total Profit"},
+                new AnalysisType{ AnalysisTypeID=2, Name="Total Profit By Payment Method"},   
+                new AnalysisType{ AnalysisTypeID=3, Name="Total Profit By Movie"},
+                new AnalysisType{ AnalysisTypeID=4, Name="Total Profit By Technology Type"},
+                new AnalysisType{ AnalysisTypeID=5, Name="Total Profit By Movie Genre"},
+                new AnalysisType{ AnalysisTypeID=6, Name="Top 10 Seat Reservation Frequency"},
+                new AnalysisType{ AnalysisTypeID=7, Name="Total Tickets Sold"}
+
+            };
+        }
+    }
+
+    public class AnalysisType
+    {
+        public int AnalysisTypeID { get; set; }
+
+        public string Name { get; set; }
+    }
+
+   
+
+
+}

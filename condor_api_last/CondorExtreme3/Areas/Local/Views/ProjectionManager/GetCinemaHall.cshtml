@@ -1,0 +1,71 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+@model CondorExtreme3.Areas.Local.Models.CinemaVM
+
+<div class="row" style="margin-bottom:25px;">
+    <div class="col-xs-1 col-sm-1 col-md-1"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+    <div class="col-xs-9 col-sm-10 col-md-10">Cinema halls in <b>@Model.CinemaHalls[0].Cinema.Name</b> cinema</div>
+    <div class="col-xs-1 col-sm-1 col-md-1"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+</div>
+
+<div class="row">
+    @for(int i = 0; i < Model.CinemaHalls.Count; i++)
+            {
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-blue-gradient"><i class="fa fa-film" aria-hidden="true"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>@Model.CinemaHalls[i].Name</b></span>
+                    <span class="info-box-text"><small style="font-size:10px">Number of seats:</small> <b>@Model.NumberOfSeats[i].ToString()</b></span>
+                   <!-- <span class="info-box-text" style="padding-top:7px; padding-left:0;">
+                         get all tech.types for selected cinema hall  look: dictionary<int, list<string>>
+                        @for (int j = 0; j < @Model.TechTypes[Model.CinemaHalls[i].CinemaHallID].Count(); j++)
+                        {
+                            <small class="label bg-red-gradient" style="margin-left:15px 1px 0px 0px; opacity:0.7;">@Model.TechTypes[Model.CinemaHalls[i].CinemaHallID][j].ToString()</small>
+
+                        }
+                    </span>-->
+                </div>
+
+                <!-- /.info-box-content -->
+            </div>
+
+            @using (Ajax.BeginForm("GetSeats", "ProjectionManager", new { cinemaHallID = Model.CinemaHalls[i].CinemaHallID }, new AjaxOptions
+            {
+                HttpMethod = "post",
+                UpdateTargetId = "modelContent",
+                //LoadingElementId = "loadingMovies"
+            }))
+            {
+                <a class="btn btn-app pull-right" href="#" onclick="$(this).closest('form').submit()" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-bars"></i> Edi
+                </a>
+
+
+
+            }
+            <a class="btn btn-app pull-right">
+               nesto
+            </a>
+            <a class="btn btn-app pull-right" style="background-color:grey;">
+                
+            </a>
+
+            <!-- /.info-box -->
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+

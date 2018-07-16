@@ -1,0 +1,81 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MoreLinq;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_Xamarin
+{
+    public class Seat : Image
+    {
+        // Ugly hack.. for now
+        // Reason: poor design, unable to predict scenario
+        private List<Seat> selectedSeats;
+        private Func<string, string, string, Task> DisplayAlert;
+
+        public int SeatID { get; set; }
+        private SeatTypes _SeatType = SeatTypes.Available;
+        public SeatTypes SeatType { get { return _SeatType; }
+        set
+        {
+            switch (value)
+            {
+                case SeatTypes.Available:
+                    Source = "greenSeat.png";
+                    _SeatType = SeatTypes.Available;
+                break;
+
+                case SeatTypes.Reserved:
+                    Source = "redSeat.png";
+                    _SeatType = SeatTypes.Reserved;
+                break;
+
+                case SeatTypes.Selected:
+                    Source = "graySeat.png";
+                    _SeatType = SeatTypes.Selected;
+                break;
+            }
+        }}
+
+        public enum SeatTypes { Available, Reserved, Selected };
+        private TapGestureRecognizer tapRecognizer = new TapGestureRecognizer();
+
+        public Seat(ref List<Seat> selectedSeats, Func<string, string, string, Task> DisplayAlert)
+        {
+            this.selectedSeats = selectedSeats;
+            this.DisplayAlert = DisplayAlert;
+
+            tapRecognizer.Tapped += TapRecognizer_Tapped;
+            GestureRecognizers.Add(tapRecognizer);
+        }
+
+        private void TapRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is Seat)
+            {
+                var senderSeat = sender as Seat;
+
+                if (senderSeat.SeatType == SeatTypes.Available)
+                {
+                    if (selectedSeats.Count < 4)
+                    {
+                        selectedSeats.Add(senderSeat);
+                        SeatType = SeatTypes.Selected;
+                    }
+                    else DisplayAlert("Error", "You are allowed to pick a maximum of 4 seats!", "Ok");
+                }
+                else
+                if (senderSeat.SeatType == SeatTypes.Selected)
+                {
+                    SeatType = SeatTypes.Available;
+                    selectedSeats.Remove(selectedSeats
+                        .Where(x => x.SeatID == senderSeat.SeatID)
+                        .FirstOrDefault());
+                }
+            }
+        }
+    }
+}

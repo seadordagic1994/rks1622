@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class ProjectionsParent : Form
+    {
+        private int childFormNumber = 0;
+        public Projections.addMovie addMovieForm;
+        public Projections.addProjection addProjectionForm;
+        public Projections.searchMovie searchMovie;
+        public projectionPanel moviesForm;
+        public Seats seatsForm;
+        public bool IsOpen { get; private set; }
+
+        public ProjectionsParent()
+        {
+            InitializeComponent();
+            moviesForm = new projectionPanel();
+            moviesForm.MdiParent = this;
+            moviesForm.StartPosition = FormStartPosition.CenterScreen;
+            moviesForm.Show();
+
+        }
+
+
+        private void addSeatsInCinemaHallsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(Seats))
+                {
+                    form.Activate();
+                    form.Focus();
+                    return;
+                }
+            }
+
+            seatsForm = new Projections.Seats();
+            seatsForm.MdiParent = this;
+            seatsForm.StartPosition = FormStartPosition.CenterScreen;
+            seatsForm.Show();
+        }
+
+        private void MDIParent1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addMovieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(addMovie))
+                {
+                    form.Activate();
+                    form.Focus();
+                    return;
+                }
+            }
+
+                addMovieForm = new Projections.addMovie();
+                addMovieForm.MdiParent = this;
+                addMovieForm.StartPosition = FormStartPosition.CenterScreen;
+                addMovieForm.Show();
+
+        }
+
+        private void addProjectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(addProjection))
+                {
+                    form.Activate();
+                    form.Focus();
+                    return;
+                }
+            }
+
+            addProjectionForm = new Projections.addProjection();        
+            addProjectionForm.MdiParent = this;
+            addProjectionForm.FormClosing += new FormClosingEventHandler(this.searchMovie_closing);
+            addProjectionForm.StartPosition = FormStartPosition.CenterScreen;
+            addProjectionForm.Show();
+        }
+
+        private void editMovieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form.GetType() == typeof(searchMovie))
+                {
+                    form.Activate();
+                    form.Focus();
+                    return;
+                }
+            }
+
+            searchMovie = new Projections.searchMovie();     
+            searchMovie.FormClosing += new FormClosingEventHandler(this.searchMovie_closing);
+            searchMovie.StartPosition = FormStartPosition.CenterScreen;
+            searchMovie.ShowDialog();
+        }
+
+        private void searchMovie_closing(object sender, FormClosingEventArgs e)
+        {
+            moviesForm.Close();
+            projectionPanel moviesForm1 = new projectionPanel();
+            moviesForm1.MdiParent = this;
+            moviesForm1.StartPosition = FormStartPosition.CenterScreen;
+            moviesForm1.Show();
+        }
+    }
+}

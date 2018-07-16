@@ -1,0 +1,48 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@using CondorExtreme3.Helper;
+@{
+    
+
+}
+@model CondorExtreme3.ModelsLocalDB.Employee
+
+<input type="hidden" id="refresh" value="no">
+
+
+<div class="centerSite">
+    <div class="col-md-5 col-sm-5 col-xs-12">
+        <img src="~/Pictures/logo1.png" />
+
+    </div>
+    <div class="col-md-7 col-sm-7 col-xs-12" style="margin-top:20px;">
+        <form action="/Login/VerifyRequest" method="post">
+
+            <h5 class="SelectH5">Username: &nbsp;
+            @Html.ValidationMessageFor(model => model.Username, null, new { @class = "field-validation-error", @style = "color:red" })
+            </h5>            
+                <div class="custom-search-input">
+                    <div class="input-group col-md-12">
+                        @Html.TextBoxFor(model=>model.Username,new {@class= "modifyInput", @placeholder= "Username", @value=Model.Username})                   
+                    </div>
+                </div>
+
+            <h5 class="SelectH5">Password: &nbsp;
+            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "field-validation-error", @style = "color:red" })
+            </h5>
+                <div class="custom-search-input">
+                    <div class="input-group col-md-12">
+                        @Html.PasswordFor(model => model.Password, new { @class = "modifyInput", @name = "Password", @placeholder = "Password" })
+                        
+                    </div>
+                </div>
+
+
+
+                <div class="input-group col-md-12" style="margin-top:10px; padding-right:0px;">
+                    <button type="submit" class="btn btn-danger pull-right">Login</button>
+                </div>
+
+            </form>
+                <img id="loading" style="z-index:1234; display:none; width:40px;" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader pull-right" />
+</div>
+</div>

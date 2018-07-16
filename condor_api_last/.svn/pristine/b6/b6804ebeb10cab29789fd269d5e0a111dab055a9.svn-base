@@ -1,0 +1,155 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    //Singleton degisn pattern
+    public partial class RootCinemaForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        private static RootCinemaForm Instance;
+        public static RootCinemaForm GetForm
+        {            
+            get
+            {
+                if (Instance == null || Instance.IsDisposed)
+                    Instance = new RootCinemaForm();
+                return Instance;
+            }
+        }
+
+        private RootCinemaForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/RootAdministration");
+            LoadCities();
+
+        }
+
+        void LoadCities()
+        {
+            HttpResponseMessage httpResponseMessage = Service.GetResponse("GetCitiesWithCountryNames", null);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                cmbCities.DataSource = httpResponseMessage.Content.ReadAsAsync<List<object>>().Result;
+                cmbCities.ValueMember = "CityID";
+                cmbCities.DisplayMember = "CityNameAndCountry";               
+            }
+        }
+
+        void LoadCinemas()
+        {
+            string CinemaName = (!String.IsNullOrWhiteSpace(txtCinemaName.Text)) ? txtCinemaName.Text : "";
+            int CityID = Int32.Parse(cmbCities.SelectedValue.ToString());
+
+            dynamic queryObject = new
+            {
+                CinemaName = CinemaName,
+                CityID = CityID
+            };
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(queryObject, "SearchCinemas");
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                grdCinemas.DataSource = httpResponseMessage.Content.ReadAsAsync<List<CinemaInfo>>().Result;
+                grdCinemas.Columns["CinemaID"].Visible = false;
+                grdCinemas.Columns["Name"].HeaderText = "Cinema";
+                grdCinemas.Columns["Name"].Width = 180;
+                grdCinemas.Columns["Address"].Width = 180;
+
+                grdCinemas.Columns["CinemaHallTotal"].HeaderText = "Cinema Halls";
+                
+                grdCinemas.Columns["EmployeeTotal"].HeaderText = "Employees";
+                grdCinemas.Columns["CityID"].Visible = false;
+
+            }
+        }
+
+        private void btnSearchCinemas_Click(object sender, EventArgs e)
+        {      
+            LoadCinemas();           
+        }
+
+        public void ClearFilters()
+        {
+            txtCinemaName.Text = "";
+            cmbCities.SelectedItem = cmbCities.Items[0];
+        }
+
+        private void btnAddCinema_Click(object sender, EventArgs e)
+        {
+            RootAddCinemaForm rootAddCinemaForm = new RootAddCinemaForm();
+            DialogResult dialogResult= rootAddCinemaForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                ClearFilters();
+                LoadCinemas();
+            }
+        }
+
+        private void btnEditCinema_Click(object sender, EventArgs e)
+        {
+            if(grdCinemas.SelectedRows.Count==0)
+            {
+                MessageBox.Show(Messages.RootCinemaSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            CinemaInfo cinemaInfo = new CinemaInfo
+            {
+                CinemaID = (int)grdCinemas.SelectedRows[0].Cells["CinemaID"].Value,
+                Name = (string)grdCinemas.SelectedRows[0].Cells["Name"].Value,
+                Address = (string)grdCinemas.SelectedRows[0].Cells["Address"].Value
+            };
+            RootCinemaEditForm rootCinemaEditForm = new RootCinemaEditForm(cinemaInfo);
+
+            DialogResult dialogResult = rootCinemaEditForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                ClearFilters();
+                LoadCinemas();
+            }
+        }
+
+        private void btnDeactivateCinema_Click(object sender, EventArgs e)
+        {
+            if (grdCinemas.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(Messages.RootCinemaSelectedNull, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to deactivate this cinema?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+          
+            if (dialogResult == DialogResult.Yes)
+            {
+                CinemaInfo cinemaInfo = new CinemaInfo
+                {
+                    CinemaID = (int)grdCinemas.SelectedRows[0].Cells["CinemaID"].Value,   
+                };
+                HttpResponseMessage httpResponseMessage = Service.PutResponse(cinemaInfo, "MakeCinemasInactive");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(Messages.RootCinemaRemoveSuccess, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearFilters();
+                    LoadCinemas();
+                }
+                else
+                    MessageBox.Show(Messages.RootCinemaRemoveFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+
+        }
+    }
+}

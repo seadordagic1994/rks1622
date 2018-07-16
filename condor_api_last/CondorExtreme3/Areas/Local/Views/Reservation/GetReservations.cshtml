@@ -1,0 +1,76 @@
+﻿@using CondorExtreme3.Areas.Local.Models
+@using CondorExtreme3.Helper;
+
+@model List<ReservationVM>
+@{
+    Layout = null;
+}
+    <!DOCTYPE html>
+
+    <style>
+        .table td, th {
+            text-align: center;
+        }
+    </style>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>GetReservations</title>
+    </head>
+    <body>
+        @if (Model.Count != 0)
+        {
+            <div class="row">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th scope="col">ReservationID</th>
+                            <th scope="col">Reservation Date</th>
+                            <th scope="col">Expiry Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var reservation in Model)
+                        {
+                            string rowClass = "";
+                            if (reservation.Status == "Approved")
+                            { rowClass = "bg-success"; }
+                            else
+                            if (reservation.Status == "Canceled")
+                            { rowClass = "bg-danger"; }
+                            else { rowClass = "bg-warning"; };
+
+
+                            <tr class="@rowClass">
+                                <td>@reservation.ReservationID</td>
+                                <td>@reservation.ReservationDate.ToString()</td>
+                                <td>@reservation.ExpiryDate.ToString()</td>
+                                <td>@reservation.Status</td>
+                                <td>@reservation.Discount</td>
+                                <td>@reservation.Total</td>
+                                <td>
+                                    @using (Html.BeginForm("ConfirmReservation", "Reservation", FormMethod.Post, null))
+                                    {
+                                        @Html.Hidden("reservationID", reservation.ReservationID);
+                                        @Html.Hidden("connectionString", reservation.ConnectionString);
+                                        if (reservation.Status == "Pending")
+                                        {
+                                            <button name="action:Confirm" class="btn btn-success btn-xs" style="border:none" type="submit">Confirm</button>
+                                            <button name="action:Cancel" class="btn btn-danger btn-xs" style="border:none" type="submit">Cancel</button>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        { <h3>No reservations found!</h3> }
+    </body>
+</html>

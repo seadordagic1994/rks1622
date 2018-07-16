@@ -1,0 +1,37 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddProjectionVM
+
+@using (Ajax.BeginForm("SubmitProjection", "ProjectionManager", null, new AjaxOptions
+{
+    HttpMethod = "post",
+    UpdateTargetId = "modelContent",
+   LoadingElementId = "loader"
+}, new { id = "SubmitProjection" }))
+{
+    @Html.HiddenFor(x => x.Projection.DateTimeStart, Model.Projection.DateTimeStart);
+    @Html.HiddenFor(x => x.Projection.DateTimeEnd, Model.Projection.DateTimeEnd);
+    @Html.HiddenFor(x => x.Projection.Movie.MovieID, Model.Projection.Movie.MovieID);
+<div class="col-md-6" style="padding-left:0px; padding-right:0px; width:48%;">
+    @Html.Label("Select cinema hall: ", new { @class = "fontSize " })
+    @Html.DropDownListFor(x => x.CinemaHallID, Model.CinemaHalls, "", new { @class = "form-control inputTransp fontSize", Style = "" })
+</div>
+
+<div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px; width:50%;">
+    @Html.Label("Select technology type: ", new { @class = "fontSize " })
+    @Html.DropDownListFor(x => x.TechTypeID, Model.TechTypes, "", new { @class = "form-control inputTransp fontSize", Style = "" })
+</div>
+
+<div class="col-md-6" style="padding-left:0px; padding-right:0px; width:48%;">
+    @Html.Label("Ticket price:", new { @class = "fontSize", Style = "font-weight:bold; color:darkred;" })
+    @Html.TextBoxFor(x => x.Projection.TicketPrice, new { @class = "form-control inputTransp fontSize", @type = "text" })
+</div>
+
+<div class="col-md-6 pull-right" style="padding-left:0px; padding-right:0px; ">
+    <br />
+    <button name="btnType" id="addProjection" type="submit" class="btn btn-danger pull-right" style="margin-top:5px;">Add projection</button>
+</div>
+}

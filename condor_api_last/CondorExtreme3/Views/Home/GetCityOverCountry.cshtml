@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = null;
+}
+@model CondorExtreme3.Models.HomeIndexVM
+
+@using (Ajax.BeginForm("GetCinemaOverCity", "Home", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "ShowCinema", LoadingElementId = "loading" }))
+{
+    <h5 class="SelectH5">Choose your city: </h5>
+    <select name="city" onchange="$(this.form).submit()">
+        <option name="choose" value="0">Choose your city: </option>
+        @foreach (SelectListItem sl in Model.Cities)
+        {
+            <option value="@sl.Value">@sl.Text</option>
+        }
+    </select>
+}
+
+<script>
+    $(document).on("change", $("select[name='city']"), function () {
+        $("option[value='0'][name='choose']").remove();
+    });
+
+</script>

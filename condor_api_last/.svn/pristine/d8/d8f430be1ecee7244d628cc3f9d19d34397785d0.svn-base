@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CashRegisterDataset" targetNamespace="http://tempuri.org/CashRegisterDataset.xsd" xmlns:mstns="http://tempuri.org/CashRegisterDataset.xsd" xmlns="http://tempuri.org/CashRegisterDataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CashRegisterDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CashRegisterDataset" msprop:Generator_UserDSName="CashRegisterDataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DailyItemsSold" msprop:Generator_TableClassName="DailyItemsSoldDataTable" msprop:Generator_TableVarName="tableDailyItemsSold" msprop:Generator_RowChangedName="DailyItemsSoldRowChanged" msprop:Generator_TablePropName="DailyItemsSold" msprop:Generator_RowDeletingName="DailyItemsSoldRowDeleting" msprop:Generator_RowChangingName="DailyItemsSoldRowChanging" msprop:Generator_RowEvHandlerName="DailyItemsSoldRowChangeEventHandler" msprop:Generator_RowDeletedName="DailyItemsSoldRowDeleted" msprop:Generator_RowClassName="DailyItemsSoldRow" msprop:Generator_UserTableName="DailyItemsSold" msprop:Generator_RowEvArgName="DailyItemsSoldRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Stavka" msprop:Generator_ColumnVarNameInTable="columnStavka" msprop:Generator_ColumnPropNameInRow="Stavka" msprop:Generator_ColumnPropNameInTable="StavkaColumn" msprop:Generator_UserColumnName="Stavka" type="xs:string" minOccurs="0" />
+              <xs:element name="Kolicina" msprop:Generator_ColumnVarNameInTable="columnKolicina" msprop:Generator_ColumnPropNameInRow="Kolicina" msprop:Generator_ColumnPropNameInTable="KolicinaColumn" msprop:Generator_UserColumnName="Kolicina" type="xs:string" minOccurs="0" />
+              <xs:element name="Cijena" msprop:Generator_ColumnVarNameInTable="columnCijena" msprop:Generator_ColumnPropNameInRow="Cijena" msprop:Generator_ColumnPropNameInTable="CijenaColumn" msprop:Generator_UserColumnName="Cijena" type="xs:string" minOccurs="0" />
+              <xs:element name="Iznos" msprop:Generator_ColumnVarNameInTable="columnIznos" msprop:Generator_ColumnPropNameInRow="Iznos" msprop:Generator_ColumnPropNameInTable="IznosColumn" msprop:Generator_UserColumnName="Iznos" type="xs:string" minOccurs="0" />
+              <xs:element name="Datum" msprop:Generator_ColumnVarNameInTable="columnDatum" msprop:Generator_ColumnPropNameInRow="Datum" msprop:Generator_ColumnPropNameInTable="DatumColumn" msprop:Generator_UserColumnName="Datum" type="xs:string" minOccurs="0" />
+              <xs:element name="FisklaniRacun" msprop:Generator_ColumnVarNameInTable="columnFisklaniRacun" msprop:Generator_ColumnPropNameInRow="FisklaniRacun" msprop:Generator_ColumnPropNameInTable="FisklaniRacunColumn" msprop:Generator_UserColumnName="FisklaniRacun" type="xs:string" minOccurs="0" />
+              <xs:element name="Sum" msprop:Generator_ColumnVarNameInTable="columnSum" msprop:Generator_ColumnPropNameInRow="Sum" msprop:Generator_ColumnPropNameInTable="SumColumn" msprop:Generator_UserColumnName="Sum" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

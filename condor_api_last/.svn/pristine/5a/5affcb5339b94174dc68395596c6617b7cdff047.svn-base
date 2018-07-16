@@ -1,0 +1,213 @@
+﻿using CondorExtreme3_UI.Employees;
+using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Index
+{
+    public partial class InitialForm : Form
+    {
+        public WebAPIHelper Service{ get; set; }
+        public List<dynamic> frmControls { get; set; }
+        public List<dynamic> Employees { get; set; }
+
+        public InitialForm()
+        {     
+            InitializeComponent();
+            frmControls = new List<dynamic> { cmbCountries,cmbCities,cmbCinemas,txtUsername,txtPassword,btnSignin };
+            Employees = new List<dynamic>();
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Info");
+            HttpResponseMessage Response = Service.GetResponse("GetCountries",null);
+            if (!Response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(Messages.Country404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                cmbCountries.DataSource = Response.Content.ReadAsAsync<List<Object>>().Result;
+                cmbCountries.ValueMember = "CountryID";
+                cmbCountries.DisplayMember = "Name";
+                cmbCountries.SelectedItem = null;
+            }
+          
+        }
+
+        public enum allControls { cmbCountries, cmbCities, cmbCinemas, txtUsername, txtPassword, btnSignin }
+
+        public void ControlChangedStatus(int controlTrigger)
+        {
+            
+            for (int i = controlTrigger + 1; i < frmControls.Count; i++)
+            {
+                Type T = frmControls[i].GetType();
+                if (T.GetProperty("DataSource")!=null)
+                    frmControls[i].DataSource = null;
+                else if (T.GetProperty("Text") != null)
+                    frmControls[i].Text = null;
+ 
+              frmControls[i].Enabled = false;
+            }
+            frmControls[controlTrigger + 1].Enabled = true;
+            frmControls[frmControls.Count-1].Text = "Sign in";
+
+
+            if (controlTrigger == (int)allControls.cmbCinemas)
+            {
+                frmControls[(int)allControls.txtPassword].Enabled = true;
+                frmControls[(int)allControls.btnSignin].Enabled = true;
+
+            }
+        }
+
+
+
+
+        private void cmbCountries_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ControlChangedStatus((int)allControls.cmbCountries);
+
+            HttpResponseMessage Response= Service.GetResponse("GetCitiesByCountry",cmbCountries.SelectedValue);
+
+            if (Response.StatusCode==System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show(Messages.City404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbCities.DataSource = null;
+            }
+            else
+            {
+                cmbCities.DataSource = Response.Content.ReadAsAsync<List<Object>>().Result;
+                cmbCities.ValueMember = "CityID";
+                cmbCities.DisplayMember = "Name";
+                cmbCities.SelectedItem = null;
+            }
+         
+        }
+
+        private void cmbCities_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ControlChangedStatus((int)allControls.cmbCities);
+            HttpResponseMessage Response = Service.GetResponse("GetCinemasByCity", cmbCities.SelectedValue);
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show(Messages.Cinema404,"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbCinemas.DataSource = null;
+            }
+            else
+            {
+                cmbCinemas.DataSource = Response.Content.ReadAsAsync<List<Object>>().Result;
+                cmbCinemas.ValueMember = "CinemaID";
+                cmbCinemas.DisplayMember = "Name";
+                cmbCinemas.SelectedItem = null;
+            }
+
+
+        }
+
+        private void cmbCinemas_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ControlChangedStatus((int)allControls.cmbCinemas);
+            Service.Route = "api/Employees";
+            HttpResponseMessage Response = Service.GetResponse("GetEmployeesByCinema", cmbCinemas.SelectedValue);
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Employees = Response.Content.ReadAsAsync<List<object>>().Result;
+            }
+            else
+            {
+              MessageBox.Show(Messages.EmployeeForCinema404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            Service.Route = "api/Info";
+        }
+
+        private void btnSignin_Click(object sender, EventArgs e)
+        {
+            dynamic emp = Employees.Where(x => x.Username == txtUsername.Text).FirstOrDefault();
+
+
+            if (emp != null && emp.PasswordHash == UIHelper.GenerateHash(txtPassword.Text, emp.PasswordSalt.ToString()))
+            {
+               
+              
+                Service.Route = "api/Employees";
+                HttpResponseMessage Response = Service.GetResponse("GetEmployeeRoles", emp.EmployeeID);
+
+                if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    AuthenticationUI.LoggedEmployee = emp;
+                    AuthenticationUI.CurrentCinema = cmbCinemas.SelectedItem;
+                    AuthenticationUI.CurrentCinema.City = cmbCities.Text;
+                    AuthenticationUI.CurrentCinema.Country = cmbCountries.Text;
+                  
+                    MessageBox.Show($"Welcome {emp.FirstName} {emp.LastName}!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    AuthenticationUI.Roles = Response.Content.ReadAsAsync<List<Object>>().Result;                
+                }
+                else
+                {
+                    MessageBox.Show(Messages.AuthorizationUIFailed, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                                      
+            }
+            else
+            {
+                MessageBox.Show(Messages.LoginFailed, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void lblRootMode_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.No;
+        }
+
+        private void InitialForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+
+        }
+
+        private void tabIntialForm_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabIntialForm.SelectedIndex == 0)
+                this.tabIntialForm.Height = 296;                    
+            else
+                this.tabIntialForm.Height = 180;
+
+        }
+
+        private void btnRootSignIn_Click(object sender, EventArgs e)
+        {
+            Service.Route = "api/Info";
+            HttpResponseMessage Response = Service.GetResponse("GetRootUsers", txtRootUsername.Text);
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                dynamic RootUser = Response.Content.ReadAsAsync<Object>().Result;
+
+                if (RootUser.PasswordHash == UIHelper.GenerateHash(txtRootPassword.Text, RootUser.PasswordSalt.ToString()))
+                {
+                    MessageBox.Show($"Welcome {RootUser.Username}!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AuthenticationUI.LoggedRootUser = RootUser;
+                    DialogResult = DialogResult.Yes;
+                }
+                else
+                    MessageBox.Show(Messages.RootLoginFailure, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);               
+            }
+            else
+            {
+                MessageBox.Show(Messages.RootLoginFailure, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+    }
+}

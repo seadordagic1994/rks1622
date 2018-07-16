@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public class Employments
+    {
+        public int EmploymentID { get; set; }
+        public int EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int EmploymentTypeID { get; set; }
+        public string EmploymentTypeName{ get; set; }
+        public DateTime HireDate { get; set; }
+        public decimal CurrentSalary { get; set; }
+        public string BankAccountNumber { get; set; }
+        public int BankID { get; set; }
+        public string BankName { get; set; }
+        public bool IsDeleted { get; set; }
+
+    }
+}

@@ -1,0 +1,146 @@
+﻿namespace CondorExtreme3_UI.Employees
+{
+    partial class EmployeePaymentsShowForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.grdEmployeePayments = new System.Windows.Forms.DataGridView();
+            this.btnAddEmployeePayment = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblBankAccountNumber = new System.Windows.Forms.Label();
+            this.lblBank = new System.Windows.Forms.Label();
+            this.groupBankAccount = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployeePayments)).BeginInit();
+            this.groupBankAccount.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // grdEmployeePayments
+            // 
+            this.grdEmployeePayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdEmployeePayments.Location = new System.Drawing.Point(12, 99);
+            this.grdEmployeePayments.MultiSelect = false;
+            this.grdEmployeePayments.Name = "grdEmployeePayments";
+            this.grdEmployeePayments.ReadOnly = true;
+            this.grdEmployeePayments.Size = new System.Drawing.Size(449, 236);
+            this.grdEmployeePayments.TabIndex = 0;
+            // 
+            // btnAddEmployeePayment
+            // 
+            this.btnAddEmployeePayment.Location = new System.Drawing.Point(165, 339);
+            this.btnAddEmployeePayment.Name = "btnAddEmployeePayment";
+            this.btnAddEmployeePayment.Size = new System.Drawing.Size(170, 37);
+            this.btnAddEmployeePayment.TabIndex = 1;
+            this.btnAddEmployeePayment.Text = "Add Payment";
+            this.btnAddEmployeePayment.UseVisualStyleBackColor = true;
+            this.btnAddEmployeePayment.Click += new System.EventHandler(this.btnAddEmployeePayment_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(26, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(173, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Bank Account Number:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(26, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Bank:";
+            // 
+            // lblBankAccountNumber
+            // 
+            this.lblBankAccountNumber.AutoSize = true;
+            this.lblBankAccountNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBankAccountNumber.Location = new System.Drawing.Point(205, 26);
+            this.lblBankAccountNumber.Name = "lblBankAccountNumber";
+            this.lblBankAccountNumber.Size = new System.Drawing.Size(118, 20);
+            this.lblBankAccountNumber.TabIndex = 4;
+            this.lblBankAccountNumber.Text = "someAccount";
+            // 
+            // lblBank
+            // 
+            this.lblBank.AutoSize = true;
+            this.lblBank.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBank.Location = new System.Drawing.Point(205, 51);
+            this.lblBank.Name = "lblBank";
+            this.lblBank.Size = new System.Drawing.Size(139, 20);
+            this.lblBank.TabIndex = 5;
+            this.lblBank.Text = "someBankName";
+            // 
+            // groupBankAccount
+            // 
+            this.groupBankAccount.Controls.Add(this.label1);
+            this.groupBankAccount.Controls.Add(this.lblBank);
+            this.groupBankAccount.Controls.Add(this.label2);
+            this.groupBankAccount.Controls.Add(this.lblBankAccountNumber);
+            this.groupBankAccount.Location = new System.Drawing.Point(12, 12);
+            this.groupBankAccount.Name = "groupBankAccount";
+            this.groupBankAccount.Size = new System.Drawing.Size(449, 81);
+            this.groupBankAccount.TabIndex = 6;
+            this.groupBankAccount.TabStop = false;
+            this.groupBankAccount.Text = "Bank Account";
+            // 
+            // EmployeePaymentsShowForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(470, 388);
+            this.Controls.Add(this.groupBankAccount);
+            this.Controls.Add(this.btnAddEmployeePayment);
+            this.Controls.Add(this.grdEmployeePayments);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "EmployeePaymentsShowForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Payments";
+            ((System.ComponentModel.ISupportInitialize)(this.grdEmployeePayments)).EndInit();
+            this.groupBankAccount.ResumeLayout(false);
+            this.groupBankAccount.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.DataGridView grdEmployeePayments;
+        private System.Windows.Forms.Button btnAddEmployeePayment;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblBankAccountNumber;
+        private System.Windows.Forms.Label lblBank;
+        private System.Windows.Forms.GroupBox groupBankAccount;
+    }
+}

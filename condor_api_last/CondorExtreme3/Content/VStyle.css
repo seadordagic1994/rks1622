@@ -1,0 +1,14 @@
+﻿#wrapAnalysisTypes, #wrapDateRange, #wrapMovies, #wrapTechTypes, #wrapSubmitBtn{    
+    margin-right:20px;
+    width:230px;
+    background-color:red;
+}
+
+#AnalysisTypesID, #reservationtime, #MovieID, #TechTypeID, #SubmitID{
+    width:230px;
+}
+
+
+#wrapDateRange, #wrapSubmitBtn{
+    height:69px;
+}

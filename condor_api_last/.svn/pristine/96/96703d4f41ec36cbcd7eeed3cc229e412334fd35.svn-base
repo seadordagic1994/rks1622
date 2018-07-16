@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eCinema</title>
+    <link href="~/Content/SiteHybrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrapHybrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/flipclock.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:300|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.session.js"></script>
+    <link href="~/Content/cubeLoader.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="bgImageActual"></div>
+    <div class="navbar">
+        <div class="container">
+        </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header" style="display:inline;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/Pictures/logo1.png" width="170px" />
+
+            </div>
+            <div class="navbar-collapse collapse" aria-expanded="false">
+                <ul class="nav navbar-nav pull-right">
+                    <li>@Html.ActionLink("HOME", "Index")</li>
+                    <li>@Html.ActionLink("ABOUT", "Index")</li>
+                    <li>@Html.ActionLink("CONTACT", "Index")</li>
+                    <li>@Html.ActionLink("WATCH SOON", "Index", new object { }, new { @class = "btn btn-danger" })</li>
+                    <li> <a href="../../Login/EmployeeLogin" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+    <input type="hidden" name ="Success" value="@ViewBag.Message" />
+
+    @RenderBody()
+
+    <div id="loader" class="loader">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+
+
+    <footer class="blackBack  navbar-fixed-bottom nomargin" style="margin-top:30px;">
+        <div class="container" style="height:50px; padding-top:20px; color:white; font-family:Quicksand; font-size:11px;">
+            <span>&copy; @DateTime.Now.Year - eCinema by <b>CondorCo</b></span>
+            <span class="pull-right" style="display:inline; padding-right:20px;">
+                ® All rights reserved &nbsp;| &nbsp;Privacy |&nbsp; Follow us on: &nbsp;&nbsp;
+                <i class="fa fa-facebook-square" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="fa fa-twitter-square" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+            </span>
+
+        </div>
+    </footer>
+
+
+
+
+    <script src="~/scripts/Heartbeat.js"></script>
+    
+    <script>        
+
+
+        $("#myModal").on('hidden.bs.modal', function (e) {
+            $("#myModal iframe").attr("src", $("#myModal iframe").attr("src"));
+        });
+        $('#animated').animate({ 'opacity': 'show' }, 1500);
+
+        function getMovies(broj) {
+            $("#showProjections").fadeOut(200).html("").hide();
+            $("#loadingMovies").delay(300).fadeIn(100);
+            $.post(
+                "../Local/Cinema/GetProjections",
+                {
+                    cinema: $.session.get("cinema"),
+                    search: broj
+                },
+                function (data) {
+                    $("#showProjections").html(data);
+                    $("#loadingMovies").fadeOut(100);
+                    $("#showProjections").delay(300).fadeIn(100);
+                }
+            )
+        }
+
+        $(function () { //start
+            
+          
+
+            SetupSessionUpdater('/KeepSessionAlive');
+
+            var clock = $('.your-clock').FlipClock({
+                clockFace: 'DailyCounter',
+                autoStart: false,
+                callbacks: {
+                    stop: function () {
+                        $('.message').html('The clock has stopped!')
+                    }
+                }
+                });
+
+            clock.setTime(864000);
+            clock.setCountdown(true);
+            clock.start();
+
+            $.session.set('kljuc', 'teheran');
+            var timeout = null;
+            $("input[name='search']").keyup(function () {
+
+                var that = this;
+                if (timeout !== null) {
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(function () {
+                    getMovies($(that).val());
+                }, 750);
+            })
+
+        }); // end
+
+        
+
+        $("select[name='Cinema']").css(
+            {
+                "color": "white",
+                "border": "1px solid white",
+                "background-color": "transparent",
+                "padding": "10px 10px",
+                "border-radius": "10px",
+                "width": "100%",
+                "outline": "none",
+                "z-index": "1000"
+            })
+
+
+        
+        $("select[name='days']").css(
+            {
+                "color": "white",
+                "border": "1px solid white",
+                "background-color": "transparent",
+                "padding": "10px 10px",
+                "border-radius": "10px",
+                "width": "100%",
+                "outline": "none",
+                "z-index": "1000"
+            })
+
+        
+
+        $("select[name='city']").on('change', function () {
+            $("option[value='0'][name='choose']").remove();
+        })
+
+
+        function init() {
+            window.addEventListener('scroll', function (e) {
+                var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+                    shrinkOn = 300,
+                    header = document.querySelector("header");
+                if (distanceY > shrinkOn) {
+
+                } else {
+                    if (classie.has(header, "smaller")) {
+                        classie.remove(header, "smaller");
+                    }
+                }
+            });
+        }
+        window.onload = init();
+
+        if ($("input[name='Success']").val() != "") {
+            alert($("input[name='Success']").val());
+            $("input[name='Success']").val("");
+        }0
+
+    </script>
+
+    <script src="~/scripts/flipclock.min.js"></script>
+
+</body>
+</html>

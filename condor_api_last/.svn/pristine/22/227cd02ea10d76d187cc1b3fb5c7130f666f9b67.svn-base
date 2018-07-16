@@ -1,0 +1,72 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Cinemas
+{
+    public partial class AddCinemaHallForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+        public AddCinemaHallForm()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/CinemaManagement");
+
+        }
+
+        private void btnSaveCinemaHall_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren())
+            {
+                var NewCinemaHall = new
+                {
+                    CinemaID = AuthenticationUI.CurrentCinema.CinemaID,
+                    Name = txtCinemaHallName.Text,
+                    NumberOfSeatRows = (int)numSeatRows.Value,
+                    NumberOfSeatColumns = (int)numSeatColumns.Value
+                };
+            
+                HttpResponseMessage httpResponseMessage = Service.PostResponse(NewCinemaHall, "PostCinemaHalls");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    DialogResult = DialogResult.OK;
+                    MessageBox.Show(Messages.CinemaHallAddSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
+                }
+                else
+                    MessageBox.Show(Messages.CinemaHallAddFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void txtCinemaHallName_TextChanged(object sender, EventArgs e)
+        {
+            txtCinemaHallName_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtCinemaHallName_Validated(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void txtCinemaHallName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtCinemaHallName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtCinemaHallName, Messages.CinemaHallNameRequired);
+            }
+            else
+                errorProvider.SetError(txtCinemaHallName, null);
+
+        }
+    }
+}

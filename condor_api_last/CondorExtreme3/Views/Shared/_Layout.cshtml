@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>eCinema</title>
+    <link href="~/Content/SiteHybrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrapHybrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/cubeLoader.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans:300|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    
+    <style>
+        canvas {
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            z-index: 10000;
+            background-color:black;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="bgImage"></div>
+
+  
+
+            @RenderBody()
+
+
+    <div id="loader" class="loader">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+   
+
+    <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>       
+     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.session.js"></script>
+
+    
+    <script>
+
+
+        $('#animated').animate({ 'opacity': 'show' }, 1500);
+
+       
+       
+
+        $(function () { //start
+
+
+
+            if ($.session.get('kljuc') == 'teheran') {
+                $.session.remove('kljuc');
+                $("select[name='country'] option[value='all']").attr('selected','selected');
+            }
+            
+            var timeout = null;
+            $("input[name='search']").keyup(function () {
+
+            var that = this;
+            if (timeout !== null) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(function () {
+                getMovies($(that).val());
+            }, 750);              
+        })
+        
+    }); // end
+
+        $("select[name='city']").prop("disabled", true);
+
+        $("select[name='city']").css(
+        {
+            "color": "white",
+            "border": "1px solid red",
+            "background-color": "rgba(0,0,0,0.3)",
+            "padding": "10px 10px",
+            "border-radius": "10px",
+            "width": "100%",
+            "outline": "none",
+            "z-index": "1000"
+            })
+
+        $("select[name='Cinema']").prop("disabled", true);
+
+        $("select[name='Cinema']").css(
+            {
+                "color": "white",
+                "border": "1px solid red",
+                "background-color": "rgba(0,0,0,0.3)",
+                "padding": "10px 10px",
+                "border-radius": "10px",
+                "width": "100%",
+                "outline": "none",
+                "z-index": "1000"
+            })
+
+
+    $("select[name='days']").prop("disabled", true);
+    $("select[name='days']").css(
+        {
+            "color": "white",
+            "border": "1px solid red",
+            "background-color": "transparent",
+            "padding": "10px 10px",
+            "border-radius": "10px",
+            "width": "100%",
+            "outline": "none",
+            "z-index": "1000"
+        })
+
+    $("input[name='search']").prop("disabled", true);
+    $("#custom-search-input").addClass("custom-search-inputRed");
+
+    $("select[name='country']").on('change', function () {
+         $("option[value='0'][name='choose']").remove(); 
+        })
+  
+    function init() {
+        window.addEventListener('scroll', function (e) {
+            var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+                shrinkOn = 300,
+                header = document.querySelector("header");
+            if (distanceY > shrinkOn) {
+
+            } else {
+                if (classie.has(header, "smaller")) {
+                    classie.remove(header, "smaller");
+                }
+            }
+        });
+    }
+    window.onload = init();
+
+    </script>
+
+
+  
+</body>
+</html>

@@ -1,0 +1,179 @@
+﻿@model CondorExtreme3.Areas.Local.Models.StatIndexPageVM
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Local/Views/Shared/_LayoutDirector.cshtml";
+  
+}
+<style>
+ #wrapAnalysisTypes, #wrapDateRange, #wrapMovies, #wrapTechTypes{    
+    margin-right:40px;  
+   
+}
+
+ #wrapAnalysisTypes, #wrapDateRange, #wrapMovies, #wrapTechTypes, #wrapSubmitBtn{    
+    width:200px;
+    padding:0px;
+    
+}
+
+#wrapDateRange, #wrapSubmitBtn{
+    height:69px;
+
+}
+#allFiltersPa{
+    max-width:1200px;
+}
+form>select{
+border-radius:10px;
+}
+
+#SubmitID{
+    width:200px;
+}
+
+
+
+</style>
+
+
+<h1> @Model.CinemaName</h1>
+ <!-- Info boxes -->
+<div class="row" id="statRow">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+            <div class="info-box-content " >
+                <span class="info-box-text">Employees</span>
+                <span class="info-box-number">@Model.NumberOfEmployees</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+            <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Visitors</span>
+                <span class="info-box-number">@Model.NumberOfVisitors</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Registered Visitors</span>
+                <span class="info-box-number">@Model.NumberOfRegisteredVisitors</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Reservations</span>
+                <span class="info-box-number">@Model.NumberOfReservations</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<br />
+
+        
+@using (Ajax.BeginForm("PerformCalculations", "Director", new AjaxOptions { UpdateTargetId = "graphWrapper", InsertionMode = InsertionMode.Replace }))
+{
+    <div class="box box-primary" id="allFiltersPa" style="display:inline-block;">
+
+        <div class="box-body" id="allFiltersCh">
+                                    
+                <div id="wrapAnalysisTypes" class="col-lg-3 col-md-3 col-sm-6" >
+
+                    <h5 style="font-weight:bold;">                         
+                        Choose an analysis type:                          
+                    </h5>
+                    @Html.DropDownListFor(m => m.AnalysisTypeKey, Model.ListAnalysisType, new { @class = "form-control", @name = "AnalysisTypes", @id= "AnalysisTypesID" })
+                </div>
+
+                
+                <div id="wrapDateRange" class="col-lg-3 col-md-3 col-sm-6">
+
+                    <h5 style="font-weight:bold;">
+                        Date and time range:
+                    </h5>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="reservationtime" >
+                    </div>
+                      
+                </div>
+
+                <div id="wrapMovies" class="col-lg-3 col-md-3 col-sm-6">
+
+                    <h5 style="font-weight:bold;">
+                        Choose a movie:
+                    </h5>
+                    @Html.DropDownListFor(m => m.MovieID, Model.ListMovies, new { @class = "form-control", @name = "Movies", @id = "MovieID" })
+                </div>
+
+                <div id="wrapTechTypes" class="col-lg-3 col-md-3 col-sm-6" >
+
+                    <h5 style="font-weight:bold;">
+                        Choose a technology type:
+                    </h5>
+                    @Html.DropDownListFor(m => m.TechTypeID, Model.ListTechTypes, new { @class = "form-control", @name = "TechTypes", @id = "TechTypeID" })
+                </div>
+
+
+                <div id="wrapSubmitBtn" class="col-lg-3 col-md-3 col-sm-6">
+
+                    <h5 style="font-weight:bold;">
+                        Business statistics:
+                    </h5>
+                       
+                        <button type="submit" class="btn btn-success" id="SubmitID" style="background-color:#222d32;"> Generate chart </button>
+                </div>
+
+
+                <input type="hidden" id="date1" name="DateTimeFrom" />
+                <input type="hidden" id="date2" name="DateTimeTo" />
+
+                  
+        </div>          
+      
+    </div>
+    <div style="display:inline-block;" id="divLoader" >
+        <img id="loading" style="display:none; width:60px; height:60px; vertical-align:inherit" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader" />
+    </div>
+}
+
+
+    
+
+
+<div class="row" style="margin-left:0px;" id="graphWrapper"></div>
+
+
+

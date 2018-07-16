@@ -1,0 +1,67 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class SystemRolesAddForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public int EmployeeID { get; set; }
+        public string Username { get; set; }
+
+        public SystemRolesAddForm(int EmployeeID,string Username)
+        {
+            InitializeComponent();
+            this.EmployeeID = EmployeeID;
+            this.Username = Username;
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+            lblCurrentUsername.Text = Username;
+
+
+            HttpResponseMessage httpResponseMessage = Service.GetResponse("GetRoles");
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                cmbEmployeeRoles.DataSource = httpResponseMessage.Content.ReadAsAsync<List<object>>().Result;
+                cmbEmployeeRoles.DisplayMember = "Name";
+                cmbEmployeeRoles.ValueMember = "RoleID";
+
+            }
+        }
+
+        private void btnSaveSystemRole_Click(object sender, EventArgs e)
+        {
+            dynamic empRole = new
+            {
+                EmployeeID = this.EmployeeID,
+                RoleID = Int32.Parse(cmbEmployeeRoles.SelectedValue.ToString())
+            };
+
+            HttpResponseMessage httpResponseMessage = Service.PostResponse(empRole,"PostEmployeeRoles");
+            if (httpResponseMessage.StatusCode==System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.EmployeeRoleAddSuccess, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else if(httpResponseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show("Specified employee already has system role you selected!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show(Messages.EmployeeRoleAddFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+    }
+}

@@ -1,0 +1,219 @@
+﻿using CondorExtreme3_UI.Helper;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class addProjection : Form
+    {
+        public WebAPIHelper Service;
+
+        public dynamic SingleMovie { get; set; }
+
+        public addProjection()
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            this.AutoValidate = AutoValidate.Disable;
+
+            HttpResponseMessage movies = Service.GetResponse("GetMovies", null);
+
+            if (movies.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                selectMoviecombo.DataSource = movies.Content.ReadAsAsync<List<Object>>().Result;
+                selectMoviecombo.ValueMember = "Id";
+                selectMoviecombo.DisplayMember = "MovieName";
+                selectMoviecombo.SelectedItem = null;
+                movieDetails.Visible = false;
+                setProjectionGroup.Visible = false;
+                setProjectionGroup1.Visible = false;
+
+                HttpResponseMessage GetTechnologyTypes = Service.GetResponse("GetTechnologyTypes", null);
+                techCombo.DataSource = GetTechnologyTypes.Content.ReadAsAsync<List<Object>>().Result;
+                techCombo.ValueMember = "Id";
+                techCombo.DisplayMember = "Name";
+                techCombo.SelectedItem = null;
+
+                startTime.Format = DateTimePickerFormat.Custom;
+                startTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+
+                endTime.Format = DateTimePickerFormat.Custom;
+                endTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
+
+                endTime.Enabled = false;
+
+                addProjectionBtn.Enabled = false;
+                priceBox.Enabled = false;
+                techCombo.Enabled = false;
+                cinemaHallcombo.Enabled = false;
+            }
+            else if (movies.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                MessageBox.Show(Messages.Movies404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        private void selectMoviecombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(selectMoviecombo.SelectedValue != null)
+            { 
+                HttpResponseMessage m = Service.GetResponse("GetMovie", int.Parse(selectMoviecombo.SelectedValue.ToString()));
+
+                if (m.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    SingleMovie = m.Content.ReadAsAsync<Object>().Result as dynamic;
+
+                    if (!String.IsNullOrEmpty(SingleMovie.Image.ToString()))
+                    {
+                        byte[] image = Convert.FromBase64String(SingleMovie.Image.ToString());
+                        MemoryStream ms = new MemoryStream(image);
+                        movieImage.Image = Image.FromStream(ms);
+                    }
+
+                    movieImage.SizeMode = PictureBoxSizeMode.StretchImage;
+                    durationlbl.Text = SingleMovie.Duration;
+                    yearlbl.Text = SingleMovie.ReleaseYear;
+                    agelbl.Text = SingleMovie.Age;
+                    movieNamelbl.Text = SingleMovie.MovieName;
+                    synopsisBox.Text = SingleMovie.Synopsis;
+
+                    endTime.Value = startTime.Value.AddMinutes(int.Parse(durationlbl.Text) + 20);
+
+                    movieDetails.Visible = true;
+                    setProjectionGroup.Visible = true;
+                    setProjectionGroup1.Visible = true;
+                }
+                else if (m.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    MessageBox.Show(Messages.Movies404, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+
+        private void addProjectionBtn_Click(object sender, EventArgs e)
+        {
+            if(this.ValidateChildren())
+            Cursor.Current = Cursors.WaitCursor;
+            dynamic Projection = new
+            {
+                MovieId = int.Parse(selectMoviecombo.SelectedValue.ToString()),
+                CinemaHallId = int.Parse(cinemaHallcombo.SelectedValue.ToString()),
+                DateTimeStart = startTime.Value,
+                techTypeId = int.Parse(techCombo.SelectedValue.ToString()),
+                Price = double.Parse(priceBox.Text, CultureInfo.InvariantCulture),
+            };
+
+            HttpResponseMessage Response = Service.PostResponse(Projection, "AddProjection");
+
+            if (Response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show(Messages.ProjectionSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else if (Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                string messageError = Response.Content.ReadAsAsync<string>().Result;
+                MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("New projection could not be added!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void priceBox_Validating(object sender, CancelEventArgs e)
+        {
+            decimal result;
+            if (!decimal.TryParse(priceBox.Text, out result))
+            {
+                e.Cancel = true;
+                errors.SetError(priceBox, Messages.Digit_err);
+            }
+        }
+
+        private void priceBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+             (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void cinemaHallcombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (cinemaHallcombo.SelectedItem == null)
+            {
+                e.Cancel = true;
+                errors.SetError(cinemaHallcombo, Messages.Required);
+            }
+        }
+
+        private void techCombo_Validating(object sender, CancelEventArgs e)
+        {
+            if (techCombo.SelectedItem == null)
+            {
+                e.Cancel = true;
+                errors.SetError(techCombo, Messages.Required);
+            }
+        }
+
+        private void startTime_Leave(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            dynamic dt = new
+            {
+                start = startTime.Value,
+                end = endTime.Value,
+                cinemaId = AuthenticationUI.CurrentCinema.CinemaID,
+            };
+
+
+            HttpResponseMessage m = Service.PostResponse(dt, "GetCinemaHalls");
+            if (m.IsSuccessStatusCode)
+            {
+
+                cinemaHallcombo.DataSource = m.Content.ReadAsAsync<List<Object>>().Result;
+                cinemaHallcombo.ValueMember = "Id";
+                cinemaHallcombo.DisplayMember = "Name";
+                cinemaHallcombo.SelectedItem = null;
+            }
+            else
+            {
+                MessageBox.Show("No cinema halls available!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            endTimeLbl.ForeColor = System.Drawing.Color.Black;
+            addProjectionBtn.Enabled = true;
+            priceBox.Enabled = true;
+            techCombo.Enabled = true;
+            cinemaHallcombo.Enabled = true;
+
+        }
+
+        private void startTime_ValueChanged(object sender, EventArgs e)
+        {
+            endTime.Value = startTime.Value.AddMinutes(int.Parse(durationlbl.Text) + 20);
+        }
+    }
+}

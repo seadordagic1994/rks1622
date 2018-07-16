@@ -1,0 +1,83 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    public partial class RootCinemaEditForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public CinemaInfo cinemaInfo { get; set; }
+        public RootCinemaEditForm(CinemaInfo cinemaInfo)
+        {
+            InitializeComponent();
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/RootAdministration");
+            this.cinemaInfo = cinemaInfo;
+            txtCinemaName.Text = cinemaInfo.Name;
+            txtAddress.Text = cinemaInfo.Address;
+
+        }
+
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateChildren()) { 
+
+                cinemaInfo.Name = txtCinemaName.Text;
+                cinemaInfo.Address = txtAddress.Text;
+
+                HttpResponseMessage httpResponseMessage = Service.PutResponse(cinemaInfo, "PutCinemas");
+
+                if (httpResponseMessage.StatusCode==System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.RootCinemaEditSuccess, "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else
+                    MessageBox.Show(Messages.RootCinemaEditFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void txtCinemaName_TextChanged(object sender, EventArgs e)
+        {
+            txtCinemaName_Validating(sender, new CancelEventArgs());
+        }
+
+        private void txtAddress_TextChanged(object sender, EventArgs e)
+        {
+            txtAddress_Validating(sender, new CancelEventArgs());
+        }
+
+        private void txtCinemaName_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtCinemaName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtCinemaName, Messages.CinemaNameRequired);
+            }
+            else
+                errorProvider.SetError(txtCinemaName, null);
+        }
+
+        private void txtAddress_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtAddress.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtAddress, Messages.CinemaAddressRequired);
+            }
+            else
+                errorProvider.SetError(txtAddress, null);
+        }
+    }
+}

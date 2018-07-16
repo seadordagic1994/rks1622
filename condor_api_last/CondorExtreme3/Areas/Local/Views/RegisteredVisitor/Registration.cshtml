@@ -1,0 +1,125 @@
+﻿@{ Layout = null;}
+
+@model CondorExtreme3.Areas.Local.Models.RegisteredVisitorVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+    <!-- Website CSS style -->
+    <link rel="stylesheet" type="text/css" href="~/Content/Registration.css">
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <title>Registration</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row main">
+            <div class="panel-heading">
+                <div class="panel-title text-center">
+                    <img class="no-resize" src="/Pictures/logo1.png" />
+                </div>
+            </div>
+            <div class="main-login main-center">
+                <div class="subtitle">Registration</div>
+                <form class="form-horizontal" method="post" action="SubmitRegisteredVisitors">
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="FirstName" class="cols-sm-2 control-label">First Name</label>
+                            @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter your First Name", @name = "FirstName" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="LastName" class="cols-sm-2 control-label">Last Name</label>
+                            @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter your Last Name", @name = "LastName" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="Username" class="cols-sm-2 control-label">Username</label>
+                            @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter your Username", @name = "Username" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="Password" class="cols-sm-2 control-label">Password</label>
+                            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter your Password", @name = "Password", @type = "Password" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="PhoneNumber" class="cols-sm-2 control-label">Phone Number</label>
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "Enter your Phone Number", @name = "Phone" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="Email" class="cols-sm-2 control-label">Email</label>
+                            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter your Email", @name = "Email" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="heading">
+                            <label for="confirm" class="cols-sm-2 control-label">City</label>
+                            @Html.ValidationMessageFor(m => m.CityID, null, new { @class = "field-validation-error" })
+                        </div>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span>
+                                @Html.DropDownListFor(m => m.CityID, Model.SelectListCities, "Select City", new { @class = "form-control", @name = "City" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/scripts/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CondorExtreme3_UI.Helper;
+
+namespace CondorExtreme3_UI.Projections
+{
+    public partial class projectionPanel : Form
+    {
+        public WebAPIHelper Service;
+        public List<dynamic> Projections { get; set; }
+        public projectionPanel()
+        {
+            InitializeComponent();
+            var loggedEmp = AuthenticationUI.LoggedEmployee;
+            var currentCinema = AuthenticationUI.CurrentCinema;
+           // lblHeaderPodaci.Text = $"Cinestar Mostar, Mostar | Sead Ordagić";
+            lblHeaderPodaci.Text = $"{currentCinema.Name.ToString()} {currentCinema.City.ToString()} | {loggedEmp.FirstName.ToString()} {loggedEmp.LastName.ToString()}";
+
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Projections");
+            
+
+            //ProjectionId = x.ProjectionID,
+            //    MovieId = x.MovieID,
+            //    MovieName = x.Movies.Name,
+            //    TechnologyTypeId = x.TechnologyTypeID,
+            //    CinemaHallId = x.CinemaHallID,
+            //    CinemaHall = x.CinemaHalls.Name,
+            //    DateTimeStart = x.DateTimeStart,
+            //    MovieImage = x.Movies.ImageThumb,
+
+            addProjections();
+
+        }
+
+        public void addProjections()
+        {
+            List<Control> listControls = ParenPanel.Controls.Cast<Control>().ToList();
+
+            foreach (Control control in listControls)
+            {
+                ParenPanel.Controls.Remove(control);
+                control.Dispose();
+            }
+            HttpResponseMessage Response = Service.GetResponse("GetProjections", AuthenticationUI.CurrentCinema.CinemaID);
+
+            if (Response.IsSuccessStatusCode)
+            {
+
+                Projections = Response.Content.ReadAsAsync<List<Object>>().Result;
+
+                foreach (dynamic d in Projections)
+                {
+
+                    Panel panel = new Panel();
+                    panel.Size = new Size(405, 150);
+                    panel.BackColor = System.Drawing.ColorTranslator.FromHtml("#ecf0f1");
+
+                    PictureBox pb = new PictureBox();
+                    pb.Location = new Point(5, 5);
+                    pb.Size = new Size(150, 145);
+                    if (d.MovieImage != null)
+                    {
+                        byte[] image = Convert.FromBase64String(d.MovieImage.ToString());
+                        MemoryStream ms = new MemoryStream(image);
+                        pb.Image = Image.FromStream(ms);
+                    }
+
+                    Label MovieName = new Label();
+                    MovieName.Width = 255;
+                    MovieName.Text = "Movie name: " + d.MovieName.ToString();
+                    MovieName.Location = new Point(160, 5);
+
+                    Label CinemaHall = new Label();
+                    CinemaHall.Width = 255;
+                    CinemaHall.Text = "Cinema hall: " + d.CinemaHall.ToString();
+                    CinemaHall.Location = new Point(160, 30);
+
+
+                    Label Start = new Label();
+                    Start.Width = 255;
+                    Start.Text = "Start time: " + d.DateTimeStart.ToString("dd.MM.yyyy hh:mm");
+                    Start.Location = new Point(160, 55);
+
+                    Label techTypeName = new Label();
+                    techTypeName.Width = 255;
+                    techTypeName.Text = "Techology type: " + d.techTypeName.ToString();
+                    techTypeName.Location = new Point(160, 80);
+
+                    Button Edit = new Button();
+                    Edit.Size = new Size(25, 25);
+                    Edit.Location = new Point(375, 120);
+                    Edit.Image = Properties.Resources.edit;
+                    Edit.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+                    Edit.Click += new EventHandler((s, ev) =>
+                    {
+
+                        foreach (Form form in Application.OpenForms)
+                        {
+                            if (form.GetType() == typeof(addProjection))
+                            {
+                                form.Activate();
+                                form.Focus();
+                                return;
+                            }
+                        }
+
+                        editProjection editProjectionFrom = new Projections.editProjection(int.Parse(d.ProjectionId.ToString()));
+                        editProjectionFrom.FormClosing += new FormClosingEventHandler(this.editProjectionFrom1_closing);
+                        editProjectionFrom.StartPosition = FormStartPosition.CenterScreen;
+                        editProjectionFrom.ShowDialog();
+                    });
+
+                    panel.Controls.Add(pb);
+                    panel.Controls.Add(MovieName);
+                    panel.Controls.Add(CinemaHall);
+                    panel.Controls.Add(Start);
+                    panel.Controls.Add(techTypeName);
+                    panel.Controls.Add(Edit);
+
+                    ParenPanel.Controls.Add(panel);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No projections available!", "Warning", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+        }
+
+        private void editProjectionFrom1_closing(object sender, FormClosingEventArgs e)
+        {
+            addProjections();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {            
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void pictureBox1_MouseHover(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

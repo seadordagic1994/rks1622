@@ -1,0 +1,156 @@
+﻿namespace CondorExtreme3_UI.Projections
+{
+    partial class Seats
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.rowsFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.columnFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.SeatsGrpBox = new System.Windows.Forms.GroupBox();
+            this.MainSeatsFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.rowNumberFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cinemaHallsCombo = new System.Windows.Forms.CheckedListBox();
+            this.confirmSeatsBtn = new System.Windows.Forms.Button();
+            this.SeatsGrpBox.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // rowsFlow
+            // 
+            this.rowsFlow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.rowsFlow.Location = new System.Drawing.Point(102, 61);
+            this.rowsFlow.Name = "rowsFlow";
+            this.rowsFlow.Size = new System.Drawing.Size(25, 416);
+            this.rowsFlow.TabIndex = 0;
+            // 
+            // columnFlow
+            // 
+            this.columnFlow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.columnFlow.Location = new System.Drawing.Point(133, 26);
+            this.columnFlow.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
+            this.columnFlow.Name = "columnFlow";
+            this.columnFlow.Padding = new System.Windows.Forms.Padding(0, 7, 0, 7);
+            this.columnFlow.Size = new System.Drawing.Size(432, 25);
+            this.columnFlow.TabIndex = 1;
+            // 
+            // SeatsGrpBox
+            // 
+            this.SeatsGrpBox.Controls.Add(this.MainSeatsFlow);
+            this.SeatsGrpBox.Controls.Add(this.rowNumberFlow);
+            this.SeatsGrpBox.Controls.Add(this.columnFlow);
+            this.SeatsGrpBox.Controls.Add(this.rowsFlow);
+            this.SeatsGrpBox.ForeColor = System.Drawing.Color.Brown;
+            this.SeatsGrpBox.Location = new System.Drawing.Point(225, 12);
+            this.SeatsGrpBox.Name = "SeatsGrpBox";
+            this.SeatsGrpBox.Size = new System.Drawing.Size(579, 492);
+            this.SeatsGrpBox.TabIndex = 3;
+            this.SeatsGrpBox.TabStop = false;
+            this.SeatsGrpBox.Text = "Edit seats";
+            // 
+            // MainSeatsFlow
+            // 
+            this.MainSeatsFlow.Location = new System.Drawing.Point(129, 55);
+            this.MainSeatsFlow.Margin = new System.Windows.Forms.Padding(0);
+            this.MainSeatsFlow.Name = "MainSeatsFlow";
+            this.MainSeatsFlow.Size = new System.Drawing.Size(436, 422);
+            this.MainSeatsFlow.TabIndex = 3;
+            // 
+            // rowNumberFlow
+            // 
+            this.rowNumberFlow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.rowNumberFlow.Location = new System.Drawing.Point(12, 58);
+            this.rowNumberFlow.Margin = new System.Windows.Forms.Padding(0);
+            this.rowNumberFlow.Name = "rowNumberFlow";
+            this.rowNumberFlow.Size = new System.Drawing.Size(83, 419);
+            this.rowNumberFlow.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cinemaHallsCombo);
+            this.groupBox2.ForeColor = System.Drawing.Color.Brown;
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(207, 492);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Cinema halls";
+            // 
+            // cinemaHallsCombo
+            // 
+            this.cinemaHallsCombo.BackColor = System.Drawing.SystemColors.Control;
+            this.cinemaHallsCombo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cinemaHallsCombo.FormattingEnabled = true;
+            this.cinemaHallsCombo.Location = new System.Drawing.Point(8, 24);
+            this.cinemaHallsCombo.Name = "cinemaHallsCombo";
+            this.cinemaHallsCombo.Size = new System.Drawing.Size(190, 450);
+            this.cinemaHallsCombo.TabIndex = 0;
+            this.cinemaHallsCombo.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.cinemaHallsCombo_ItemCheck);
+            this.cinemaHallsCombo.SelectedIndexChanged += new System.EventHandler(this.cinemaHallsCombo_SelectedIndexChanged);
+            // 
+            // confirmSeatsBtn
+            // 
+            this.confirmSeatsBtn.BackColor = System.Drawing.Color.IndianRed;
+            this.confirmSeatsBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.confirmSeatsBtn.Location = new System.Drawing.Point(646, 507);
+            this.confirmSeatsBtn.Name = "confirmSeatsBtn";
+            this.confirmSeatsBtn.Size = new System.Drawing.Size(158, 30);
+            this.confirmSeatsBtn.TabIndex = 5;
+            this.confirmSeatsBtn.Text = "Confirm seat changes";
+            this.confirmSeatsBtn.UseVisualStyleBackColor = false;
+            this.confirmSeatsBtn.Click += new System.EventHandler(this.confirmSeatsBtn_Click);
+            // 
+            // Seats
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(816, 541);
+            this.Controls.Add(this.confirmSeatsBtn);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.SeatsGrpBox);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Name = "Seats";
+            this.ShowIcon = false;
+            this.Text = "Seats";
+            this.SeatsGrpBox.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel rowsFlow;
+        private System.Windows.Forms.FlowLayoutPanel columnFlow;
+        private System.Windows.Forms.GroupBox SeatsGrpBox;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckedListBox cinemaHallsCombo;
+        private System.Windows.Forms.FlowLayoutPanel rowNumberFlow;
+        private System.Windows.Forms.FlowLayoutPanel MainSeatsFlow;
+        private System.Windows.Forms.Button confirmSeatsBtn;
+    }
+}

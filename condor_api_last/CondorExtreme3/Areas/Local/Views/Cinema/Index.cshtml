@@ -1,0 +1,104 @@
+﻿@using System;
+@using CondorExtreme3.ModelsLocalDB;
+@{
+// ViewBag.Title = "Index";
+
+}
+@model CondorExtreme3.ModelsLocalDB.Cinema
+<input hidden="hidden" id="cinemaID" value="@Model.CinemaID"/>
+<div class="container-fluid">
+    <div class="container marginbot15">
+        <div class="col-lg-3 col-md-3 col-sm-6" style="color:white;">
+            <h5>Welcome to <b>@Model.Name.ToString() @Model.Address.City.Name </b></h5>
+            @using (Ajax.BeginForm("GetProjections", "Cinema",new { cinema = Model.CinemaID }, new AjaxOptions
+            {
+                HttpMethod = "post",
+                UpdateTargetId = "showProjections",
+                LoadingElementId = "loadingMovies"
+            }))
+            {
+            <button type="submit" class="btn btn-danger" style="font-size:15px;"> Get all projections </button> 
+            }
+
+        </div>
+
+        <div id="ShowCinemas" class="col-lg-3 col-md-3 col-sm-6">
+
+            <h5>
+                Sort your projections: 
+                <img id="loading" style="z-index:1234; display:none;" width="13px" src="@Url.Content("~/Pictures/loader.svg")" alt="Loading..." class="ajax-loader" />
+            </h5>
+            @using (Ajax.BeginForm("GetProjectionsSort", "Cinema", new { cinema = Model.CinemaID  }, new AjaxOptions
+            {
+                HttpMethod = "post",
+                UpdateTargetId = "showProjections",
+                LoadingElementId = "loadingMovies"
+            }))
+            { 
+            <select name="SortProjections" id="CinemaSort" onchange="$(this.form).submit()">
+                <option value="0">Not sorted:</option>
+                <option value="Name">Sort by name:</option>
+                <option value="Release">Sort by release:</option>
+                <option value="Duration">Sort by duration (low to heigh)</option>
+
+            </select>
+            }
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <h5>Choose a day: </h5>
+            <select name="days">
+                <option value="@System.DateTime.Now">@System.DateTime.Now.DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(1).Day">@System.DateTime.Now.AddDays(1).DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(2).Day">@System.DateTime.Now.AddDays(2).DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(3).Day">@System.DateTime.Now.AddDays(3).DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(4).Day">@System.DateTime.Now.AddDays(4).DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(5).Day">@System.DateTime.Now.AddDays(5).DayOfWeek.ToString()</option>
+                <option value="@System.DateTime.Now.AddDays(6).Day">@System.DateTime.Now.AddDays(6).DayOfWeek.ToString()</option>
+            </select>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <h5>Search for: </h5>
+
+            <div id="custom-search-input" class="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input lang="en" spellcheck="false" type="text" name="search" class="" placeholder="Justice league" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+       
+    </div>
+    <div id="showProjections" class="container" style="margin-bottom:60px; text-align:center;">
+        <div class="row" style="padding-top:3vh;">
+
+            <div class="col-md-12">
+                <div style="padding-top:5vh;">
+
+                    <div><h2 style="line-height:0px;"><span style="color:#ede9e9"> Jumanji: <span style="color:#c0392b; font-weight:bolder;">Welcome to the jungle</span></span></h2> <br /> <h5 style="color:#a4a2a2; line-height:0px;">(coming <b>soon</b>)</h5></div>
+                    <div  class="your-clock" style="margin:0 auto; width:50%; margin-top:8vh"></div>
+                    <img id="loadingMovies" style="z-index:1234; display:none;" width="90" src="~/Pictures/loader.svg" alt="Loading..." class="ajax-loader" />
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+               
+              
+             
+
+
+            </div>
+<script>        
+        $.session.clear();
+        $.session.set('cinema', $("#cinemaID").val());
+</script>

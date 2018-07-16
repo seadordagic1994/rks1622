@@ -1,0 +1,61 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace CondorExtreme3_Xamarin
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class RVMenuPage : ContentPage
+	{
+		public RVMenuPage()
+		{
+			InitializeComponent();
+            labelBalance.Text = $"Balance: { Authentication.CurrentUser.VirtualPoints } VP";
+            System.Threading.Tasks.Task.Run(RefreshUserInfo);
+        }
+
+        private async Task RefreshUserInfo()
+        {
+            while (true)
+            {
+                await Authentication.RefreshUserInfo();
+                labelBalance.Text = $"Balance: { Authentication.CurrentUser.VirtualPoints } VP";
+
+                System.Threading.Thread.Sleep(2000);
+            }
+        }
+
+        private void buttonBuyVP_Clicked(object sender, EventArgs e)
+        {
+            NavigationHelper.ChangePageTo<RVMenuPage, RVMenuPage_BuyVP>();
+        }
+
+        private void buttonReservations_Clicked(object sender, EventArgs e)
+        {
+            NavigationHelper.ChangePageTo<RVMenuPage, RVMenuPage_Reservations>();
+        }
+
+        private void buttonProjections_Clicked(object sender, EventArgs e)
+        {
+            NavigationHelper.ChangePageTo<RVMenuPage, RVMainPage>();
+        }
+
+        private void buttonRateMovies_Clicked(object sender, EventArgs e)
+        {
+            NavigationHelper.ChangePageTo<RVMenuPage, MovieRatingsPage>();
+        }
+
+        private void buttonSignOut_Clicked(object sender, EventArgs e)
+        {
+            Authentication.TerminateSession();
+            Application.Current.MainPage = new NavigationPage(new LoginPage()) {
+                BarBackgroundColor = Color.FromHex("CB5C5C")
+            };
+        }
+    }
+}

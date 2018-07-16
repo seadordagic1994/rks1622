@@ -1,0 +1,111 @@
+﻿namespace CondorExtreme3_UI.Reports
+{
+    partial class DailyReportForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.rptViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.PickDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Generate = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // rptViewer
+            // 
+            this.rptViewer.Location = new System.Drawing.Point(14, 61);
+            this.rptViewer.Name = "rptViewer";
+            this.rptViewer.ServerReport.BearerToken = null;
+            this.rptViewer.Size = new System.Drawing.Size(844, 465);
+            this.rptViewer.TabIndex = 15;
+            // 
+            // PickDatePicker
+            // 
+            this.PickDatePicker.Location = new System.Drawing.Point(544, 20);
+            this.PickDatePicker.Name = "PickDatePicker";
+            this.PickDatePicker.Size = new System.Drawing.Size(233, 23);
+            this.PickDatePicker.TabIndex = 16;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(439, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 15);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Choose your day:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::CondorExtreme3_UI.Properties.Resources.logo1;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(14, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(140, 43);
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
+            // Generate
+            // 
+            this.Generate.Location = new System.Drawing.Point(784, 20);
+            this.Generate.Name = "Generate";
+            this.Generate.Size = new System.Drawing.Size(74, 23);
+            this.Generate.TabIndex = 19;
+            this.Generate.Text = "Generate";
+            this.Generate.UseVisualStyleBackColor = true;
+            this.Generate.Click += new System.EventHandler(this.Generate_Click);
+            // 
+            // DailyReportForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(873, 540);
+            this.Controls.Add(this.Generate);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.PickDatePicker);
+            this.Controls.Add(this.rptViewer);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Name = "DailyReportForm";
+            this.ShowIcon = false;
+            this.Text = "Daily report";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private Microsoft.Reporting.WinForms.ReportViewer rptViewer;
+        private System.Windows.Forms.DateTimePicker PickDatePicker;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button Generate;
+    }
+}

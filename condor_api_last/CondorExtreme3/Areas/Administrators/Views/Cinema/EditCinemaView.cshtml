@@ -1,0 +1,47 @@
+﻿@using CondorExtreme3.Models;
+
+@{
+    Layout = null;
+    Cinema c = (Cinema)ViewData["cinemaC"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditCinemaView</title>
+</head>
+<body>
+    <div>
+        <form action="/Administrators/Cinema/SubmitEditCinema">
+           
+
+            <table>
+                <tr>
+                    <td><input type="hidden" name="CinemaID" value="@c.CinemaID" /></td>
+                </tr>
+
+
+                <tr>
+                    <td>Cinema name
+                    </td>
+                    <td> <input type="text" name="CinemaName"  value="@c.Name"/></td>
+                </tr>
+               
+                <tr>
+                    <td>           
+                    </td>
+                    <td>
+                        <input type="submit" value="Save changes"/>
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+        
+         
+    </div>
+</body>
+</html>

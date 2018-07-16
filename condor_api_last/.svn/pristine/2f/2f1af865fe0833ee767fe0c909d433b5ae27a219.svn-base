@@ -1,0 +1,143 @@
+﻿using CondorExtreme3_UI.Helper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CondorExtreme3_UI.Employees
+{
+    public partial class EditEmploymentForm : Form
+    {
+        public WebAPIHelper Service { get; set; }
+
+        public Employments EmploymentToEdit { get; set; }
+        public EditEmploymentForm(Employments Employment)
+        {
+            InitializeComponent();          
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+            EmploymentToEdit = Employment;
+            HttpResponseMessage responseEmployees = Service.GetResponse("GetEmployeesForEmployment", (int)AuthenticationUI.CurrentCinema.CinemaID);
+            if (responseEmployees.IsSuccessStatusCode)
+            {
+                var Employees = responseEmployees.Content.ReadAsAsync<List<dynamic>>().Result;
+
+                cmbEmployeeNames.DataSource = Employees.Select(x => new
+                {
+                    EmployeeID=x.EmployeeID.ToString(),
+                    FullName = x.FullName,
+
+                }).ToList();
+                cmbEmployeeNames.ValueMember = "EmployeeID";
+                cmbEmployeeNames.DisplayMember = "FullName";
+                cmbEmployeeNames.SelectedValue = Employment.EmployeeID.ToString();
+            }
+            
+
+            HttpResponseMessage responseEmploymentTypes = Service.GetResponse("GetEmploymentTypesForEmployment");
+            if (responseEmploymentTypes.IsSuccessStatusCode)
+            {
+                var EmploymentTypes = responseEmploymentTypes.Content.ReadAsAsync<List<dynamic>>().Result;
+
+                cmbEmploymentTypes.DataSource = EmploymentTypes.Select(x => new
+                {
+                    EmploymentTypeID = x.EmploymentTypeID.ToString(),
+                    Name = x.Name,
+                }).ToList();
+
+                cmbEmploymentTypes.ValueMember = "EmploymentTypeID";
+                cmbEmploymentTypes.DisplayMember = "Name";
+                cmbEmploymentTypes.SelectedValue = Employment.EmploymentTypeID.ToString();
+            }
+
+            HttpResponseMessage responseBanks = Service.GetResponse("GetBanks");
+            if (responseBanks.IsSuccessStatusCode)
+            {
+                var Banks = responseBanks.Content.ReadAsAsync<List<dynamic>>().Result;
+
+                cmbBanks.DataSource = Banks.Select(x => new
+                {
+                    BankID = x.BankID.ToString(),
+                    Name = x.Name,
+                }).ToList();
+          
+                cmbBanks.ValueMember = "BankID";
+                cmbBanks.DisplayMember = "Name";
+                cmbBanks.SelectedValue = Employment.BankID.ToString();
+            }
+            dtHireDate.Value = Employment.HireDate;
+            numCurrentSalary.Value = Employment.CurrentSalary;
+            txtBankAccountNumber.Text = Employment.BankAccountNumber;
+
+
+        }
+
+        private void btnSaveChangesEmployment_Click(object sender, EventArgs e)
+        {
+            if (Int32.Parse(cmbEmployeeNames.SelectedValue.ToString()) == (int)AuthenticationUI.LoggedEmployee.EmployeeID)
+            {
+                MessageBox.Show(Messages.DirectorEmploymentAdd, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.ValidateChildren())
+            {
+                EmploymentToEdit.EmployeeID = Int32.Parse(cmbEmployeeNames.SelectedValue.ToString());
+                EmploymentToEdit.HireDate = dtHireDate.Value;
+                EmploymentToEdit.EmploymentTypeID = Int32.Parse(cmbEmploymentTypes.SelectedValue.ToString());
+                EmploymentToEdit.CurrentSalary = numCurrentSalary.Value;
+                EmploymentToEdit.BankAccountNumber = txtBankAccountNumber.Text;
+                EmploymentToEdit.BankID = Int32.Parse(cmbBanks.SelectedValue.ToString());
+
+                HttpResponseMessage PutEmployment = Service.PutResponse(EmploymentToEdit, "PutEmployments");
+
+                if (PutEmployment.StatusCode== System.Net.HttpStatusCode.OK)
+                {
+                    MessageBox.Show(Messages.EmploymentEditSuccess, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if (PutEmployment.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string messageError = PutEmployment.Content.ReadAsAsync<string>().Result;
+                    MessageBox.Show(messageError, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show(Messages.EmploymentEditFailure, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }     
+        }
+
+        private void txtBankAccountNumber_TextChanged(object sender, EventArgs e)
+        {
+            txtBankAccountNumber_Validating(sender, new CancelEventArgs { });
+        }
+
+        private void txtBankAccountNumber_Validating(object sender, CancelEventArgs e)
+        {
+            string Pattern = @"^[0-9]{10,20}$";
+            Regex regex = new Regex(Pattern);
+            if (String.IsNullOrWhiteSpace(txtBankAccountNumber.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtBankAccountNumber, Messages.BankAccountNumberRequired);
+            }
+            else if (!regex.IsMatch(txtBankAccountNumber.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtBankAccountNumber, Messages.BankAccountNumberInvalidFormat);
+            }
+            else
+            {
+                errorProvider.SetError(txtBankAccountNumber, null);
+            }
+        }
+    }
+}

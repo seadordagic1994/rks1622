@@ -1,0 +1,88 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.CinemaVM
+<section class="content-header">
+    <span class="info-box-text"><b>@Model.Cinemas[0].Name</b> @Model.Cinemas[0].Address.City.Name, <small>@Model.Cinemas[0].Address.AddressLine1</small></span>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li class="active">Cinemas halls</li>
+        </ol>
+        
+</section>
+
+<section class="content-header">
+
+    @using (Ajax.BeginForm("AddCinemaHall", "ProjectionManager", null, new AjaxOptions
+    {
+        HttpMethod = "post",
+        UpdateTargetId = "modelContent",
+        //LoadingElementId = "loadingMovies"
+    }))
+    {
+        <button type="submit" class="btn bg-red-gradient" style="margin-bottom:0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <br/><br />
+    }
+</section>
+
+    <section class="content">
+
+        <div class="row">
+            @if (Model.CinemaHalls.Count == 0)
+            {
+               <span class="col-xs-12" style="margin-top:15px;"> <small>Trenutno ne postoji niti jedna dvorana u odabranom kinu</small> </span>
+            }
+            else
+            { 
+                for (int i = 0; i < Model.CinemaHalls.Count; i++)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-blue-gradient"><i class="fa fa-film" aria-hidden="true"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>@Model.CinemaHalls[i].Name</b></span>
+                                @if (Model.NumberOfSeats.Count == 0)
+                                {<span class="info-box-text"><small style="font-size:10px">Number of seats:</small> <b>0</b></span>}
+                                else
+                                {<span class="info-box-text"><small style="font-size:10px">Number of seats:</small> <b>@Model.NumberOfSeats[i].ToString()</b></span>}
+
+
+                                <span class="info-box-text" style="padding-top:7px; padding-left:0;">
+                                     <!--get all tech.types for selected cinema hall  look: dictionary<int, list<string>>-->
+                                    @for (int j = 0; j < @Model.TechTypes[Model.CinemaHalls[i].CinemaHallID].Count(); j++)
+                                    {
+                                        <small class="label bg-red-gradient" style="margin-left:15px 1px 0px 0px; opacity:0.7;">@Model.TechTypes[Model.CinemaHalls[i].CinemaHallID][j].ToString()</small>
+
+                                    }
+                                </span>
+                            </div>
+
+                            <!-- /.info-box-content -->
+                        </div>
+
+                        @using (Ajax.BeginForm("GetSeats", "ProjectionManager", new { cinemaHallID = Model.CinemaHalls[i].CinemaHallID }, new AjaxOptions
+                    {
+                        HttpMethod = "post",
+                        UpdateTargetId = "modelContent",
+                        //LoadingElementId = "loadingMovies"
+                    }))
+                    {
+                            <a class="btn btn-app pull-right" href="#" onclick="$(this).closest('form').submit()" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-bars"></i> Edit seats
+                            </a>
+
+
+
+                        }
+                       
+                        <!-- /.info-box -->
+                    </div>
+                }
+           }
+        </div>
+    </section>
+
+

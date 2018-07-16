@@ -1,0 +1,11 @@
+﻿namespace CondorExtreme3_UI.ReportModels
+{
+
+
+    partial class CashRegisterDataset
+    {
+        partial class DailyItemsSoldDataTable
+        {
+        }
+    }
+}

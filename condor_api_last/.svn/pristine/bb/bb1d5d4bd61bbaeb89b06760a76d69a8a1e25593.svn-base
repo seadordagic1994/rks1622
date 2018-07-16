@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_UI.Helper
+{
+    public static class AuthenticationUI
+    {
+        public static dynamic LoggedEmployee { get; set; }
+        public static dynamic LoggedRootUser { get; set; }
+        public static dynamic CurrentCinema { get; set; }
+
+        public static int NumberOfEmployees { get; set; }
+
+        public static List<dynamic> Roles { get; set; }
+
+        public static void CheckForUpdates()
+        {
+            Service = new WebAPIHelper(WebAPIHelper.ApiUri, "api/Employees");
+            HttpResponseMessage UpdateCurrentEmployee= Service.GetResponse("", LoggedEmployee.EmployeeID);
+            if (UpdateCurrentEmployee.IsSuccessStatusCode)
+            {
+                LoggedEmployee = UpdateCurrentEmployee.Content.ReadAsAsync<dynamic>().Result;
+            }
+
+            HttpResponseMessage UpdateTotalNumberOfEmployees = Service.GetResponse("GetEmployeesByCinema", CurrentCinema.CinemaID);
+            if (UpdateTotalNumberOfEmployees.IsSuccessStatusCode)
+            {
+                var allEmps  = UpdateTotalNumberOfEmployees.Content.ReadAsAsync<List<dynamic>>().Result;
+                NumberOfEmployees = allEmps.Count;
+            }
+
+        }
+
+        public static WebAPIHelper Service { get; set; }
+    }
+}

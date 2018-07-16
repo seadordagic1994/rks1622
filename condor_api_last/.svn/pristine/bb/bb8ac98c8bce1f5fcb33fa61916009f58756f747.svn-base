@@ -1,0 +1,125 @@
+﻿namespace CondorExtreme3_UI.KasaRacuni
+{
+    partial class Seats
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.CinemaHalllbl = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.MainSeatsFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.columnFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.rowsFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.makeTicketsBtn = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // CinemaHalllbl
+            // 
+            this.CinemaHalllbl.AutoSize = true;
+            this.CinemaHalllbl.Location = new System.Drawing.Point(12, 9);
+            this.CinemaHalllbl.Name = "CinemaHalllbl";
+            this.CinemaHalllbl.Size = new System.Drawing.Size(155, 15);
+            this.CinemaHalllbl.TabIndex = 0;
+            this.CinemaHalllbl.Text = "Cinema hall: CInema hall 1";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.MainSeatsFlow);
+            this.groupBox1.Controls.Add(this.columnFlow);
+            this.groupBox1.Controls.Add(this.rowsFlow);
+            this.groupBox1.Location = new System.Drawing.Point(15, 34);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(495, 505);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Choose your seats";
+            // 
+            // MainSeatsFlow
+            // 
+            this.MainSeatsFlow.Location = new System.Drawing.Point(42, 64);
+            this.MainSeatsFlow.Margin = new System.Windows.Forms.Padding(0);
+            this.MainSeatsFlow.Name = "MainSeatsFlow";
+            this.MainSeatsFlow.Size = new System.Drawing.Size(436, 422);
+            this.MainSeatsFlow.TabIndex = 6;
+            // 
+            // columnFlow
+            // 
+            this.columnFlow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.columnFlow.Location = new System.Drawing.Point(46, 35);
+            this.columnFlow.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
+            this.columnFlow.Name = "columnFlow";
+            this.columnFlow.Padding = new System.Windows.Forms.Padding(0, 7, 0, 7);
+            this.columnFlow.Size = new System.Drawing.Size(432, 25);
+            this.columnFlow.TabIndex = 5;
+            // 
+            // rowsFlow
+            // 
+            this.rowsFlow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.rowsFlow.Location = new System.Drawing.Point(15, 70);
+            this.rowsFlow.Name = "rowsFlow";
+            this.rowsFlow.Size = new System.Drawing.Size(25, 416);
+            this.rowsFlow.TabIndex = 4;
+            // 
+            // makeTicketsBtn
+            // 
+            this.makeTicketsBtn.Location = new System.Drawing.Point(406, 9);
+            this.makeTicketsBtn.Name = "makeTicketsBtn";
+            this.makeTicketsBtn.Size = new System.Drawing.Size(106, 23);
+            this.makeTicketsBtn.TabIndex = 2;
+            this.makeTicketsBtn.Text = "Make tickets";
+            this.makeTicketsBtn.UseVisualStyleBackColor = true;
+            this.makeTicketsBtn.Click += new System.EventHandler(this.makeTicketsBtn_Click);
+            // 
+            // Seats
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(524, 551);
+            this.Controls.Add(this.makeTicketsBtn);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.CinemaHalllbl);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "Seats";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Seats";
+            this.groupBox1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label CinemaHalllbl;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.FlowLayoutPanel MainSeatsFlow;
+        private System.Windows.Forms.FlowLayoutPanel columnFlow;
+        private System.Windows.Forms.FlowLayoutPanel rowsFlow;
+        private System.Windows.Forms.Button makeTicketsBtn;
+    }
+}

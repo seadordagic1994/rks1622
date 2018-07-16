@@ -1,0 +1,217 @@
+﻿@model CondorExtreme3.Areas.Local.Models.EditEmployeeVM
+
+<div class="modal-dialog">
+    <div class="modal-content" style="background-color:#e74c3c">      
+        <div class="modal-body" style="padding:2px 2px 2px 2px;">
+                @using (Html.BeginForm("SubmitEditEmployee", "Director", new { @id="EditForm" }))
+                {
+                <div class="box" style="border-width:0px; margin-bottom:0px;">
+                    <div class="box-header with-border" style="background-color:#3498db;">
+                        <h4 style="text-align:center; margin:1px 0px 1px 0px; color:white; font-family:sans-serif;">User Info</h4>
+                    </div>
+              
+                
+                   
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+
+
+
+
+                                    <tr>
+                                        <td>
+                                            <div>                  
+                                                    @Html.HiddenFor(model => model.EmployeeID)
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="FirstName">First Name</label>
+                                                <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Enter first name..." value="@Model.FirstName" required>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <div class="form-group">
+                                                <label for="LastName">Last Name</label>
+                                                <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Enter last name..." value="@Model.LastName" required>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="EmailAddress">Email Address</label>
+                                                <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" placeholder="Email Address..." value="@Model.EmailAddress" required>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Phone Number:</label>
+
+
+                                                @*<div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>*@
+                                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Phone Number..." data-inputmask='"mask": "(999) 999-999"' data-mask required>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>City:</label>
+                                                @Html.DropDownListFor(m => m.CityID, Model.ListCities, new { @class = "form-control", @style = "width:100%;", @id = "DropDownListCities" })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Hire Date:</label>
+
+
+                                                <input type="text" class="form-control pull-right" id="datepickerH" name="HireDate" value="@Model.HireDate" required>
+
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Birth Date:</label>
+
+                                                <input type="text" class="form-control pull-right" id="datepickerB" name="BirthDate" value="@Model.BirthDate" required>
+
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label>Salary:</label>
+
+                                                <input type="number" class="form-control" id="Salary" name="Salary" value="@Model.Salary" required>
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+
+                                                @foreach (var item in Model.Genders)
+	                                            {
+		                                              @Html.RadioButtonFor(m=>m.SelectedGender,item.Id, (item.IsSelected.HasValue && item.IsSelected.Value)? new {@checked="checked" }:null)
+                                                      <label>@item.Name</label>
+                                                        
+                                                }
+
+
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <div class="xs-12">
+                                                    <label>Roles</label>
+                                                    <br />
+                                                    @Html.EditorFor(m=>m.ProjectionManager)
+                                                    <label>Projection Manager</label>
+                                                    @Html.EditorFor(m => m.Employee)
+                                                    <label>Employee</label>
+                                                </div>
+                                               
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+
+
+
+
+                                </table>
+                            </div>
+                                     
+                   
+
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal"  style="width:125px; height:40px; margin-right:20px; margin-bottom:10px;">Discard</button>
+                            @*<button type="submit" class="btn btn-primary pull-right" style="width:125px; height:40px; margin-right:15px;" id="buttonID">Submit</button>*@
+                        
+                            <input type="submit" class="btn btn primary pull-right" style="width:125px; height:40px; margin-right:20px;" id="buttonID" value="Submit" />
+                        </div>
+
+                       
+                    
+                                                  
+                </div>
+               }
+        </div>
+        @*<div class="modal-footer">
+            
+        </div>*@
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        //$(".select2").select2();
+
+        //$(".select2-selection.select2-selection--single").css({"height":"34px", "padding-left":"6px"});
+
+
+        
+
+        $("[data-mask]").inputmask();
+
+
+
+
+        $('#datepickerH').datepicker({
+            autoclose: true
+        });
+        $('#datepickerB').datepicker({
+            autoclose: true
+        });
+
+
+        $(".modal").on("hidden.bs.modal", function () {
+
+            $("#ModalN").html("");
+
+        });
+
+        
+
+
+        //var FirstRole = $("#ProjectionManager").val();
+
+        //if(FirstRole=="True")
+        //{
+        //    $("#ProjectionManager").prop('checked', true);
+        //}
+
+        //var SecondRole = $("#Employee").val();
+
+        //if (SecondRole == "True") {
+        //    $("#Employee").prop('checked', true);
+        //}
+
+    });
+
+  
+
+
+
+
+
+</script>

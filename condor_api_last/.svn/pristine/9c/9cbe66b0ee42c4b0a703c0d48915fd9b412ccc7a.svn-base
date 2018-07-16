@@ -1,0 +1,49 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+}
+
+@model CondorExtreme3.Areas.Local.Models.AddCinemaVM
+
+<div class="row" style="margin-bottom:25px;">
+    <div class="col-xs-1 col-sm-1 col-md-1"><i class="fa fa-chevron-left" aria-hidden="true"></i> <small></small></div>
+    <div class="col-xs-10 col-sm-10 col-md-10"><b>Add new cinema hall</b></div>
+    <div class="col-xs-1 col-sm-1 col-md-1"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+</div>
+
+
+@using (Ajax.BeginForm("SubmitCinemaHall", "ProjectionManager", null, new AjaxOptions
+{
+    HttpMethod = "post",
+    UpdateTargetId = "modelContent",
+    //LoadingElementId = "loadingMovies"
+}))
+{
+    
+    <div hidden="hidden">
+        @Html.EditorFor(x => x.Cinema)
+        @Html.EditorFor(x => x.Cinema.Address)
+        @Html.EditorFor(x => x.Cinema.Address.City)
+        @Html.EditorFor(x => x.Cinema.Address.City.Country)
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.Label("Selected country:", new { @class = "fontSize" })
+            @Html.LabelFor(x=>x.CountryID,Model.Cinema.Address.City.Country.Name, new { @class = "fontSize", Style="font-weight:bold;" })<br />
+            @Html.Label("Selected city:", new { @class = "fontSize" })
+            @Html.LabelFor(x=>x.CityID,Model.Cinema.Address.City.Name, new { @class = "fontSize", Style = "font-weight:bold;" })<br />
+            @Html.Label("Selected address:", new { @class = "fontSize" })
+            @Html.LabelFor(x=>x.AddressID, Model.Cinema.Address.AddressLine1, new { @class = "fontSize", Style = "font-weight:bold;" })<br />
+            @Html.Label("Selected cinema:", new { @class = "fontSize" })
+            @Html.LabelFor(x=>x.CinemaID, Model.Cinema.Name, new { @class = "fontSize", Style = "font-weight:bold;" })
+            
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">           
+            @Html.LabelFor(x => x.CountryID, "Cinema hall name:", new { @class = "fontSize" })            
+            @Html.TextBoxFor(x => x.CinemaHall.Name, new { placeholder = "Cinema name", @class = "form-control" })         
+            <button type="submit" class="btn btn-primary pull-right">Next step</button>
+        </div>
+        
+    </div>
+    
+}

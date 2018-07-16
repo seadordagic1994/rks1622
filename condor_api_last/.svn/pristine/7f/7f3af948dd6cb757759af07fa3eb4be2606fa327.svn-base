@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CondorExtreme3_UI.RootUsers
+{
+    public class CinemaInfo
+    {
+        public int CinemaID { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public int CinemaHallTotal { get; set; }
+        public int EmployeeTotal { get; set; }
+
+        public int CityID { get; set; }
+    }
+}

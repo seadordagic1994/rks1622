@@ -1,0 +1,527 @@
+﻿namespace CondorExtreme3_UI.KasaRacuni
+{
+    partial class Kasa
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kasa));
+            this.emplLbl = new System.Windows.Forms.Label();
+            this.dateTime = new System.Windows.Forms.Timer(this.components);
+            this.timeLbl = new System.Windows.Forms.Label();
+            this.racunBox = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.TotalToPayLbl = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.TotalLbl = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.billPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.OpenCameraBtn = new System.Windows.Forms.Button();
+            this.projectionsFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.projectionCombo = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.todayLbl = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.qrcodePicture = new System.Windows.Forms.PictureBox();
+            this.printFiscalBtn = new System.Windows.Forms.Button();
+            this.MainItemsPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ReklamacijaBtn = new System.Windows.Forms.Button();
+            this.CashBtn = new System.Windows.Forms.Button();
+            this.logo = new System.Windows.Forms.PictureBox();
+            this.BillBox = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.racunBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qrcodePicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BillBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // emplLbl
+            // 
+            this.emplLbl.AutoSize = true;
+            this.emplLbl.Location = new System.Drawing.Point(12, 9);
+            this.emplLbl.Name = "emplLbl";
+            this.emplLbl.Size = new System.Drawing.Size(138, 15);
+            this.emplLbl.TabIndex = 1;
+            this.emplLbl.Text = "Employee: Sead Ordagić";
+            // 
+            // dateTime
+            // 
+            this.dateTime.Enabled = true;
+            this.dateTime.Interval = 1000;
+            this.dateTime.Tick += new System.EventHandler(this.dateTime_Tick);
+            // 
+            // timeLbl
+            // 
+            this.timeLbl.AutoSize = true;
+            this.timeLbl.Location = new System.Drawing.Point(336, 9);
+            this.timeLbl.Name = "timeLbl";
+            this.timeLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.timeLbl.Size = new System.Drawing.Size(0, 15);
+            this.timeLbl.TabIndex = 2;
+            // 
+            // racunBox
+            // 
+            this.racunBox.Controls.Add(this.label19);
+            this.racunBox.Controls.Add(this.label17);
+            this.racunBox.Controls.Add(this.pictureBox4);
+            this.racunBox.Controls.Add(this.TotalToPayLbl);
+            this.racunBox.Controls.Add(this.label18);
+            this.racunBox.Controls.Add(this.TotalLbl);
+            this.racunBox.Controls.Add(this.label16);
+            this.racunBox.Controls.Add(this.label15);
+            this.racunBox.Controls.Add(this.label14);
+            this.racunBox.Controls.Add(this.billPanel);
+            this.racunBox.Location = new System.Drawing.Point(12, 59);
+            this.racunBox.Name = "racunBox";
+            this.racunBox.Size = new System.Drawing.Size(393, 387);
+            this.racunBox.TabIndex = 3;
+            this.racunBox.TabStop = false;
+            this.racunBox.Text = "Current bill";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label19.ForeColor = System.Drawing.Color.White;
+            this.label19.Location = new System.Drawing.Point(346, 363);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(25, 15);
+            this.label19.TabIndex = 8;
+            this.label19.Text = "KM";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label17.ForeColor = System.Drawing.Color.White;
+            this.label17.Location = new System.Drawing.Point(346, 316);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(25, 15);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "KM";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pictureBox4.Location = new System.Drawing.Point(6, 308);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(378, 2);
+            this.pictureBox4.TabIndex = 0;
+            this.pictureBox4.TabStop = false;
+            // 
+            // TotalToPayLbl
+            // 
+            this.TotalToPayLbl.AutoSize = true;
+            this.TotalToPayLbl.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TotalToPayLbl.ForeColor = System.Drawing.Color.White;
+            this.TotalToPayLbl.Location = new System.Drawing.Point(301, 363);
+            this.TotalToPayLbl.Name = "TotalToPayLbl";
+            this.TotalToPayLbl.Size = new System.Drawing.Size(31, 15);
+            this.TotalToPayLbl.TabIndex = 6;
+            this.TotalToPayLbl.Text = "0,00";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label18.ForeColor = System.Drawing.Color.White;
+            this.label18.Location = new System.Drawing.Point(301, 341);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(30, 15);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "17%";
+            // 
+            // TotalLbl
+            // 
+            this.TotalLbl.AutoSize = true;
+            this.TotalLbl.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TotalLbl.ForeColor = System.Drawing.Color.White;
+            this.TotalLbl.Location = new System.Drawing.Point(301, 316);
+            this.TotalLbl.Name = "TotalLbl";
+            this.TotalLbl.Size = new System.Drawing.Size(31, 15);
+            this.TotalLbl.TabIndex = 4;
+            this.TotalLbl.Text = "0,00";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(221, 363);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(74, 15);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Total to pay:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(268, 341);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 15);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "VAT:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(258, 316);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 15);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Total:";
+            // 
+            // billPanel
+            // 
+            this.billPanel.Location = new System.Drawing.Point(6, 22);
+            this.billPanel.Name = "billPanel";
+            this.billPanel.Size = new System.Drawing.Size(378, 290);
+            this.billPanel.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Location = new System.Drawing.Point(439, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(167, 33);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Refreshments";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label2.Location = new System.Drawing.Point(673, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(115, 33);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Popcorns";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label3.Location = new System.Drawing.Point(895, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 33);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Other";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.OpenCameraBtn);
+            this.groupBox1.Controls.Add(this.projectionsFlow);
+            this.groupBox1.Controls.Add(this.projectionCombo);
+            this.groupBox1.Controls.Add(this.label22);
+            this.groupBox1.Controls.Add(this.todayLbl);
+            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.label20);
+            this.groupBox1.Controls.Add(this.qrcodePicture);
+            this.groupBox1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.groupBox1.Location = new System.Drawing.Point(1044, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 480);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Projection details";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // OpenCameraBtn
+            // 
+            this.OpenCameraBtn.Location = new System.Drawing.Point(117, 330);
+            this.OpenCameraBtn.Name = "OpenCameraBtn";
+            this.OpenCameraBtn.Size = new System.Drawing.Size(75, 23);
+            this.OpenCameraBtn.TabIndex = 0;
+            this.OpenCameraBtn.Text = "Photo";
+            this.OpenCameraBtn.UseVisualStyleBackColor = true;
+            this.OpenCameraBtn.Click += new System.EventHandler(this.OpenCameraBtn_Click);
+            // 
+            // projectionsFlow
+            // 
+            this.projectionsFlow.AutoScroll = true;
+            this.projectionsFlow.Location = new System.Drawing.Point(7, 99);
+            this.projectionsFlow.Name = "projectionsFlow";
+            this.projectionsFlow.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.projectionsFlow.Size = new System.Drawing.Size(188, 158);
+            this.projectionsFlow.TabIndex = 35;
+            this.projectionsFlow.WrapContents = false;
+            this.projectionsFlow.MouseEnter += new System.EventHandler(this.projectionsFlow_MouseEnter);
+            // 
+            // projectionCombo
+            // 
+            this.projectionCombo.FormattingEnabled = true;
+            this.projectionCombo.Location = new System.Drawing.Point(8, 66);
+            this.projectionCombo.Name = "projectionCombo";
+            this.projectionCombo.Size = new System.Drawing.Size(184, 23);
+            this.projectionCombo.TabIndex = 35;
+            this.projectionCombo.SelectedIndexChanged += new System.EventHandler(this.projectionCombo_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label22.Location = new System.Drawing.Point(6, 48);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(101, 15);
+            this.label22.TabIndex = 37;
+            this.label22.Text = "Select projection:";
+            // 
+            // todayLbl
+            // 
+            this.todayLbl.AutoSize = true;
+            this.todayLbl.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.todayLbl.Location = new System.Drawing.Point(118, 24);
+            this.todayLbl.Name = "todayLbl";
+            this.todayLbl.Size = new System.Drawing.Size(0, 15);
+            this.todayLbl.TabIndex = 36;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label21.Location = new System.Drawing.Point(7, 24);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(91, 15);
+            this.label21.TabIndex = 35;
+            this.label21.Text = "Projections for:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 334);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(102, 15);
+            this.label20.TabIndex = 35;
+            this.label20.Text = "Scan for QR code:";
+            // 
+            // qrcodePicture
+            // 
+            this.qrcodePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.qrcodePicture.Image = ((System.Drawing.Image)(resources.GetObject("qrcodePicture.Image")));
+            this.qrcodePicture.Location = new System.Drawing.Point(6, 364);
+            this.qrcodePicture.Name = "qrcodePicture";
+            this.qrcodePicture.Size = new System.Drawing.Size(188, 110);
+            this.qrcodePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.qrcodePicture.TabIndex = 35;
+            this.qrcodePicture.TabStop = false;
+            // 
+            // printFiscalBtn
+            // 
+            this.printFiscalBtn.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.printFiscalBtn.Location = new System.Drawing.Point(303, 455);
+            this.printFiscalBtn.Name = "printFiscalBtn";
+            this.printFiscalBtn.Size = new System.Drawing.Size(102, 33);
+            this.printFiscalBtn.TabIndex = 35;
+            this.printFiscalBtn.Text = "Print fiscal";
+            this.printFiscalBtn.UseVisualStyleBackColor = false;
+            this.printFiscalBtn.Click += new System.EventHandler(this.printFiscalBtn_Click);
+            // 
+            // MainItemsPanel
+            // 
+            this.MainItemsPanel.Location = new System.Drawing.Point(424, 69);
+            this.MainItemsPanel.Name = "MainItemsPanel";
+            this.MainItemsPanel.Size = new System.Drawing.Size(612, 420);
+            this.MainItemsPanel.TabIndex = 37;
+            // 
+            // ReklamacijaBtn
+            // 
+            this.ReklamacijaBtn.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.ReklamacijaBtn.Enabled = false;
+            this.ReklamacijaBtn.Location = new System.Drawing.Point(180, 455);
+            this.ReklamacijaBtn.Name = "ReklamacijaBtn";
+            this.ReklamacijaBtn.Size = new System.Drawing.Size(117, 33);
+            this.ReklamacijaBtn.TabIndex = 38;
+            this.ReklamacijaBtn.Text = "Bill reclamation";
+            this.ReklamacijaBtn.UseVisualStyleBackColor = false;
+            this.ReklamacijaBtn.Click += new System.EventHandler(this.ReklamacijaBtn_Click);
+            // 
+            // CashBtn
+            // 
+            this.CashBtn.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.CashBtn.BackgroundImage = global::CondorExtreme3_UI.Properties.Resources.cash_icon;
+            this.CashBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CashBtn.Location = new System.Drawing.Point(140, 455);
+            this.CashBtn.Name = "CashBtn";
+            this.CashBtn.Size = new System.Drawing.Size(34, 33);
+            this.CashBtn.TabIndex = 39;
+            this.CashBtn.UseVisualStyleBackColor = false;
+            this.CashBtn.Click += new System.EventHandler(this.CashBtn_Click);
+            // 
+            // logo
+            // 
+            this.logo.BackColor = System.Drawing.Color.Transparent;
+            this.logo.BackgroundImage = global::CondorExtreme3_UI.Properties.Resources.logo1;
+            this.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.logo.Location = new System.Drawing.Point(12, 456);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(108, 33);
+            this.logo.TabIndex = 36;
+            this.logo.TabStop = false;
+            // 
+            // BillBox
+            // 
+            this.BillBox.BackColor = System.Drawing.Color.Teal;
+            this.BillBox.Location = new System.Drawing.Point(-1, -1);
+            this.BillBox.Name = "BillBox";
+            this.BillBox.Size = new System.Drawing.Size(416, 500);
+            this.BillBox.TabIndex = 0;
+            this.BillBox.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(423, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(202, 52);
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox2.Location = new System.Drawing.Point(628, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(201, 52);
+            this.pictureBox2.TabIndex = 18;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Location = new System.Drawing.Point(832, 12);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(201, 51);
+            this.pictureBox3.TabIndex = 19;
+            this.pictureBox3.TabStop = false;
+            // 
+            // Kasa
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1252, 495);
+            this.Controls.Add(this.CashBtn);
+            this.Controls.Add(this.ReklamacijaBtn);
+            this.Controls.Add(this.MainItemsPanel);
+            this.Controls.Add(this.logo);
+            this.Controls.Add(this.printFiscalBtn);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.racunBox);
+            this.Controls.Add(this.timeLbl);
+            this.Controls.Add(this.emplLbl);
+            this.Controls.Add(this.BillBox);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox3);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "Kasa";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Cash register";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Kasa_FormClosing);
+            this.racunBox.ResumeLayout(false);
+            this.racunBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qrcodePicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BillBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.PictureBox BillBox;
+        private System.Windows.Forms.Label emplLbl;
+        private System.Windows.Forms.Timer dateTime;
+        private System.Windows.Forms.Label timeLbl;
+        private System.Windows.Forms.GroupBox racunBox;
+        private System.Windows.Forms.FlowLayoutPanel billPanel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label TotalToPayLbl;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label TotalLbl;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.PictureBox qrcodePicture;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label todayLbl;
+        private System.Windows.Forms.ComboBox projectionCombo;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.FlowLayoutPanel projectionsFlow;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button printFiscalBtn;
+        private System.Windows.Forms.PictureBox logo;
+        private System.Windows.Forms.FlowLayoutPanel MainItemsPanel;
+        private System.Windows.Forms.Button ReklamacijaBtn;
+        private System.Windows.Forms.Button CashBtn;
+        private System.Windows.Forms.Button OpenCameraBtn;
+    }
+}

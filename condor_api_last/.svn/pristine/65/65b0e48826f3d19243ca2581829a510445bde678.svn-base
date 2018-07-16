@@ -1,0 +1,14 @@
+﻿using System;
+
+namespace CondorExtreme3_UI.Projections
+{
+    internal class BitmapImage
+    {
+        private Uri uri;
+
+        public BitmapImage(Uri uri)
+        {
+            this.uri = uri;
+        }
+    }
+}

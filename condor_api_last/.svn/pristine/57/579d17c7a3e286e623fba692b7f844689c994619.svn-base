@@ -1,0 +1,179 @@
+﻿namespace CondorExtreme3_UI.Projections
+{
+    partial class ProjectionsParent
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.projectionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moviesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMovieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editMovieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addProjectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSeatsInCinemaHallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectionsToolStripMenuItem,
+            this.seatsToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(612, 24);
+            this.menuStrip.TabIndex = 0;
+            this.menuStrip.Text = "MenuStrip";
+            // 
+            // projectionsToolStripMenuItem
+            // 
+            this.projectionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moviesToolStripMenuItem,
+            this.projectionsToolStripMenuItem1});
+            this.projectionsToolStripMenuItem.Name = "projectionsToolStripMenuItem";
+            this.projectionsToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.projectionsToolStripMenuItem.Text = "Projections";
+            // 
+            // moviesToolStripMenuItem
+            // 
+            this.moviesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addMovieToolStripMenuItem,
+            this.editMovieToolStripMenuItem});
+            this.moviesToolStripMenuItem.Name = "moviesToolStripMenuItem";
+            this.moviesToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.moviesToolStripMenuItem.Text = "Movies";
+            // 
+            // addMovieToolStripMenuItem
+            // 
+            this.addMovieToolStripMenuItem.Name = "addMovieToolStripMenuItem";
+            this.addMovieToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.addMovieToolStripMenuItem.Text = "Add movie";
+            this.addMovieToolStripMenuItem.Click += new System.EventHandler(this.addMovieToolStripMenuItem_Click);
+            // 
+            // editMovieToolStripMenuItem
+            // 
+            this.editMovieToolStripMenuItem.Name = "editMovieToolStripMenuItem";
+            this.editMovieToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.editMovieToolStripMenuItem.Text = "Edit movie";
+            this.editMovieToolStripMenuItem.Click += new System.EventHandler(this.editMovieToolStripMenuItem_Click);
+            // 
+            // projectionsToolStripMenuItem1
+            // 
+            this.projectionsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addProjectionToolStripMenuItem});
+            this.projectionsToolStripMenuItem1.Name = "projectionsToolStripMenuItem1";
+            this.projectionsToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
+            this.projectionsToolStripMenuItem1.Text = "Projections";
+            // 
+            // addProjectionToolStripMenuItem
+            // 
+            this.addProjectionToolStripMenuItem.Name = "addProjectionToolStripMenuItem";
+            this.addProjectionToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.addProjectionToolStripMenuItem.Text = "Add projection";
+            this.addProjectionToolStripMenuItem.Click += new System.EventHandler(this.addProjectionToolStripMenuItem_Click);
+            // 
+            // seatsToolStripMenuItem
+            // 
+            this.seatsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSeatsInCinemaHallsToolStripMenuItem});
+            this.seatsToolStripMenuItem.Name = "seatsToolStripMenuItem";
+            this.seatsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.seatsToolStripMenuItem.Text = "Seats";
+            // 
+            // addSeatsInCinemaHallsToolStripMenuItem
+            // 
+            this.addSeatsInCinemaHallsToolStripMenuItem.Name = "addSeatsInCinemaHallsToolStripMenuItem";
+            this.addSeatsInCinemaHallsToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.addSeatsInCinemaHallsToolStripMenuItem.Text = "Add seats in cinema halls";
+            this.addSeatsInCinemaHallsToolStripMenuItem.Click += new System.EventHandler(this.addSeatsInCinemaHallsToolStripMenuItem_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 431);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(612, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "StatusStrip";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
+            this.toolStripStatusLabel.Text = "Status";
+            // 
+            // ProjectionsParent
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(612, 453);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
+            this.IsMdiContainer = true;
+            this.MainMenuStrip = this.menuStrip;
+            this.Name = "ProjectionsParent";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Projections and seats menagement";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MDIParent1_Load);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+        #endregion
+
+
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ToolStripMenuItem projectionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moviesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addMovieToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editMovieToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectionsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addProjectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem seatsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addSeatsInCinemaHallsToolStripMenuItem;
+    }
+}
+
+
+

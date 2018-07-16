@@ -1,0 +1,181 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Newtonsoft.Json.Linq;
+
+namespace CondorExtreme3_Xamarin
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class RVMenuPage_Reservations : ContentPage
+	{
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/UserReservations");
+        private TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+
+        public RVMenuPage_Reservations ()
+		{
+			InitializeComponent();
+            LoadReservations();
+            tapGestureRecognizer.Tapped += TapGestureRecognizer_Tapped;
+		}
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is Image)
+            {
+                var clickedImg = sender as Image;
+                var modal = new QRZoomed_Modal();
+                var mainStackLayout = new StackLayout() { Padding = 15 };
+
+                mainStackLayout.VerticalOptions = LayoutOptions.Center;
+                mainStackLayout.Children.Add(new Image() { Source = clickedImg.Source, BackgroundColor = Color.Black });
+
+                modal.BackgroundColor = Color.Black;
+                modal.Content = mainStackLayout;
+                modal.Content.BackgroundColor = Color.Black;
+                await Navigation.PushModalAsync(modal);
+            }
+        }
+
+        public async void LoadReservations()
+        {
+            var response = service.GetResponse("GetUserReservations", Authentication.CurrentUser.UserID);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var jReservations = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+                if (jReservations.Count == 0)
+                    mainStackLayout.Children.Add(new Label() {
+                        Text = "You have no active reservations!",
+                        FontSize = 30
+                    });
+
+                foreach (var reservation in jReservations)
+                {
+                    var grid = new Grid();
+
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+                    grid.Children.Add(new Label() {
+                        Text = reservation["MovieName"].ToString()
+                    }, 0, 0);
+                    Grid.SetColumnSpan(grid.Children.Last(), 2);
+
+                    grid.Children.Add(new Label() {
+                        Text = "Order Date:",
+                        VerticalTextAlignment = TextAlignment.Center
+                    }, 0, 1);
+
+                    grid.Children.Add(new Label() {
+                        Text = reservation["OrderDate"].ToString(),
+                        VerticalTextAlignment = TextAlignment.Center
+                    }, 1, 1);
+
+                    grid.Children.Add(new Label() {
+                        Text = "Expire Date:",
+                        VerticalTextAlignment = TextAlignment.Center
+                    }, 0, 2);
+
+                    grid.Children.Add(new Label() {
+                        Text = reservation["ExpireDate"].ToString(),
+                        VerticalTextAlignment = TextAlignment.Center
+                    }, 1, 2);
+
+                    grid.Children.Add(new Label() {
+                        Text = $"Total: {reservation["Total"]}$ ({reservation["Discount"]}% discount)",
+                        VerticalTextAlignment = TextAlignment.Center
+                    }, 0, 3);
+                    Grid.SetColumnSpan(grid.Children.Last(), 2);
+
+                    var btnConfirm = new Button() {
+                        Text = "Confirm",
+                        VerticalOptions = LayoutOptions.StartAndExpand,
+                        WidthRequest = 50,
+                        HeightRequest = 30,
+                        FontSize = 8,
+                    };
+
+                    btnConfirm.Clicked += async (sender, args) => {
+                        JObject jObj = new JObject() {
+                            { "RVisitorID", Authentication.CurrentUser.UserID },
+                            { "ReservationID", reservation["ReservationID"] }
+                        };
+
+                        response = service.PostResponse(jObj.ToString(), "PostConfirmReservation");
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            await DisplayAlert("Info", "You have successfully confirmed your reservation!", "Ok");
+                        else await DisplayAlert("Error", "You don't have enough VP to confirm the reservation!", "Ok");
+
+                        NavigationHelper.ChangePageTo<RVMenuPage, RVMenuPage_Reservations>();
+                    };
+
+                    var btnCancel = new Button() {
+                        Text = "Cancel",
+                        VerticalOptions = LayoutOptions.StartAndExpand,
+                        WidthRequest = 50, 
+                        HeightRequest = 30,
+                        FontSize = 8
+                    };
+
+                    btnCancel.Clicked += async (sender, args) => {
+                        try
+                        {
+                            JObject jObj = new JObject() {
+                                { "RVisitorID", Authentication.CurrentUser.UserID },
+                                { "ReservationID", reservation["ReservationID"] }
+                            };
+
+                            response = service.PostResponse(jObj.ToString(), "PostCancelReservation");
+
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)    
+                                await DisplayAlert("Info", "You have successfully canceled your reservation!", "Ok");
+                            else await DisplayAlert("Error", "Unable to cancel your reservation!", "Ok");
+
+                            MasterDetailPage mdp = Application.Current.MainPage as MasterDetailPage;
+                            mdp.Detail = new NavigationPage(new RVMenuPage_Reservations())
+                            {
+                                BarBackgroundColor = Color.FromHex("CB5C5C"),
+                                Title = "Detail"
+                            };
+                            mdp.IsPresented = false;
+                        }
+                        catch (Exception ex) { await DisplayAlert("error", ex.ToString(), "ok"); }
+                    };
+
+                    grid.Children.Add(btnConfirm, 2, 3);
+                    grid.Children.Add(btnCancel, 3, 3);
+
+                    var QRCodeImg = new Image() {
+                        Source = $"https://api.qrserver.com/v1/create-qr-code/?size=700x700&data={reservation["ReservationID"]}",
+                        Aspect = Aspect.AspectFit
+                    };
+
+                    QRCodeImg.GestureRecognizers.Add(tapGestureRecognizer);
+                    grid.Children.Add(QRCodeImg, 2, 0);
+
+                    Grid.SetColumnSpan(grid.Children.Last(), 2);
+                    Grid.SetRowSpan(grid.Children.Last(), 3);
+                    mainStackLayout.Children.Add(grid);
+                    mainStackLayout.Children.Add(new BoxView() {
+                        HeightRequest = 1,
+                        BackgroundColor = Color.FromHex("#AAA")
+                    });
+                }
+            }
+        }
+	}
+}

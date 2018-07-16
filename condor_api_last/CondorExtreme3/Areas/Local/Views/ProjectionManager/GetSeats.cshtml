@@ -1,0 +1,97 @@
+﻿@using CondorExtreme3.ModelsLocalDB;
+@{
+    Layout = null;
+    
+}
+
+@model CondorExtreme3.Areas.Local.Models.PMSeatsVM
+
+<div class="row" style="margin-bottom:25px;">
+    <div class="col-xs-1 col-sm-1 col-md-1"><i class="fa fa-chevron-left" aria-hidden="true"></i> <small></small></div>
+    <div class="col-xs-10 col-sm-10 col-md-10"><b>Add/edit seats for @Model.CinemaHall.Name</b></div>
+    <div class="col-xs-1 col-sm-1 col-md-1"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+</div>
+
+<div class="row">
+
+    <div class="col-xs-1" style="border-bottom:2px #808080 solid; text-align:center; padding-left:0px;"><H5><smal>ROWS</smal></H5></div>
+    <div class="col-xs-11 pull-right" style="border-bottom:2px black solid; text-align:center;"><H5>CANVAS</H5></div>
+    <div class="col-xs-12" style="height:15px"></div>
+</div> 
+    <div id="setSeat">
+           
+        @foreach (SeatRow sr in Model.SeatRow)
+        {
+            <div class="row">
+                <div class="col-xs-1" style="margin-top:7px; padding: 2px 0px 5px 0px;">
+                    
+                        @using (Ajax.BeginForm("GetSeatsDictionary", "ProjectionManager", new {  SeatRowID = sr.SeatRowID }, new AjaxOptions
+                        {
+                            HttpMethod = "post",
+                            UpdateTargetId = "setSeat",
+                            //LoadingElementId = "loadingMovies"
+                        }))
+                        {
+                            @Html.Hidden("JsonDict", Model.MyDictionaryToJson(Model.Seats))
+                            <div hidden="hidden">
+                                @Html.EditorFor(x => x.CinemaHall)
+                            </div>
+                            <span style="white-space:nowrap;">
+                                <label>@sr.SeatRowID.ToString()</label>
+                                <input onchange="$(this.form).submit()"
+                                       type="number"
+                                       class="pull-right"
+                                       style="width:70%; text-align:right;"
+                                       name="FillSeat"
+                                       required
+                                       value="@Model.Seats[sr.SeatRowID].Count()"
+                                       max="1500"
+                                       min="0" />
+                            </span>
+                        }
+                            
+                </div>
+
+                <div class="col-xs-11" style="margin-top:7px;">
+                    @if (Model.Seats.ContainsKey(sr.SeatRowID))
+                    {
+                        foreach (string s in Model.Seats[sr.SeatRowID])
+                        {
+                            <div class="col-xs-1" style="color:black; padding:0px 3px 3px 1px;  text-align:center; height:25px; width:4%;  ">
+                                <input type="checkbox" name="seat" id="@sr.SeatRowID@s" value="@sr.SeatRowID@s" />
+                                <label for="@sr.SeatRowID@s"></label>
+                            </div>
+
+                        }
+                    }
+                    else
+                    { <small>Empty</small> }
+                </div>
+            </div>
+        }
+
+@using (Ajax.BeginForm("AcceptSeats", "ProjectionManager", new AjaxOptions
+            {
+                HttpMethod = "post",
+                UpdateTargetId = "setSeat",
+                //LoadingElementId = "loadingMovies"
+            }))
+                {
+                 
+                <div class="row"><button type="submit" class="btn btn-block btn-primary pull-right" style="width:auto;">Accept changes</button></div>
+                }
+</div>
+  
+<script>
+    $("input[type = 'checkbox'][name = 'seat'] + label").css(
+        {
+            "position": "absolute",
+            "width": "30px",
+            "height": "25px",
+            "background-size": "90%",
+            "background-image": "url('/Pictures/seatT.png')",
+            "background-repeat": "no-repeat",
+            "-webkit-transform": "rotate(180deg)"
+        });
+</script>
+

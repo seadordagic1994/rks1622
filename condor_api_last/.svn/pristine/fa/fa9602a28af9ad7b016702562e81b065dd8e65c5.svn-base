@@ -1,0 +1,61 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace CondorExtreme3_Xamarin
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class RVMenuPage_BuyVP : ContentPage
+    {
+        private WebAPIHelper service = new WebAPIHelper(Domains.APIDomain, "api/VirtualPoints");
+
+        public RVMenuPage_BuyVP()
+        {
+            InitializeComponent();
+            LoadVPPacks();
+        }
+
+        public async void LoadVPPacks()
+        {
+            var response = service.GetResponse("GetVirtualPointsPacks");
+            JArray packs = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+            if (packs.Count == 0)
+                mainStackLayout.Children.Add(new Label()
+                {
+                    Text = "No VP packs available at the moment!",
+                    FontSize = 30
+                });
+
+            foreach (var pack in packs)
+            {
+                var button = new Button() { Text = $"Buy {pack["Amount"]} VP" };
+                button.Clicked += (sender, args) => {
+                    JObject jsonBuyOrder = new JObject()
+                    {
+                        { "RVisitorID", Authentication.CurrentUser.UserID },
+                        { "VirtualPointsPacketID", pack["VirtualPointsPacketID"] }
+                    };
+
+                    response = service.PostResponse(jsonBuyOrder.ToString(), "PostBuyVirtualPointPack");
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        DisplayAlert("Info", $"Your order for {pack["Amount"]} VP has been filled!", "Ok");
+                    else
+                        DisplayAlert("Info", "There has been an error processing your payment!", "Ok");
+
+                    NavigationHelper.ChangePageTo<RVMenuPage, RVMainPage>();
+                };
+
+                mainStackLayout.Children.Add(button);
+            }
+        }
+    }
+
+
+}
